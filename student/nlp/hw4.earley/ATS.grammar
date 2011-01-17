@@ -1,0 +1,27 @@
+(
+( 
+"Det-->that|this|a|the",  
+"Noun-->book|flight|meal|money", 
+"Verb-->book|include|prefer", 
+"Pronoun-->I|she|me", 
+"Proper-noun-->NWA|Houston", 
+"Aux-->does", 
+"Preposition-->from|to|on|near|through"),
+( 
+"S-->NP VP,fooey", 
+"S-->Aux NP VP,fooey", 
+"S-->VP,x", 
+"NP-->Pronoun,x",
+"NP-->Proper-noun,x",
+"NP-->Det NOML,x",
+"NOML-->Noun,x",
+"NOML-->NOML Noun,x",
+"NOML-->NOML PP,x",
+"VP-->Verb,x",
+"VP-->Verb NP,x",
+"VP-->Verb NP PP,x",
+"VP-->Verb PP,x",
+"VP-->VP PP,x",
+"PP-->Preposition NP,x"
+)
+)

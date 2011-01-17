@@ -1,0 +1,18 @@
+Measures of quality could be based on n-gram frequency or some combination of parsing information and word-sense: "theta bled own there" makes less sense and likely appears less than "the table down there". It also may not parse as well. "the table down there" is a noun phrase. "theta bled own there" is something weird with 2 verbs: bled and own.
+
+A simple measure is just if you were able to find lexicon entries for most or all of the string.
+
+Improvements are very difficult outside of lexicon matches. You could improve lexicon matches by studying l33t speak and expanding the lexicon, but l33t speak is likely not very consistent from speaker to speaker and grows over time.
+
+
+Q: What is wrong with part1's solution to the hashtags problem?
+What kinds of errors pop up?
+fball, 60-minutes, acronyms, short names...stuff a language model won't solve?
+
+Q: how much slower is part2 than part1?
+Imperceptably. Part1 ran in 475 milliseconds real-time and part2 took 495.
+
+
+I really wanted to do back-tracking but after examinging the data and implementing some filters for numbers and "junk" characters, very little error remained and only a small part of that was from the shortcomings of max-match.
+
+

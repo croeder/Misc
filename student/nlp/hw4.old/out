@@ -1,0 +1,163 @@
+---- ['play', 'song', '1', 'and', 'songs', '3', 'to', '7']
+Chart[0] "play"
+predictor: S      --> * "CLAUSE"         [0,0]      x
+predictor: S      --> * "CLAUSE" "CONJ" "CLAUSE" [0,0]      x
+predictor: CLAUSE --> * "Verb" "RANGELIST" [0,0]     x
+predictor: CLAUSE --> * "Verb" "Noun" "RANGELIST" [0,0]     x
+predictor: CLAUSE --> * "Verb" "RANGELIST" [0,0]     x
+predictor: CLAUSE --> * "Verb" "Noun" "RANGELIST" [0,0]     x
+scanner adding to:  1
+scanner   : Verb   -->"play"  *           [0,1]     x
+scanner adding to:  1
+scanner   : Verb   -->"play"  *           [0,1]     x
+Chart[1] "song"
+completer : CLAUSE -->"Verb"  * "RANGELIST" [0,1]     x
+completer : CLAUSE -->"Verb"  * "Noun" "RANGELIST" [0,1]     x
+completer : CLAUSE -->"Verb"  * "RANGELIST" [0,1]     x
+completer : CLAUSE -->"Verb"  * "Noun" "RANGELIST" [0,1]     x
+predictor: RANGELIST--> * "RANGE"        [1,1]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [1,1]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [1,1]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [1,1]     x
+scanner adding to:  2
+scanner   : Noun   -->"song"  *           [1,2]     x
+predictor: RANGE  --> * "Digit"          [1,1]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [1,1]     x
+predictor: RANGE  --> * "Digit"          [1,1]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [1,1]     x
+predictor: RANGELIST--> * "RANGE"        [1,1]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [1,1]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [1,1]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [1,1]     x
+Chart[2] "1"
+completer : CLAUSE -->"Verb" "Noun"  * "RANGELIST" [0,2]     x
+predictor: RANGELIST--> * "RANGE"        [2,2]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [2,2]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [2,2]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [2,2]     x
+predictor: RANGE  --> * "Digit"          [2,2]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [2,2]     x
+predictor: RANGE  --> * "Digit"          [2,2]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [2,2]     x
+predictor: RANGELIST--> * "RANGE"        [2,2]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [2,2]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [2,2]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [2,2]     x
+scanner adding to:  3
+scanner   : Digit  -->"1"  *              [2,3]     x
+scanner adding to:  3
+scanner   : Digit  -->"1"  *              [2,3]     x
+Chart[3] "and"
+completer : RANGE  -->"Digit"  *          [2,3]     x
+completer : RANGE  -->"Digit"  * "Prep" "RANGE" [2,3]     x
+completer : RANGE  -->"Digit"  *          [2,3]     x
+completer : RANGE  -->"Digit"  * "Prep" "RANGE" [2,3]     x
+completer : RANGELIST-->"RANGE"  *        [2,3]     x
+completer : RANGELIST-->"RANGE"  * "Conj" "RANGELIST" [2,3]     x
+completer : CLAUSE -->"Verb" "Noun" "RANGELIST"  * [0,3]     x
+completer : RANGELIST-->"RANGELIST"  * "PPA" [2,3]     x
+scanner adding to:  4
+scanner   : Conj   -->"and"  *            [3,4]     x
+completer : S      -->"CLAUSE"  *         [0,3]      x
+completer : S      -->"CLAUSE"  * "CONJ" "CLAUSE" [0,3]      x
+predictor: PPA    --> * "Prep" "Nnp"     [3,3]     x
+completer : gamma  -->"S"  *              [0,3]     x
+Chart[4] "songs"
+completer : RANGELIST-->"RANGE" "Conj"  * "RANGELIST" [2,4]     x
+predictor: RANGELIST--> * "RANGE"        [4,4]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [4,4]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [4,4]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [4,4]     x
+predictor: RANGE  --> * "Digit"          [4,4]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [4,4]     x
+predictor: RANGE  --> * "Digit"          [4,4]     x
+predictor: RANGE  --> * "Digit" "Prep" "RANGE" [4,4]     x
+predictor: RANGELIST--> * "RANGE"        [4,4]     x
+predictor: RANGELIST--> * "RANGE" "Conj" "RANGELIST" [4,4]     x
+predictor: RANGELIST--> * "Conj" "RANGELIST" [4,4]     x
+predictor: RANGELIST--> * "RANGELIST" "PPA" [4,4]     x
+Chart[5] "3"
+Chart[6] "to"
+Chart[7] "7"
+Chart[8]
+=====================================================================
+
+WORDS: ['play', 'song', '1', 'and', 'songs', '3', 'to', '7']
+TERMINAL RULES:
+Verb   --> * "play" "skip"    [0,0]     x
+Noun   --> * "songs" "song"   [0,0]     x
+Digit  --> * "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" [0,0]     x
+Conj   --> * "and" "without" "but" [0,0]     x
+Adj    --> * "shuffled" "reversed" "random" [0,0]     x
+Prep   --> * "to" "without" "from" [0,0]     x
+Nnp    --> * "album"          [0,0]     x
+RULES:
+RANGE  --> * "Digit"          [0,0]     x
+RANGE  --> * "Digit" "Prep" "RANGE" [0,0]     x
+RANGELIST--> * "RANGE"        [0,0]     x
+RANGELIST--> * "RANGE" "Conj" "RANGELIST" [0,0]     x
+RANGELIST--> * "Conj" "RANGELIST" [0,0]     x
+PPA    --> * "Prep" "Nnp"     [0,0]     x
+RANGELIST--> * "RANGELIST" "PPA" [0,0]     x
+PPR    --> * "Prep" "RANGE"   [0,0]     x
+CLAUSE --> * "Verb" "RANGELIST" [0,0]     x
+CLAUSE --> * "Verb" "Noun" "RANGELIST" [0,0]     x
+S      --> * "CLAUSE"         [0,0]      x
+S      --> * "CLAUSE" "CONJ" "CLAUSE" [0,0]      x
+CHART:
+0 ----------
+gamma  --> * "S"              [0,0]     x
+S      --> * "CLAUSE"         [0,0]      x
+S      --> * "CLAUSE" "CONJ" "CLAUSE" [0,0]      x
+CLAUSE --> * "Verb" "RANGELIST" [0,0]     x
+CLAUSE --> * "Verb" "Noun" "RANGELIST" [0,0]     x
+1 ----------
+Verb   -->"play"  *           [0,1]     x
+Verb   -->"play"  *           [0,1]     x
+CLAUSE -->"Verb"  * "RANGELIST" [0,1]     x
+CLAUSE -->"Verb"  * "Noun" "RANGELIST" [0,1]     x
+RANGELIST--> * "RANGE"        [1,1]     x
+RANGELIST--> * "RANGE" "Conj" "RANGELIST" [1,1]     x
+RANGELIST--> * "Conj" "RANGELIST" [1,1]     x
+RANGELIST--> * "RANGELIST" "PPA" [1,1]     x
+RANGE  --> * "Digit"          [1,1]     x
+RANGE  --> * "Digit" "Prep" "RANGE" [1,1]     x
+2 ----------
+Noun   -->"song"  *           [1,2]     x
+CLAUSE -->"Verb" "Noun"  * "RANGELIST" [0,2]     x
+RANGELIST--> * "RANGE"        [2,2]     x
+RANGELIST--> * "RANGE" "Conj" "RANGELIST" [2,2]     x
+RANGELIST--> * "Conj" "RANGELIST" [2,2]     x
+RANGELIST--> * "RANGELIST" "PPA" [2,2]     x
+RANGE  --> * "Digit"          [2,2]     x
+RANGE  --> * "Digit" "Prep" "RANGE" [2,2]     x
+3 ----------
+Digit  -->"1"  *              [2,3]     x
+Digit  -->"1"  *              [2,3]     x
+RANGE  -->"Digit"  *          [2,3]     x
+RANGE  -->"Digit"  * "Prep" "RANGE" [2,3]     x
+RANGELIST-->"RANGE"  *        [2,3]     x
+RANGELIST-->"RANGE"  * "Conj" "RANGELIST" [2,3]     x
+CLAUSE -->"Verb" "Noun" "RANGELIST"  * [0,3]     x
+RANGELIST-->"RANGELIST"  * "PPA" [2,3]     x
+S      -->"CLAUSE"  *         [0,3]      x
+S      -->"CLAUSE"  * "CONJ" "CLAUSE" [0,3]      x
+PPA    --> * "Prep" "Nnp"     [3,3]     x
+gamma  -->"S"  *              [0,3]     x
+4 ----------
+Conj   -->"and"  *            [3,4]     x
+RANGELIST-->"RANGE" "Conj"  * "RANGELIST" [2,4]     x
+RANGELIST--> * "RANGE"        [4,4]     x
+RANGELIST--> * "RANGE" "Conj" "RANGELIST" [4,4]     x
+RANGELIST--> * "Conj" "RANGELIST" [4,4]     x
+RANGELIST--> * "RANGELIST" "PPA" [4,4]     x
+RANGE  --> * "Digit"          [4,4]     x
+RANGE  --> * "Digit" "Prep" "RANGE" [4,4]     x
+5 ----------
+6 ----------
+7 ----------
+8 ----------
+9 ----------
+10 ----------
+----------
+=====================================================================

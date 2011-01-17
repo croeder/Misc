@@ -1,0 +1,11 @@
+
+chars = ('a', 'b', 'c', 'd')
+root = Node('0')
+pointer = root
+for c in chars:
+	print "adding " + c
+	n = Node(c)
+	pointer.add(n)
+	pointer = n
+
+

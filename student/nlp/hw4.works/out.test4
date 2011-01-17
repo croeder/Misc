@@ -1,0 +1,21 @@
+WINNER2 
+
+['S', 
+	['VP', 	
+		['Verb'], 
+		['NP', 
+			['Det'], 
+			['NOML', 
+				['Noun']
+			]
+		]
+	]
+]
+
+
+
+WINNER2 ['S', ['VP', ['Verb'], ['NP', ['Det'], ['NOML', ['Noun']]], ['PP', ['Preposition'], ['NP', ['Propernoun']]]]]
+WINNER2 ['S', ['NP', ['Pronoun']], ['VP', ['Verb']]]
+WINNER2 ['S', ['NP', ['Pronoun']], ['VP', ['Verb'], ['NP', ['Det'], ['NOML', ['Noun']]]]]
+WINNER2 ['S', ['NP', ['Pronoun']], ['VP', ['Verb'], ['NP', ['Det'], ['NOML', ['Noun']]], ['PP', ['Preposition'], ['NP', ['Propernoun']]]]]
+WINNER2 ['S', ['NP', ['Pronoun']], ['VP', ['Verb'], ['NP', ['Propernoun']]]]

@@ -1,0 +1,144 @@
+Chart[0]
+-1 =========---^^^^^^^^^^^^^^
+-1 =============^^^^
+head--> gamma
+a--> not POS <-- gamma
+predictor : S         -->  * NP VP                 [0,0]      fooey     incomplete? True     next_cat: not POS
+predictor : S         -->  * Aux NP VP             [0,0]      fooey     incomplete? True     next_cat: POS
+predictor : S         -->  * VP                    [0,0]     x     incomplete? True     next_cat: not POS
+head--> S
+a--> not POS <-- S
+predictor : NP        -->  * Pronoun               [0,0]      x     incomplete? True     next_cat: POS
+predictor : NP        -->  * Proper-noun           [0,0]     x     incomplete? True     next_cat: POS
+predictor : NP        -->  * Det Nominal           [0,0]     x     incomplete? True     next_cat: POS
+head--> S
+b--> POS <-- S
+head--> S
+a--> not POS <-- S
+predictor : VP        -->  * Verb                  [0,0]     x     incomplete? True     next_cat: POS
+predictor : VP        -->  * Verb NP               [0,0]     x     incomplete? True     next_cat: POS
+predictor : VP        -->  * Verb NP PP            [0,0]     x     incomplete? True     next_cat: POS
+predictor : VP        -->  * Verb PP               [0,0]     x     incomplete? True     next_cat: POS
+predictor : VP        -->  * VP PP                 [0,0]     x     incomplete? True     next_cat: not POS
+head--> NP
+b--> POS <-- NP
+head--> NP
+b--> POS <-- NP
+head--> NP
+b--> POS <-- NP
+head--> VP
+b--> POS <-- VP
+scanner   : Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+head--> VP
+b--> POS <-- VP
+scanner   : Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+head--> VP
+b--> POS <-- VP
+scanner   : Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+head--> VP
+b--> POS <-- VP
+scanner   : Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+head--> VP
+a--> not POS <-- VP
+0 ^^^^---^^^^^^^^^^^^^^
+gamma     -->  * S                     [0,0]     x     incomplete? True     next_cat: not POS
+S         -->  * NP VP                 [0,0]      fooey     incomplete? True     next_cat: not POS
+S         -->  * Aux NP VP             [0,0]      fooey     incomplete? True     next_cat: POS
+S         -->  * VP                    [0,0]     x     incomplete? True     next_cat: not POS
+NP        -->  * Pronoun               [0,0]      x     incomplete? True     next_cat: POS
+NP        -->  * Proper-noun           [0,0]     x     incomplete? True     next_cat: POS
+NP        -->  * Det Nominal           [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb                  [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb NP               [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb NP PP            [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb PP               [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * VP PP                 [0,0]     x     incomplete? True     next_cat: not POS
+0 ^^^^^^^^^^^^^^^^^^^^^^
+Chart[1]
+0 =========---^^^^^^^^^^^^^^
+gamma     -->  * S                     [0,0]     x     incomplete? True     next_cat: not POS
+S         -->  * NP VP                 [0,0]      fooey     incomplete? True     next_cat: not POS
+S         -->  * Aux NP VP             [0,0]      fooey     incomplete? True     next_cat: POS
+S         -->  * VP                    [0,0]     x     incomplete? True     next_cat: not POS
+NP        -->  * Pronoun               [0,0]      x     incomplete? True     next_cat: POS
+NP        -->  * Proper-noun           [0,0]     x     incomplete? True     next_cat: POS
+NP        -->  * Det Nominal           [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb                  [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb NP               [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb NP PP            [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * Verb PP               [0,0]     x     incomplete? True     next_cat: POS
+VP        -->  * VP PP                 [0,0]     x     incomplete? True     next_cat: not POS
+0 =============^^^^
+head--> Verb
+COMPLETER completed symbol: Verb
+completer : VP        --> Verb  *                  [0,1]     x     incomplete? True     next_cat: None
+completer : VP        --> Verb  * NP               [0,1]     x     incomplete? True     next_cat: not POS
+completer : VP        --> Verb  * NP PP            [0,1]     x     incomplete? True     next_cat: not POS
+completer : VP        --> Verb  * PP               [0,1]     x     incomplete? True     next_cat: not POS
+head--> Verb
+COMPLETER completed symbol: Verb
+head--> Verb
+COMPLETER completed symbol: Verb
+head--> Verb
+COMPLETER completed symbol: Verb
+head--> VP
+-------WTF: " 1 c--> None <-- VP
+WTF------: " 1 VP        --> Verb  *                  [0,1]     x     incomplete? True     next_cat: None
+head--> VP
+a--> not POS <-- VP
+predictor : NP        -->  * Pronoun               [1,1]      x     incomplete? True     next_cat: POS
+predictor : NP        -->  * Proper-noun           [1,1]     x     incomplete? True     next_cat: POS
+predictor : NP        -->  * Det Nominal           [1,1]     x     incomplete? True     next_cat: POS
+head--> VP
+a--> not POS <-- VP
+head--> VP
+a--> not POS <-- VP
+predictor : PP        -->  * Preposition NP        [1,1]     x     incomplete? True     next_cat: POS
+head--> NP
+b--> POS <-- NP
+head--> NP
+b--> POS <-- NP
+head--> NP
+b--> POS <-- NP
+scanner   : Det       --> that  *                  [1,2]     x     incomplete? False     next_cat: None
+head--> PP
+b--> POS <-- PP
+1 ^^^^---^^^^^^^^^^^^^^
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+VP        --> Verb  *                  [0,1]     x     incomplete? True     next_cat: None
+VP        --> Verb  * NP               [0,1]     x     incomplete? True     next_cat: not POS
+VP        --> Verb  * NP PP            [0,1]     x     incomplete? True     next_cat: not POS
+VP        --> Verb  * PP               [0,1]     x     incomplete? True     next_cat: not POS
+NP        -->  * Pronoun               [1,1]      x     incomplete? True     next_cat: POS
+NP        -->  * Proper-noun           [1,1]     x     incomplete? True     next_cat: POS
+NP        -->  * Det Nominal           [1,1]     x     incomplete? True     next_cat: POS
+PP        -->  * Preposition NP        [1,1]     x     incomplete? True     next_cat: POS
+1 ^^^^^^^^^^^^^^^^^^^^^^
+Chart[2]
+1 =========---^^^^^^^^^^^^^^
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+Verb      --> book  *                  [0,1]     x     incomplete? False     next_cat: None
+VP        --> Verb  *                  [0,1]     x     incomplete? True     next_cat: None
+VP        --> Verb  * NP               [0,1]     x     incomplete? True     next_cat: not POS
+VP        --> Verb  * NP PP            [0,1]     x     incomplete? True     next_cat: not POS
+VP        --> Verb  * PP               [0,1]     x     incomplete? True     next_cat: not POS
+NP        -->  * Pronoun               [1,1]      x     incomplete? True     next_cat: POS
+NP        -->  * Proper-noun           [1,1]     x     incomplete? True     next_cat: POS
+NP        -->  * Det Nominal           [1,1]     x     incomplete? True     next_cat: POS
+PP        -->  * Preposition NP        [1,1]     x     incomplete? True     next_cat: POS
+1 =============^^^^
+head--> Det
+COMPLETER completed symbol: Det
+completer : NP        --> Det  * Nominal           [1,2]     x     incomplete? True     next_cat: POS
+head--> NP
+b--> POS <-- NP
+scanner   : Nominal   --> flight  *                [2,3]     x     incomplete? False     next_cat: None
+2 ^^^^---^^^^^^^^^^^^^^
+Det       --> that  *                  [1,2]     x     incomplete? False     next_cat: None
+NP        --> Det  * Nominal           [1,2]     x     incomplete? True     next_cat: POS
+2 ^^^^^^^^^^^^^^^^^^^^^^

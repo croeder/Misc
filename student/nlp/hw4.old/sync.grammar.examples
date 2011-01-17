@@ -1,0 +1,57 @@
+(
+( 
+"Verb-->play|skip,x", 
+"Noun-->songs|song,x", 
+"Digit-->1|2|3|4|5|6|7|8|9|10|11|12|13|14|15,x",  
+"Conj-->and|without|but,x", 
+"Adj-->shuffled|reversed|random,x", 
+"Prep-->to|without|from,x", 
+"Nnp-->album,x"
+), 
+(
+"RANGE-->Digit,x",
+"RANGE-->Digit Prep RANGE,x",
+# (play song) 2
+# (play songs) 1 to 5
+# (play) from 3 
+# (play) from 3 to 6
+# (play) to 6
+# (play) without 7
+# (play)  1 to 5 without 7
+# (play)  from 2 to 5 without 3
+#
+"RANGELIST-->RANGE,x",
+"RANGELIST-->RANGE Conj RANGELIST,x",
+"RANGELIST-->Conj RANGELIST,x",
+# (play songs) 1 to 5 and 7 to 9
+# (play)  1 to 5 and 7 to 9
+# (play) 1 to 5 without 3
+#    could parse as a conj or a prep
+# (play) 1 to 5 without 3 to 4
+# (play) 1 to 5 and 7 to 9 without 6 but 10
+#
+"PPA-->Prep Nnp,x",
+"RANGELIST-->RANGELIST PPA,x",
+"PPR-->Prep RANGE,x", 
+# need this?
+# I could  code more semantics into the grammar for type checking
+#   eg "without RANGE", but "from Nnp". Thats a detailed road
+#   that I won't pursue here, rather in the semantic layer.
+# play songs 1 to 5 from album
+# <all of the block above> from album
+# 
+"RANGELIST-->RANGELIST PPA Adj,x",
+"RANGELIST-->RANGELIST Adj PPA,x",
+# (play songs) 1 to 5 from album reversed
+# (play songs) 1 to 5 from album reversed
+#
+"CLAUSE-->Verb RANGELIST,x",
+"CLAUSE-->Verb Noun RANGELIST,x",
+"CLAUSE-->Verb RANGELIST Adj,x",
+"CLAUSE-->Verb Noun RANGELIST Adj,x",
+#
+"S-->CLAUSE, x",
+"S-->CLAUSE Conj CLAUSE, x"
+# play 1 to 5 without 3 to 4 and play 6 to 10 without 9
+)
+)

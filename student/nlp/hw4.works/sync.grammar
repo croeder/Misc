@@ -1,0 +1,37 @@
+(
+( 
+"Verb-->play|skip", 
+"Noun-->songs|song", 
+"Digit-->1|2|3|4|5|6|7|8|9|10|11|12|13|14|15",  
+"Conj-->and|without|but", 
+"Adj-->shuffled|reversed|random", 
+"Prep-->to|without|from", 
+"Nnp-->album"
+), 
+(
+"RANGE-->Digit,x",
+"RANGE-->Digit Prep RANGE,x",
+# play songs 1 to 5
+#
+"RANGELIST--> RANGE,x",
+"RANGELIST-->RANGE Conj RANGELIST,x",
+"RANGELIST-->Conj RANGELIST,x",
+"CLAUSE-->Verb RANGELIST,x",
+"CLAUSE-->Verb Noun RANGELIST,x",
+"CLAUSE-->Verb RANGELIST Adj,x",
+"CLAUSE-->Verb Noun RANGELIST Adj,x",
+# play songs 1 to 5 and 7 to 9
+# play 1 to 5 and 7 to 9
+# play without 7
+# play 1 to 5 without 3
+# play 1 to 5 without 3 to 4
+
+#
+"S-->CLAUSE, x",
+"S-->CLAUSE CONJ CLAUSE, x",
+# play 1 to 5 without 3 to 4 and play 6 to 10 without 9
+
+# Prepositions??
+# Nnp?
+)
+)

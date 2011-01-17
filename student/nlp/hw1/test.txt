@@ -1,0 +1,7 @@
+ab
+bc
+ac
+aba
+abb
+abacab
+ackbar

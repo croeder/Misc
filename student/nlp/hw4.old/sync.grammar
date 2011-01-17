@@ -1,0 +1,50 @@
+(
+( 
+"Verb-->play|skip-->lambda head: head", 
+"Noun-->songs|song-->lambda head: head ", 
+"Digit-->1|2|3|4|5|6|7|8|9|10|11|12|13|14|15-->lambda head: int(head)",  
+"Conj-->and|without|but-->lambda head: head", 
+"Adj-->shuffled|reversed|random-->lambda head: head", 
+"Prep-->to|without|from-->lambda head: head", 
+"Nnp-->album-->lambda head: head"
+),
+(
+"RANGE-->Digit-->lambda x: [x]",
+#
+#"RANGE-->Digit Prep RANGE-->lambda digit_sem, prep_sem, range_sem: Semantics.combine_range(digit_sem, prep_sem, range_sem)",
+"RANGE-->Digit Prep RANGE-->lambda children: Semantics.combine_range(children[0], children[1], children[2])",
+#
+#
+"RANGELIST-->RANGE-->None",
+#
+"RANGELIST-->RANGE Conj RANGELIST-->None",
+#
+"RANGELIST-->Conj RANGELIST-->None",
+#
+#
+"PPA-->Prep Nnp-->None",
+#
+"RANGELIST-->RANGELIST PPA-->None",
+#
+"PPR-->Prep RANGE-->None", 
+#
+# 
+"RANGELIST-->RANGELIST PPA Adj-->None",
+#
+"RANGELIST-->RANGELIST Adj PPA-->None",
+#
+#
+"CLAUSE-->Verb RANGELIST-->None",
+#
+"CLAUSE-->Verb Noun RANGELIST-->None",
+#
+"CLAUSE-->Verb RANGELIST Adj-->None",
+#
+"CLAUSE-->Verb Noun RANGELIST Adj-->None",
+#
+#
+"S-->CLAUSE-->None",
+#
+"S-->CLAUSE Conj CLAUSE-->None"
+)
+)

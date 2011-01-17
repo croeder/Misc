@@ -1,0 +1,68 @@
+(
+( 
+"Verb-->play|skip", 
+"Noun-->songs|song", 
+"Digit-->1|2|3|4|5|6|7|8|9|10|11|12|13|14|15", 
+"Conj-->and|without|but", 
+"Adj-->shuffled|reversed|random", 
+"P-->to|without|from", 
+"NNP-->album"
+),
+# create the extra non-terminal by joining the first and second of three
+(
+##"Range-->Range Conj Range Adj",
+#"Range-->Range Conj Digit Adj",
+"RangeConj-->Range Conj",
+"RangeConj-->Digit Conj",
+#"Range-->RangeConj Digit Adj",
+"Range-->RangeConj DigitAdj",
+"Digit-->Digit Adj",
+#
+##"Range-->Range Conj Range",
+#"Range-->Range Conj Digit",
+"Range-->RangeConj Digit",
+#
+#"Range-->Digit",
+#
+"Range-->Digit Adj",
+#
+"SongSpec-->Noun Range",
+"SongSpec-->Range Noun",
+"SongSpec-->Digit Noun",
+"SongSpec-->Noun Digit",
+#
+#"SongSpecList-->SongSpec",
+"SongSpecList-->Noun Range",
+"SongSpecList-->Noun Digit",
+"SongSpecList-->Range Nount",
+"SongSpecList-->Digit Nount",
+#
+#"SongSpecList-->SongSpec Conj SongSpecList",
+"SongSpecList-->SongSpecConj SongSpecList",
+"SongSpecConj-->SongSpec Conj",
+#
+#"SongAlbumList-->SongSpecList P NNP",
+"SongAlbumList-->SongSpecListP NNP",
+"SongSpecListP-->SongSpecList P",
+#
+#"SongAlbumList-->SongSpecList P NNP Conj SongAlbumList",
+"SongAlbumList-->SongSpecListPNNP ConjSongAlbumList",
+"ConjSongAlbumList-->Conj SongAlbumList",
+"SongSpecListPNNP-->SongSpecListP NNP",
+#
+#"S-->Verb Noun SongSpecList",
+"S-->VerbNoun SongSpecList",
+"VerbNoun-->Verb Noun",
+#"S-->Verb NNP SongSpecList",
+"S-->VerbNNP SongSpecList",
+"VerbNNP-->Verb NNP",
+#"S-->Verb SongSpecList NNP"
+"S-->VerbSongSpecList NNP",
+"VerbSongSpecList-->Verb SongSpecList",
+"S-->Verb SongSpecList",
+#"S-->Verb NNP Conj Verb SongSpecList",
+"S-->VerbNNPConj VerbSongSpecList",
+"VerbNNPConj-->VerbNNP Conj"
+#
+)
+)

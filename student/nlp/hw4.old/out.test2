@@ -1,0 +1,29 @@
+WINNER2 
+['S      -->"VP"  * ', 
+	[
+		['VP     -->"Verb" "NP"  * ', 
+			[
+				['Verb   -->"book"  * ', []], 
+				['NP     -->"Det" "NOML"  * ', 
+					[
+						['Det    -->"the"  * ', []], 
+						['NOML   -->"Noun"  * ', 
+							[
+								['Noun   -->"flight"  * ', []]
+							]
+						]
+					]
+				]
+			]
+		]
+	]
+]
+
+
+
+
+WINNER2 ['S      -->"VP"  * ', [['VP     -->"Verb" "NP" "PP"  * ', [['Verb   -->"book"  * ', []], ['NP     -->"Det" "NOML"  * ', [['Det    -->"the"  * ', []], ['NOML   -->"Noun"  * ', [['Noun   -->"flight"  * ', []]]]]], ['PP     -->"Preposition" "NP"  * ', [['Preposition-->"through"  * ', []], ['NP     -->"Propernoun"  * ', [['Propernoun-->"Houston"  * ', []]]]]]]]]]
+WINNER2 ['S      -->"NP" "VP"  * ', [['NP     -->"Pronoun"  * ', [['Pronoun-->"I"  * ', []]]], ['VP     -->"Verb"  * ', [['Verb   -->"book"  * ', []]]]]]
+WINNER2 ['S      -->"NP" "VP"  * ', [['NP     -->"Pronoun"  * ', [['Pronoun-->"I"  * ', []]]], ['VP     -->"Verb" "NP"  * ', [['Verb   -->"book"  * ', []], ['NP     -->"Det" "NOML"  * ', [['Det    -->"the"  * ', []], ['NOML   -->"Noun"  * ', [['Noun   -->"flight"  * ', []]]]]]]]]]
+WINNER2 ['S      -->"NP" "VP"  * ', [['NP     -->"Pronoun"  * ', [['Pronoun-->"I"  * ', []]]], ['VP     -->"Verb" "NP" "PP"  * ', [['Verb   -->"book"  * ', []], ['NP     -->"Det" "NOML"  * ', [['Det    -->"the"  * ', []], ['NOML   -->"Noun"  * ', [['Noun   -->"flight"  * ', []]]]]], ['PP     -->"Preposition" "NP"  * ', [['Preposition-->"through"  * ', []], ['NP     -->"Propernoun"  * ', [['Propernoun-->"Houston"  * ', []]]]]]]]]]
+WINNER2 ['S      -->"NP" "VP"  * ', [['NP     -->"Pronoun"  * ', [['Pronoun-->"I"  * ', []]]], ['VP     -->"Verb" "NP"  * ', [['Verb   -->"include"  * ', []], ['NP     -->"Propernoun"  * ', [['Propernoun-->"Houston"  * ', []]]]]]]]

@@ -1,0 +1,16 @@
+(
+( 
+"Aterm-->a",
+"Bterm-->b"
+),
+(
+"S-->Bterm,x",
+"A-->Aterm,x", 
+"S-->A A,x", 
+"S-->S S,x", 
+"A-->A A,x",
+"A-->A S,x" 
+)
+)
+
+

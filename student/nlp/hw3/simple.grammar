@@ -1,0 +1,6 @@
+(
+( "S-->1",  "M-->1", "AOp-->+", "MOp-->*"),
+( "S-->AOp S", "S-->S S", "S-->M S", "S-->S M", "M-->MOp S" )
+)
+
+( "S-->AOp S|M M|S S|M S|S M", "M-->MOp S" )

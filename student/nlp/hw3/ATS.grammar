@@ -1,0 +1,6 @@
+(
+( "S-->book|include|prefer", "NP-->I|she|me|Houston|TWA", "Nominal-->book|flight|meal|money", "VP-->book|include|prefer",	"Det-->that|this|a|the",  "Verb-->book|include|prefer", "Pronoun-->I|she|me", "Proper-noun-->NWA|Houston", "Aux-->does", "Preposition-->from|to|on|near|through"),
+( "S-->NP VP", "X-->X1 VP", "X1-->Aux NP", "S-->Verb NP", "S-->X2 PP", "S-->Verb PP", "S-->VP PP", "NP-->Det Nominal", "Nominal-->Nominal Noun", "Nominal-->Nominal PP", "VP-->Verb NP", "VP-->X2 PP", "X2-->Verb NP", "VP-->Verb PP", "VP-->VP PP", "PP-->Preposition NP")
+)
+##	"PP-->Preposition X2" # added, is this true, doe sthis work?
+###	"X-->NP X2", # added, is this true? does this work?
