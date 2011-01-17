@@ -1,0 +1,1 @@
+- to type an "object" add a :type field to a hash
