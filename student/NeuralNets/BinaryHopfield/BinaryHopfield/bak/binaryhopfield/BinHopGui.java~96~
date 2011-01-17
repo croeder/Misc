@@ -1,0 +1,680 @@
+package binaryhopfield;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
+import javax.swing.event.*;
+
+/**
+ * <p>Title: BinHopGui </p>
+ * <p>Description: a GUI to explore the Binary Hopfield pattern matching code</p>
+ * <p>Copyright: Copyright Chris Roeder (c) 2004</p>
+ * @author Chris Roeder
+ * @version 1.0
+ */
+
+public class BinHopGui extends JApplet {
+  JButton jButton1 = new JButton();
+  JButton jButton2 = new JButton();
+  JButton jButton3 = new JButton();
+  JButton jButton0 = new JButton();
+
+  boolean trainingMode = true;
+  Image image;
+  Image target;
+  BinHop network;
+  boolean setupTest;
+  int iterateCount;
+
+  JRadioButton testRadioButton = new JRadioButton();
+  JRadioButton trainRadioButton = new JRadioButton();
+  ButtonGroup trainTestGroup = new ButtonGroup();
+  JLabel jLabel1 = new JLabel();
+  JLabel jLabel2 = new JLabel();
+  JButton addNoiseButton = new JButton();
+  JButton recognizeButton = new JButton();
+  JSlider noiseSlider = new JSlider();
+  JTextField noiseTextField = new JTextField();
+  JButton resetButton = new JButton();
+  JTextField iterationTextField = new JTextField();
+  JLabel jLabel3 = new JLabel();
+  JRadioButton largeRadioButton = new JRadioButton();
+  JRadioButton smallRadioButton = new JRadioButton();
+  ButtonGroup buttonGroup1 = new ButtonGroup();
+  JLabel jLabel4 = new JLabel();
+  JLabel jLabel5 = new JLabel();
+  JLabel jLabel6 = new JLabel();
+  JTextField numBitsTextField = new JTextField();
+  JButton jButton2a = new JButton();
+  JButton jButton1a = new JButton();
+  JButton jButton3a = new JButton();
+  JButton jButton0a = new JButton();
+  JButton jButton2b = new JButton();
+  JButton jButton1b = new JButton();
+  JButton jButton0b = new JButton();
+  JButton jButton3b = new JButton();
+  JLabel jLabel7 = new JLabel();
+
+  public BinHopGui() throws HeadlessException {
+    try {
+      jbInit();
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+    network = new BinHop();
+  }
+  public static void main(String[] args) throws HeadlessException {
+    BinHopGui binHopGui1 = new BinHopGui();
+  }
+  private void jbInit() throws Exception {
+    noiseSlider.setMaximum(50);
+    noiseSlider.setBounds(new Rectangle(41, 312, 87, 19));
+    noiseSlider.addChangeListener(new BinHopGui_noiseSlider_changeAdapter(this));
+    noiseSlider.addPropertyChangeListener(new BinHopGui_noiseSlider_propertyChangeAdapter(this));
+    noiseSlider.setValue(10);
+    recognizeButton.setBounds(new Rectangle(15, 228, 118, 22));
+    recognizeButton.setText("Recognize");
+    recognizeButton.addMouseListener(new BinHopGui_recognizeButton_mouseAdapter(this));
+    this.getContentPane().setLayout(null);
+    jButton1.setBounds(new Rectangle(15, 125, 41, 22));
+    jButton1.setText("1");
+    jButton1.addMouseListener(new BinHopGui_jButton1_mouseAdapter(this));
+    jButton2.setText("2");
+    jButton2.addMouseListener(new BinHopGui_jButton2_mouseAdapter(this));
+    jButton2.setBounds(new Rectangle(15, 149, 41, 22));
+    jButton3.setText("3");
+    jButton3.addMouseListener(new BinHopGui_jButton3_mouseAdapter(this));
+    jButton3.setBounds(new Rectangle(15, 175, 41, 22));
+    jButton0.setText("0");
+    jButton0.addMouseListener(new BinHopGui_jButton0_mouseAdapter(this));
+    jButton0.setBounds(new Rectangle(15, 101, 41, 22));
+    testRadioButton.setText("test");
+    testRadioButton.setBounds(new Rectangle(18, 76, 74, 22));
+    testRadioButton.addActionListener(new BinHopGui_testRadioButton_actionAdapter(this));
+    trainRadioButton.setBounds(new Rectangle(15, 50, 70, 22));
+    trainRadioButton.addActionListener(new BinHopGui_trainRadioButton_actionAdapter(this));
+    trainRadioButton.setSelected(true);
+    trainRadioButton.setText("train");
+    jLabel1.setFont(new java.awt.Font("Arial", 1, 14));
+    jLabel1.setText("Pattern Recognition Using a Binary Hopfield Network");
+    jLabel1.setBounds(new Rectangle(10, 0, 374, 24));
+    jLabel2.setText("Chris Roeder, CSC 5542 Fall 2004");
+    jLabel2.setBounds(new Rectangle(11, 17, 340, 21));
+    addNoiseButton.setBounds(new Rectangle(15, 254, 118, 22));
+    addNoiseButton.setText("Add Noise");
+    addNoiseButton.addMouseListener(new BinHopGui_addNoiseButton_mouseAdapter(this));
+    noiseTextField.setBounds(new Rectangle(42, 283, 85, 23));
+    resetButton.addMouseListener(new BinHopGui_resetButton_mouseAdapter(this));
+    resetButton.setText("Reset");
+    resetButton.addMouseListener(new BinHopGui_resetButton_mouseAdapter(this));
+    resetButton.setBounds(new Rectangle(15, 202, 118, 22));
+    iterationTextField.setText("");
+    iterationTextField.setBounds(new Rectangle(338, 50, 42, 22));
+    jLabel3.setText("iteration:");
+    jLabel3.setBounds(new Rectangle(261, 49, 76, 27));
+    largeRadioButton.setText("large");
+    largeRadioButton.setBounds(new Rectangle(124, 53, 56, 21));
+    largeRadioButton.addActionListener(new BinHopGui_largeRadioButton_actionAdapter(this));
+    smallRadioButton.setBounds(new Rectangle(124, 78, 56, 21));
+    smallRadioButton.addActionListener(new BinHopGui_smallRadioButton_actionAdapter(this));
+    smallRadioButton.setText("small");
+    smallRadioButton.setSelected(true);
+    jLabel4.setRequestFocusEnabled(true);
+    jLabel4.setText("Activations");
+    jLabel4.setBounds(new Rectangle(157, 105, 71, 15));
+    jLabel5.setText("Connections");
+    jLabel5.setBounds(new Rectangle(272, 106, 87, 15));
+    jLabel6.setBounds(new Rectangle(258, 74, 76, 27));
+    jLabel6.setText("bits different:");
+    numBitsTextField.setBounds(new Rectangle(338, 77, 42, 22));
+    numBitsTextField.setText("");
+    jButton2a.setBounds(new Rectangle(59, 151, 40, 22));
+    jButton2a.addMouseListener(new BinHopGui_jButton2a_mouseAdapter(this));
+    jButton2a.setText("2");
+    jButton2a.addMouseListener(new BinHopGui_jButton2a_mouseAdapter(this));
+    jButton1a.addMouseListener(new BinHopGui_jButton1a_mouseAdapter(this));
+    jButton1a.setText("1");
+    jButton1a.addMouseListener(new BinHopGui_jButton1a_mouseAdapter(this));
+    jButton1a.setBounds(new Rectangle(59, 126, 40, 22));
+    jButton3a.setBounds(new Rectangle(60, 175, 40, 22));
+    jButton3a.addMouseListener(new BinHopGui_jButton3a_mouseAdapter(this));
+    jButton3a.setText("3");
+    jButton3a.addMouseListener(new BinHopGui_jButton3a_mouseAdapter(this));
+    jButton0a.setBounds(new Rectangle(60, 102, 40, 22));
+    jButton0a.addMouseListener(new BinHopGui_jButton0a_mouseAdapter(this));
+    jButton0a.setText("0");
+    jButton0a.addMouseListener(new BinHopGui_jButton0a_mouseAdapter(this));
+    jButton2b.addMouseListener(new BinHopGui_jButton2b_mouseAdapter(this));
+    jButton2b.setText("2");
+    jButton2b.addMouseListener(new BinHopGui_jButton2b_mouseAdapter(this));
+    jButton2b.addMouseListener(new BinHopGui_jButton2b_mouseAdapter(this));
+    jButton2b.setBounds(new Rectangle(102, 152, 40, 22));
+    jButton1b.setBounds(new Rectangle(102, 127, 40, 22));
+    jButton1b.addMouseListener(new BinHopGui_jButton1b_mouseAdapter(this));
+    jButton1b.setText("1");
+    jButton1b.addMouseListener(new BinHopGui_jButton1b_mouseAdapter(this));
+    jButton1b.addMouseListener(new BinHopGui_jButton1b_mouseAdapter(this));
+    jButton0b.addMouseListener(new BinHopGui_jButton0b_mouseAdapter(this));
+    jButton0b.setText("0");
+    jButton0b.addMouseListener(new BinHopGui_jButton0b_mouseAdapter(this));
+    jButton0b.addMouseListener(new BinHopGui_jButton0b_mouseAdapter(this));
+    jButton0b.setBounds(new Rectangle(103, 103, 40, 22));
+    jButton3b.addMouseListener(new BinHopGui_jButton3b_mouseAdapter(this));
+    jButton3b.setText("3");
+    jButton3b.addMouseListener(new BinHopGui_jButton3b_mouseAdapter(this));
+    jButton3b.addMouseListener(new BinHopGui_jButton3b_mouseAdapter(this));
+    jButton3b.setBounds(new Rectangle(103, 176, 40, 22));
+    jLabel7.setBounds(new Rectangle(157, 254, 71, 15));
+    jLabel7.setText("Initial Image");
+    jLabel7.setRequestFocusEnabled(true);
+    trainTestGroup.add(testRadioButton);
+    trainTestGroup.add(trainRadioButton);
+    buttonGroup1.add(smallRadioButton);
+    buttonGroup1.add(largeRadioButton);
+    //trainTestGroup.set
+    this.getContentPane().add(jButton0, null);
+    this.getContentPane().add(jButton1, BorderLayout.NORTH);
+    this.getContentPane().add(trainRadioButton, null);
+    this.getContentPane().add(addNoiseButton, null);
+    this.getContentPane().add(jButton1, null);
+    this.getContentPane().add(jButton2, null);
+    this.getContentPane().add(jButton3, null);
+    this.getContentPane().add(recognizeButton, null);
+    this.getContentPane().add(resetButton, null);
+    this.getContentPane().add(iterationTextField, null);
+    this.getContentPane().add(jLabel1, null);
+    this.getContentPane().add(jLabel2, null);
+    this.getContentPane().add(smallRadioButton, null);
+    this.getContentPane().add(largeRadioButton, null);
+    this.getContentPane().add(jLabel3, null);
+    this.getContentPane().add(jLabel4, null);
+    this.getContentPane().add(jLabel5, null);
+    this.getContentPane().add(testRadioButton, null);
+    this.getContentPane().add(noiseTextField, null);
+    this.getContentPane().add(noiseSlider, null);
+    this.getContentPane().add(jLabel6, null);
+    this.getContentPane().add(numBitsTextField, null);
+    this.getContentPane().add(jButton0a, null);
+    this.getContentPane().add(jButton2a, null);
+    this.getContentPane().add(jButton3a, null);
+    this.getContentPane().add(jButton1a, null);
+    this.getContentPane().add(jButton0b, null);
+    this.getContentPane().add(jButton2b, null);
+    this.getContentPane().add(jButton1b, null);
+    this.getContentPane().add(jButton3b, null);
+    this.getContentPane().add(jLabel7, null);
+  }
+
+
+  void testRadioButton_actionPerformed(ActionEvent e) {
+    trainingMode = false;
+    addNoiseButton.setEnabled(true);
+    recognizeButton.setEnabled(true);
+    noiseSlider.setEnabled(true);
+    resetButton.setEnabled(false);
+    setupTest = true;
+    iterateCount=0;
+  }
+
+  void trainRadioButton_actionPerformed(ActionEvent e) {
+    trainingMode = true;
+    addNoiseButton.setEnabled(false);
+    recognizeButton.setEnabled(false);
+    noiseSlider.setEnabled(false);
+    resetButton.setEnabled(true);
+  }
+
+  void jButton1_mouseClicked(MouseEvent e) {
+    image = new Image(1);
+    try {target = (Image) image.clone();}
+        catch (Exception x) {; }
+    repaint();
+    if (trainingMode) {
+      network.train(image);
+    }
+  }
+
+  public void  paint(Graphics g){
+    super.paint(g);
+    if (image != null) {
+      if (trainingMode) {
+        numBitsTextField.setText("");
+        image.draw(g, 150, 120);
+        network.drawNetwork(g, 270, 120);
+      }
+      else { // preparing to recognize
+        if (setupTest) {
+          image.draw(g, 150, 120);
+          numBitsTextField.setText("");
+        }
+        else { // recognizing
+          network.drawNetwork(g, 270, 120);
+          image.draw(g, 150, 270);
+          network.draw(g, 150, 120);
+          numBitsTextField.setText("" + image.NumBitsDifferent(target));
+          try {
+            Thread.sleep(500);
+          }
+          catch (Exception x) {
+            ;
+          }
+          boolean noChange = network.update();
+          iterateCount++;
+          iterationTextField.setText("" + iterateCount);
+          if (iterateCount < 5 || (iterateCount < 10 && noChange))
+            repaint();
+          else {
+            iterateCount = 0;
+            setupTest = true;
+          }
+        }
+      }
+    }
+  }
+
+  void addNoiseButton_mouseClicked(MouseEvent e) {
+    if (image != null) {
+      image.addNoise(noiseSlider.getValue());
+      repaint();
+    }
+  }
+
+  void noiseSlider_propertyChange(PropertyChangeEvent e) {
+    noiseTextField.setText("" + noiseSlider.getValue());
+  }
+
+  void noiseSlider_stateChanged(ChangeEvent e) {
+noiseTextField.setText("" + noiseSlider.getValue());
+  }
+
+  void jButton0_mouseClicked(MouseEvent e) {
+    image = new Image(0);
+    try {target = (Image) image.clone();}
+        catch (Exception x) {; }
+    repaint();
+    if (trainingMode) {
+      network.train(image);
+    }
+  }
+
+  void jButton3_mouseClicked(MouseEvent e) {
+    image = new Image(3);
+    try { target = (Image) image.clone();}
+        catch (Exception x) {; }
+    repaint();
+    if (trainingMode) {
+        network.train(image);
+    }
+  }
+
+  void jButton2_mouseClicked(MouseEvent e) {
+    image = new Image(2);
+    try { target = (Image) image.clone();}
+        catch (Exception x) {; }
+    repaint();
+    if (trainingMode) {
+        network.train(image);
+      }
+  }
+
+  void recognizeButton_mouseClicked(MouseEvent e) {
+    if (image != null)
+      network.prime(image);
+    setupTest = false;
+    repaint();
+  }
+
+  void resetButton_mouseClicked(MouseEvent e) {
+    if (network == null)
+      network = new BinHop();
+    else
+      network.reset();
+
+    repaint();
+  }
+
+  void largeRadioButton_actionPerformed(ActionEvent e) {
+    if (largeRadioButton.isSelected())
+      Image.setLarge();
+    else
+      Image.setSmall();
+    network = new BinHop();
+    image = null;
+  }
+
+  void smallRadioButton_actionPerformed(ActionEvent e) {
+    if (smallRadioButton.isSelected())
+         Image.setSmall();
+       else
+         Image.setLarge();
+       network = new BinHop();
+       image = null;
+  }
+
+  void jButton0a_mouseClicked(MouseEvent e) {
+    image = new Image(10);
+    try {  target = (Image) image.clone();}
+          catch (Exception x) {; }
+      repaint();
+      if (trainingMode) {
+          network.train(image);
+      }
+
+  }
+
+  void jButton1a_mouseClicked(MouseEvent e) {
+    image = new Image(11);
+    System.out.println("new image 1a created");
+    try {  target = (Image) image.clone();}
+          catch (Exception x) {; }
+      repaint();
+      if (trainingMode) {
+          network.train(image);
+      }
+
+  }
+
+  void jButton2a_mouseClicked(MouseEvent e) {
+    image = new Image(12);
+    try { target = (Image) image.clone(); }
+        catch (Exception x) {; }
+      repaint();
+      if (trainingMode) {
+          network.train(image);
+      }
+
+  }
+
+  void jButton3a_mouseClicked(MouseEvent e) {
+    image = new Image(13);
+    try {  target = (Image) image.clone();}
+          catch (Exception x) {; }
+      repaint();
+      if (trainingMode) {
+          network.train(image);
+      }
+  }
+
+  void jButton0b_mouseClicked(MouseEvent e) {
+    image = new Image(20);
+      try {  target = (Image) image.clone();}
+            catch (Exception x) {; }
+        repaint();
+        if (trainingMode) {
+            network.train(image);
+        }
+
+  }
+
+  void jButton1b_mouseClicked(MouseEvent e) {
+    image = new Image(21);
+      try {  target = (Image) image.clone();}
+            catch (Exception x) {; }
+        repaint();
+        if (trainingMode) {
+            network.train(image);
+        }
+
+  }
+
+  void jButton2b_mouseClicked(MouseEvent e) {
+    image = new Image(22);
+      try {  target = (Image) image.clone();}
+            catch (Exception x) {; }
+        repaint();
+        if (trainingMode) {
+            network.train(image);
+        }
+
+  }
+
+  void jButton3b_mouseClicked(MouseEvent e) {
+    image = new Image(23);
+      try {  target = (Image) image.clone();}
+            catch (Exception x) {; }
+        repaint();
+        if (trainingMode) {
+            network.train(image);
+        }
+
+  }
+
+
+
+}
+
+class BinHopGui_testRadioButton_actionAdapter implements java.awt.event.ActionListener {
+  BinHopGui adaptee;
+
+  BinHopGui_testRadioButton_actionAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.testRadioButton_actionPerformed(e);
+  }
+}
+
+class BinHopGui_trainRadioButton_actionAdapter implements java.awt.event.ActionListener {
+  BinHopGui adaptee;
+
+  BinHopGui_trainRadioButton_actionAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.trainRadioButton_actionPerformed(e);
+  }
+}
+
+class BinHopGui_jButton1_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton1_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton1_mouseClicked(e);
+  }
+}
+
+class BinHopGui_addNoiseButton_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_addNoiseButton_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.addNoiseButton_mouseClicked(e);
+  }
+}
+
+class BinHopGui_noiseSlider_propertyChangeAdapter implements java.beans.PropertyChangeListener {
+  BinHopGui adaptee;
+
+  BinHopGui_noiseSlider_propertyChangeAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void propertyChange(PropertyChangeEvent e) {
+    adaptee.noiseSlider_propertyChange(e);
+  }
+}
+
+class BinHopGui_noiseSlider_changeAdapter implements javax.swing.event.ChangeListener {
+  BinHopGui adaptee;
+
+  BinHopGui_noiseSlider_changeAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void stateChanged(ChangeEvent e) {
+    adaptee.noiseSlider_stateChanged(e);
+  }
+}
+
+class BinHopGui_jButton0_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton0_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton0_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton3_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton3_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton3_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton2_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton2_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton2_mouseClicked(e);
+  }
+}
+
+class BinHopGui_recognizeButton_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_recognizeButton_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.recognizeButton_mouseClicked(e);
+  }
+}
+
+class BinHopGui_resetButton_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_resetButton_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.resetButton_mouseClicked(e);
+  }
+}
+
+class BinHopGui_largeRadioButton_actionAdapter implements java.awt.event.ActionListener {
+  BinHopGui adaptee;
+
+  BinHopGui_largeRadioButton_actionAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.largeRadioButton_actionPerformed(e);
+  }
+}
+
+class BinHopGui_smallRadioButton_actionAdapter implements java.awt.event.ActionListener {
+  BinHopGui adaptee;
+
+  BinHopGui_smallRadioButton_actionAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.smallRadioButton_actionPerformed(e);
+  }
+}
+
+class BinHopGui_jButton0a_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton0a_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton0a_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton1a_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton1a_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton1a_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton2a_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton2a_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton2a_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton3a_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton3a_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton3a_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton0b_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton0b_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton0b_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton1b_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton1b_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton1b_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton2b_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton2b_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton2b_mouseClicked(e);
+  }
+}
+
+class BinHopGui_jButton3b_mouseAdapter extends java.awt.event.MouseAdapter {
+  BinHopGui adaptee;
+
+  BinHopGui_jButton3b_mouseAdapter(BinHopGui adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseClicked(MouseEvent e) {
+    adaptee.jButton3b_mouseClicked(e);
+  }
+}
+
+
+

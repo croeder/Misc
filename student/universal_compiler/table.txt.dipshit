@@ -1,0 +1,30 @@
+NONTM	-99	letter	digit	blank	+	-	*	/	=	:	,	;	(	)	Other	EOL	#	$
+ma	0	1	2	3	24	4	12	33	36	6	27	28	29	30	-99	3	13	-99
+ma	1	1	1	21	21	21	21	21	21	21	21	21	21	21	21	21	-99	-99
+ma	2	22	2	22	22	22	22	22	22	22	22	22	22	22	22	22	-99	-99
+mna	3	23	23	3	23	23	23	23	23	23	23	23	23	23	-99	3	-99	-99
+ma	4	31	31	31	31	5	31	31	31	31	31	31	31	31	-99	-99	-99	-99
+ma	5	5	5	5	5	5	5	5	5	5	5	5	5	5	-99	25	-99	-99
+ma	6	-99	-99	-99	-99	-99	-99	-99	26	-99	-99	-99	-99	-99	-99	-99	-99	-99
+ma	12	32	32	32	32	32	34	32	32	32	32	32	32	32	32	32	-99	-99
+ma	13	13	13	37	-99	-99	-99	-99	-99	-99	13	-99	13	13	-99	37	-99	13
+TERMINALSTATES	-99 
+x	-99	ERROR		
+hr	-21	Id
+hr	-22	Int
+hr	-23	WhiteSpace
+ha	-24	PlusOp
+ha	-25	Comment
+ha	-26	AssignOp 			
+ha	-27	Comma
+ha	-28	Semicolon
+ha	-29	LParen
+ha	-30	RParen
+hr	-31	MinusOp
+hr	-32	MultOp
+ha	-33	DivOp
+ha	-34	PowerOp
+hna	-35	Eof
+ha	-36	EqOp
+ha	-37	ActionSymbol
+

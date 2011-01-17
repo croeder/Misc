@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>CSC5542 TSP - Chris Roeder</title>
+</head>
+<body>
+Fall 2004<br>
+CSC 5542<br>
+Neural Networks<br>
+Chris Roeder, croeder@croeder.com<br>
+<br>
+<h3>Assignment 2 : Traveling Salesman Problem</h3>
+<ol>
+  <li><a href="http://www.croeder.com/CSC5542/TSP-paper.html">Introduction</a></li>
+  <li>Source Code (C#): <a
+ href="http://www.croeder.com/CSC5542/City.cs">City.cs</a>, <a
+ href="http://www.croeder.com/CSC5542/TSP.cs">TSP.cs</a>, <a
+ href="http://www.croeder.com/CSC5542/TspDisplay.cs">TspDisplay.cs</a><br>
+  </li>
+  <li>Results</li>
+  <ol>
+    <li>Circles<br>
+    </li>
+    <ol>
+      <li><a href="http://www.croeder.com/CSC5542/run1.html">data</a>, <a
+ href="http://www.croeder.com/CSC5542/run1.png">screenshot</a></li>
+      <li><a href="http://www.croeder.com/CSC5542/run2.html">data</a>, <a
+ href="http://www.croeder.com/CSC5542/run2.png">screenshot</a><br>
+      </li>
+    </ol>
+    <li>Random<br>
+    </li>
+    <ol>
+      <li><a href="http://www.croeder.com/CSC5542/run3.html">data</a>, <a
+ href="http://www.croeder.com/CSC5542/run3.png">screenshot</a></li>
+      <li><a href="http://www.croeder.com/CSC5542/run4.html">data</a>, <a
+ href="http://www.croeder.com/CSC5542/run4.png">screenshot</a><br>
+      </li>
+    </ol>
+  </ol>
+  <li>Convergence<br>
+The code stops when either the number of iterations hits 10,000
+or&nbsp; when all the neurons' activation levels reach a threshold.
+Values of 0.7 usually stopped the network before 10,000 iterations, but
+sometimes a little too early. Energy levels vary too widely to be used,
+though the graph
+usually levels out long before&nbsp; 10,000 iterations.&nbsp; An
+effective stopping strategy might be one that&nbsp; looks at changes in
+the system energy and stops running when the changes become very small.<br>
+  </li>
+  <li>Windows <a href="http://www.croeder.com/CSC5542/TSP.exe">Executable</a>
+(with apologies to Mac OS X, Linux, and
+Solaris users) <br>
+Readers are encouraged to download (no viruses, I promise) the
+executable and play with the networks. The&nbsp; colors themselves are
+fascinating (perhaps that 's just the perspective of&nbsp; a creator
+and his creation), but watching the network's activations develop gives
+a little insight to the sinusoidal characteristics mentioned in Dr.
+Wolfe's paper.<br>
+  </li>
+</ol>
+<h3>Application User's Guide</h3>
+The application provided shows the progress of the Fuzzy TSP Neural Net
+solution with three graphic displays.&nbsp; Various controls at the
+bottom of the application allow the user to choose the initial
+configuration, the simulation speed, and the display scale. <br>
+<br>
+The graphic displays show in order from left to right, the activation
+of&nbsp; each neuron, the fuzzy&nbsp; read out for the developing tour
+and the energy level of the whole network. A text display in the bottom
+center shows the current energy level, iteration number and tour length.<br>
+<br>
+Controls just below the displays on the left allow the user to slow the
+simulation by increasing the size of a pause in each iteration. The
+size of the pause in milliseconds is displayed to the left of a slider
+that can be adjusted from 1 to 1000 milliseconds.<br>
+<br>
+<span style="font-weight: bold;">Below the delay time control</span>
+are a pair of radio buttons that&nbsp; control the displays. The
+activations as well as the energy can be displayed in either
+logarithmic or linear formats. The scales of the graphs adjust with the
+choice. If the user chooses a linear display, the activation display<br>
+can be set to one of three sensitivities or scales labeled low, medium
+and high. Low shows very low energies, down around 10<sup>-9</sup>,
+medium shows higher, around 10<sup>-6</sup>, and high shows higher
+energies around 10<sup>-3</sup>. Since the higher end of the scale
+shows as red, its best to start a run at low and shift to medium when
+most neurons are red. The scale should be shifted again when the
+neurons turn red at that level.<br>
+<br>
+<h4>Screen Shot:</h4>
+<img style="width: 702px; height: 508px;" alt=""
+ src="CSC5542%20TSP%20-%20Chris%20Roeder_files/tsp.png"><br>
+<br>
+<br>
+<br>
+</body>
+</html>

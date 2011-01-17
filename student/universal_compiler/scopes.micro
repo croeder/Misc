@@ -1,0 +1,18 @@
+BEGIN
+	BEGIN
+		A := 1 ;
+		BEGIN
+			A := 2 ;	
+			B := 2;
+			BEGIN
+				A := 3 ;
+				B := 3;
+				C := 3;
+			END
+		END
+	END
+    READ(A1,New_A,D,B) ;
+    C:=A1+(New_A-D)-75;
+    New_C:=((B-(7)+(C+D)))-(3-A1); --stupid formula
+    WRITE(C,A1+New_C);
+END

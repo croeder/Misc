@@ -1,0 +1,6 @@
+<system-goal> -> a <system-goal> e
+<system-goal> -> <B>
+<B> -> b <B> e
+<B> -> <C>
+<C> -> c <C> e
+<C> -> d

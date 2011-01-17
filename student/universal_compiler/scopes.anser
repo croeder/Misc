@@ -1,0 +1,11 @@
+Declare A_1
+Store A_1 1
+
+Store A_1 2
+eclare B_2
+Store B_2 2
+
+Store A_1 3
+Store B_2 3
+Declare C_3
+Store C_3 3

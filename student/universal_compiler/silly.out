@@ -1,0 +1,52 @@
+------printing-------
+--left--
+<article> <paper-tail> <paragraph> <sentence> <subject-clause> <subject> <system-goal> <verb> 
+--right--
+<article> <paragraph> <paper-tail> <sentence> <paragraph> <subject-clause> <subject> <title> <paper-tail> <verb> <subject-clause> Chris Lambda a hates loves program the work 
+--terminals--
+Chris Lambda a hates loves program the work 
+--nonterminals--
+<article> <paper-tail> <paragraph> <paper-tail> <sentence> <paragraph> <subject-clause> <subject> <system-goal> <title> <paper-tail> <verb> <subject-clause> 
+
+--productions--
+<article> --> a 
+<article> --> the 
+<paper-tail> --> <paragraph> <paper-tail> 
+<paper-tail> --> Lambda 
+<paragraph> --> <sentence> <paragraph> 
+<paragraph> --> Lambda 
+<sentence> --> <subject-clause> <verb> <subject-clause> 
+<subject-clause> --> <article> <subject> 
+<subject-clause> --> <subject> 
+<subject> --> Chris 
+<subject> --> program 
+<subject> --> work 
+<system-goal> --> <title> <paper-tail> 
+<verb> --> loves 
+<verb> --> hates 
+------find lambda-------
+
+------test initFirst-------
+---------------------------
+------fillFirstSet-------
+ contents: 
+<article> --> a the 
+<paper-tail> --> Chris Lambda a program the work 
+<paragraph> --> Chris Lambda a program the work 
+<sentence> --> Chris a program the work 
+<subject-clause> --> Chris a program the work 
+<subject> --> Chris program work 
+<system-goal> --> 
+<title> --> 
+<verb> --> hates loves 
+Chris --> Chris 
+Lambda --> Lambda 
+a --> a 
+hates --> hates 
+loves --> loves 
+program --> program 
+the --> the 
+work --> work 
+------------------------------------------
+
+------fillFollowSet-------

@@ -1,0 +1,451 @@
+package backprop;
+
+import java.applet.*;
+import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.JButton;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import javax.swing.BorderFactory;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+import javax.swing.*;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2004</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class BackPropGui extends Applet {
+    public BackPropGui() throws HeadlessException {
+        super();
+        try {
+            jbInit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        bpn = new BackPropNet(0.1, 0.1, 8);
+    }
+
+    Color getColor(float i, float size) {
+        // expecting a range of -2.5 to + 2.5
+        float f;
+        f = i + size/2.0f; // shift to 0 to 5
+        f /= size; // normalize to 0.0 to 1.0
+        f *= 0.85f; // scale down to 0.85
+        f += 0.15f; // shift to 0.15 to 1.0
+
+        // I want values close to 0 to have a lower brightness
+        float g = Math.abs(i); // fold to 0 to 2.5
+        g /= size/2.0f; // normalize to 0.0 to 1.0
+        g /= 3.0f; // tweak to 0.333;
+        g += 0.6666f; // avoid black
+        return Color.getHSBColor(f, 1.0f, 1.0f);
+    }
+
+    void paintNetPic(Graphics g) {
+        int vertSize=300;
+        int horzSize=200;
+        g.drawRect(netPicX, netPicY, horzSize, vertSize);
+
+        // color bar
+        for (int i=0; i<101; i++) {
+             Color c = getColor(i/100.0f * 5.0f - 2.5f, 5.0f);
+             g.setColor(c);
+             g.fillRect(netPicX + 2*i, netPicY -20 , 2, 10);
+             if (i%20==0) {
+                 g.setColor(Color.black);
+                 g.drawString("" + (i - 50), netPicX + i*2, netPicY - 22);
+             }
+        }
+
+
+        // input weights
+        int xs[]=new int[4];
+        int ys[]=new int[4];
+        for (int i=0; i<bpn.inputCount; i++) {
+            int ix = 0;
+            int iy = vertSize/(bpn.inputCount+1) * (i+1);
+            for (int j=0; j<bpn.hiddenCount; j++) {
+                int hx = horzSize/2;
+                int hy =(int)(vertSize/bpn.hiddenCount * (j + 0.5));
+                int width = 2;
+                Color c = getColor((float)(bpn.inputWeights[i][j]), 50.0f);
+                if (bpn.inputWeights[i][j] > 3.0f || bpn.inputWeights[i][j] < -3.0f)
+                    System.out.println("wtf" + bpn.inputWeights[i][j]);
+                g.setColor(c);
+
+                xs[0]=ix + netPicX; ys[0]=iy + width + netPicY;
+                xs[1]=hx + netPicX; ys[1]=hy + width + netPicY;
+                xs[2]=hx + netPicX; ys[2]=hy           + netPicY;
+                xs[3]=ix + netPicX; ys[3]=iy           + netPicY;
+                g.fillPolygon(xs, ys, 4);
+            }
+        }
+
+        // output weights
+        for (int i=0; i<bpn.hiddenCount; i++) {
+            int ix = horzSize/2;
+            int iy = (int)(vertSize/bpn.hiddenCount * (i + 0.5));
+            for (int j=0; j<bpn.outputCount; j++) {
+                int hx = horzSize;
+                int hy = vertSize/(bpn.outputCount+1) * (j+1);
+                int width=2;
+                Color c = getColor((float)(bpn.outputWeights[i][j]), 50.0f);
+                g.setColor(c);
+                if (bpn.outputWeights[i][j] > 3.0f || bpn.outputWeights[i][j] < -3.0f)
+                    System.out.println("wtf" + bpn.outputWeights[i][j]);
+                xs[0]=ix + netPicX; ys[0]=iy + width/2 + netPicY;
+                xs[1]=hx + netPicX; ys[1]=hy + width/2 + netPicY;
+                xs[2]=hx + netPicX; ys[2]=hy - width/2 + netPicY;
+                xs[3]=ix + netPicX; ys[3]=iy - width/2 + netPicY;
+                g.fillPolygon(xs, ys, 4);
+            }
+        }
+        g.setColor(Color.black);
+    }
+    void paintErrorGraph(Graphics g) {
+        // error graph
+        final int graphYSize = 100;
+        g.drawRect(graphX, graphY, 200, graphYSize);
+        g.drawString("0%", graphX - 28, graphY + graphYSize);
+        g.drawString("25%", graphX - 28, graphY + 3 * graphYSize / 4);
+        g.drawString("50%", graphX - 28, graphY + graphYSize / 2);
+        g.drawString("75%", graphX - 28, graphY + graphYSize / 4);
+        g.drawString("100%", graphX - 28, graphY);
+        for (int i = 0; i < numIterations; i++) {
+            g.drawLine(graphX + i, graphY + graphYSize,
+                       graphX + i,
+                       graphY + graphYSize - ((int) (graphYSize * errors[i])));
+        }
+    }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        paintNetPic(g);
+        if (trainMode) {
+            paintErrorGraph(g);
+            g.setColor(Color.red);
+            paintPoints(bpn.insidePoints, 100, g);
+            g.setColor(Color.blue);
+            paintPoints(bpn.outsidePoints, 100, g);
+        }
+        else {
+            paintErrorGraph(g);
+            g.setColor(Color.green);
+            paintPoints(insidePoints, insidePointsCount, g);
+            g.setColor(Color.red);
+            paintPoints(outsidePoints, outsidePointsCount, g);
+        }
+    }
+
+    void paintPoints(Point points[], int numPoints, Graphics g) {
+        final int rectSize=200;
+        final int ovalSize=3;
+
+        for (int i=0; i<numPoints; i++) {
+            Point p = points[i];
+            g.fillRect((int)(picX + rectSize*p.x/p.dimension + rectSize/2),
+                       (int)(picY + rectSize*p.y/p.dimension + rectSize/2),
+                       ovalSize, ovalSize);
+        }
+
+        g.setColor(Color.black);
+        g.drawRect(picX, picY, rectSize, rectSize);
+        g.drawString("0", picX - 25, picY + rectSize/2);
+        g.drawString("1.25", picX - 25, picY);
+        g.drawString("-1.25", picX - 25, picY+rectSize);
+
+        g.drawString("0", picX + rectSize/2, picY - 10);
+        g.drawString("1.25", picX + rectSize, picY -10);
+        g.drawString("-1.25", picX, picY -10);
+
+        //CircleRadiusInPixles
+        int crip = (int)(rectSize * 2.0/Point.dimension);
+        g.drawOval(picX + rectSize/8, picY + rectSize/8, crip, crip);
+    }
+
+    public static void main(String[] args) {
+        BackPropGui backpropgui = new BackPropGui();
+    }
+
+    private void jbInit() throws Exception {
+        this.setLayout(null);
+        label2.setText("Back Propagation - Chris Roeder");
+        trainButton.setLabel("Train 200 Epochs");
+        trainButton.setBounds(new Rectangle(140, 12, 121, 25));
+        trainButton.addMouseListener(new BackPropGui_trainButton_mouseAdapter(this));
+        stopButton.setLabel("Test 1000 points");
+        stopButton.setBounds(new Rectangle(269, 12, 121, 25));
+        stopButton.addMouseListener(new BackPropGui_testButton_mouseAdapter(this));
+        newNetworkButton.setLabel("New Network");
+        newNetworkButton.setBounds(new Rectangle(269, 42, 121, 25));
+        newNetworkButton.addMouseListener(new
+                BackPropGui_newTrainingSetButton_mouseAdapter(this));
+        label3.setText("CSC 5542 - Spring 2004");
+        label3.setBounds(new Rectangle(9, 7, 125, 17));
+        label4.setText("Back Propagation");
+        label4.setBounds(new Rectangle(9, 22, 129, 15));
+        label5.setText("Chris Roeder");
+        label5.setBounds(new Rectangle(9, 37, 91, 15));
+        label1.setText("Percent Correct: ");
+        label1.setBounds(new Rectangle(400, 13, 86, 24));
+        correctTextField.setText("");
+        correctTextField.setBounds(new Rectangle(414, 38, 51, 25));
+        label6.setText("% correct for each of 200 epochs");
+        label6.setBounds(new Rectangle(22, 144, 170, 43));
+        newTrainingSetButton.setLabel("New Training Set");
+        newTrainingSetButton.setBounds(new Rectangle(140, 42, 121, 25));
+        newTrainingSetButton.addMouseListener(new
+                BackPropGui_newTrainingSetButton_mouseAdapter(this));
+        numHiddenSlider.setMaximum(32);
+        numHiddenSlider.setValue(8);
+        numHiddenSlider.setBorder(border10);
+        numHiddenSlider.setBounds(new Rectangle(317, 73, 131, 40));
+        numHiddenSlider.addChangeListener(new
+                BackPropGui_numHiddenSlider_changeAdapter(this));
+        thetaSlider.setBorder(border6);
+        thetaSlider.setBounds(new Rectangle(2, 73, 120, 40));
+        thetaSlider.addChangeListener(new BackPropGui_jSlider2_changeAdapter(this));
+        thetaSlider.setValue(30);
+        jSlider3.setBounds(new Rectangle(141, 72, 120, 25));
+        stepSizeSlider.setBorder(border8);
+        stepSizeSlider.setBounds(new Rectangle(157, 73, 120, 40));
+        stepSizeSlider.addChangeListener(new BackPropGui_jSlider4_changeAdapter(this));
+        stepSizeSlider.setValue(10);
+        stepTextField.setText("");
+        stepTextField.setBounds(new Rectangle(282, 80, 28, 25));
+        numHiddenTextField.setText("");
+        numHiddenTextField.setBounds(new Rectangle(458, 80, 27, 25));
+        thetaTextField.setText("");
+        thetaTextField.setBounds(new Rectangle(125, 80, 28, 25));
+        this.add(label2);
+        this.add(label3);
+        this.add(label5);
+        this.add(label4);
+        this.add(label6);
+        this.add(trainButton);
+        this.add(stopButton);
+        this.add(newTrainingSetButton);
+        this.add(newNetworkButton);
+        this.add(label1);
+        this.add(correctTextField);
+        this.add(thetaSlider);
+        this.add(thetaTextField);
+        this.add(stepSizeSlider);
+        this.add(stepTextField);
+        this.add(numHiddenSlider);
+        numHiddenSlider.add(jSlider3);
+        this.add(numHiddenTextField);
+    }
+
+    Label label2 = new Label();
+    CheckboxGroup checkboxGroup1 = new CheckboxGroup();
+    Button trainButton = new Button();
+    Button stopButton = new Button();
+    final int graphX = 35;
+    final int graphY = 200;
+    final int picX = 275;
+    final int picY = 140;
+    final int netPicX = 490;
+    final int netPicY = 40;
+    final int numTestPoints=500;
+
+    BackPropNet bpn;
+    boolean trainMode = true;
+    final int numIterations=200;
+    Point insidePoints[] = new Point[numTestPoints];
+    Point outsidePoints[] = new Point[numTestPoints];
+    int insidePointsCount=0;
+    int outsidePointsCount=0;
+    double errors[] = new double[numIterations];
+    Button newNetworkButton = new Button();
+    Label label3 = new Label();
+    Label label4 = new Label();
+    Label label5 = new Label();
+    Label label1 = new Label();
+    TextField correctTextField = new TextField();
+    Label label6 = new Label();
+    Button newTrainingSetButton = new Button();
+    JSlider numHiddenSlider = new JSlider();
+    JSlider thetaSlider = new JSlider();
+    JSlider jSlider3 = new JSlider();
+    JSlider stepSizeSlider = new JSlider();
+    TextField stepTextField = new TextField();
+    TextField numHiddenTextField = new TextField();
+    TextField thetaTextField = new TextField();
+    Border border1 = BorderFactory.createEtchedBorder(EtchedBorder.RAISED,
+            Color.white, new Color(156, 156, 158));
+    Border border3 = BorderFactory.createEtchedBorder(Color.white,
+            new Color(156, 156, 158));
+    Border border4 = new TitledBorder(border3, "theta");
+    Border border5 = BorderFactory.createEtchedBorder(Color.white,
+            new Color(156, 156, 158));
+    Border border6 = new TitledBorder(border5, "Theta");
+    Border border7 = BorderFactory.createEtchedBorder(Color.white,
+            new Color(156, 156, 158));
+    Border border8 = new TitledBorder(border7, "Step Size");
+    Border border9 = BorderFactory.createEtchedBorder(Color.white,
+            new Color(156, 156, 158));
+    Border border10 = new TitledBorder(border9, "Number Hidden Neurons");
+
+    public void trainButton_mouseClicked(MouseEvent e) {
+        for (int i = 0; i < numIterations; i++) {
+            errors[i] = bpn.trainOneEpoch();
+        }
+        trainMode = true;
+        repaint();
+    }
+
+    public void testButton_mouseClicked(MouseEvent e) {
+        int i=0;
+        insidePointsCount=0;
+        outsidePointsCount=0;
+        int correctCount = 0;
+        while (i<numTestPoints * 2 &&
+               insidePointsCount < numTestPoints &&
+               outsidePointsCount < numTestPoints) {
+            Point p = new Point();
+            if (bpn.testOnePoint(p))
+                correctCount++;
+            if (bpn.insideCircle(p) && insidePointsCount < numTestPoints) {
+                insidePoints[insidePointsCount++] = p;
+            }
+            else if (outsidePointsCount < numTestPoints) {
+                outsidePoints[outsidePointsCount++] = p;
+            }
+            i++;
+
+        }
+        double error = (correctCount) /
+                       (double)(insidePointsCount + outsidePointsCount);
+        correctTextField.setText("" + (int)(error*100));
+        trainMode = false;
+        repaint();
+    }
+
+    public void newTrainingSetButton_mouseClicked(MouseEvent e) {
+        bpn.createTrainingSet();
+        trainMode = true;
+        repaint();
+    }
+
+    public void newNetworkButton_mouseClicked(MouseEvent e) {
+        double theta = thetaSlider.getValue()/100.0;
+        double stepSize = stepSizeSlider.getValue()/100.0;
+        int numNeurons = numHiddenSlider.getValue();
+        bpn = new BackPropNet(theta, stepSize, numNeurons);
+        for (int i = 0; i < numIterations; i++) {
+            errors[i] = 0.0;
+        }
+        repaint();
+    }
+
+    public void numHiddenSlider_stateChanged(ChangeEvent e) {
+        numHiddenTextField.setText("" + numHiddenSlider.getValue());
+    }
+
+    public void thetaSlider_stateChanged(ChangeEvent e) {
+        thetaTextField.setText("" + thetaSlider.getValue()/100.0);
+    }
+
+    public void stepSizeSlider_stateChanged(ChangeEvent e) {
+        stepTextField.setText("" + stepSizeSlider.getValue()/100.0);
+    }
+
+}
+
+
+class BackPropGui_jSlider2_changeAdapter implements ChangeListener {
+    private BackPropGui adaptee;
+    BackPropGui_jSlider2_changeAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void stateChanged(ChangeEvent e) {
+
+        adaptee.thetaSlider_stateChanged(e);
+    }
+}
+
+
+class BackPropGui_jSlider4_changeAdapter implements ChangeListener {
+    private BackPropGui adaptee;
+    BackPropGui_jSlider4_changeAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void stateChanged(ChangeEvent e) {
+
+        adaptee.stepSizeSlider_stateChanged(e);
+    }
+}
+
+
+
+
+
+class BackPropGui_numHiddenSlider_changeAdapter implements ChangeListener {
+    private BackPropGui adaptee;
+    BackPropGui_numHiddenSlider_changeAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void stateChanged(ChangeEvent e) {
+        adaptee.numHiddenSlider_stateChanged(e);
+    }
+}
+
+
+class BackPropGui_newTrainingSetButton_mouseAdapter extends MouseAdapter {
+    private BackPropGui adaptee;
+    BackPropGui_newTrainingSetButton_mouseAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        adaptee.newNetworkButton_mouseClicked(e);
+    }
+}
+
+
+class BackPropGui_testButton_mouseAdapter extends MouseAdapter {
+    private BackPropGui adaptee;
+    BackPropGui_testButton_mouseAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        adaptee.testButton_mouseClicked(e);
+    }
+}
+
+
+class BackPropGui_trainButton_mouseAdapter extends MouseAdapter {
+    private BackPropGui adaptee;
+    BackPropGui_trainButton_mouseAdapter(BackPropGui adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        adaptee.trainButton_mouseClicked(e);
+    }
+}

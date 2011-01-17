@@ -1,0 +1,70 @@
+predict: <system-goal> --> <program> Eof 
+A := 5 ; B := A ; End                                                                               <system-goal>                                                                                       
+
+predict: <program> --> Begin <stmt-list> End 
+A := 5 ; B := A ; End                                                                               <program> Eof                                                                                       
+
+match:Begin
+A := 5 ; B := A ; End                                                                               Begin <stmt-list> End Eof                                                                           
+predict: <stmt-list> --> <stmt> <stmt-tail> 
+:= 5 ; B := A ; End                                                                                 <stmt-list> End Eof                                                                                 
+
+predict: <stmt> --> Id AssignOp <expr> Semicolon 
+:= 5 ; B := A ; End                                                                                 <stmt> <stmt-tail> End Eof                                                                          
+
+match:Id
+:= 5 ; B := A ; End                                                                                 Id AssignOp <expr> Semicolon <stmt-tail> End Eof                                                    
+match:AssignOp
+5 ; B := A ; End                                                                                    AssignOp <expr> Semicolon <stmt-tail> End Eof                                                       
+predict: <expr> --> <primary> <primary-tail> 
+; B := A ; End                                                                                      <expr> Semicolon <stmt-tail> End Eof                                                                
+
+predict: <primary> --> Int 
+; B := A ; End                                                                                      <primary> <primary-tail> Semicolon <stmt-tail> End Eof                                              
+
+match:Int
+; B := A ; End                                                                                      Int <primary-tail> Semicolon <stmt-tail> End Eof                                                    
+predict: <primary-tail> --> Lambda 
+B := A ; End                                                                                        <primary-tail> Semicolon <stmt-tail> End Eof                                                        
+
+match:Lambda
+B := A ; End                                                                                        Lambda Semicolon <stmt-tail> End Eof                                                                
+match:Semicolon
+B := A ; End                                                                                        Semicolon <stmt-tail> End Eof                                                                       
+predict: <stmt-tail> --> <stmt-list> 
+:= A ; End                                                                                          <stmt-tail> End Eof                                                                                 
+
+predict: <stmt-list> --> <stmt> <stmt-tail> 
+:= A ; End                                                                                          <stmt-list> End Eof                                                                                 
+
+predict: <stmt> --> Id AssignOp <expr> Semicolon 
+:= A ; End                                                                                          <stmt> <stmt-tail> End Eof                                                                          
+
+match:Id
+:= A ; End                                                                                          Id AssignOp <expr> Semicolon <stmt-tail> End Eof                                                    
+match:AssignOp
+A ; End                                                                                             AssignOp <expr> Semicolon <stmt-tail> End Eof                                                       
+predict: <expr> --> <primary> <primary-tail> 
+; End                                                                                               <expr> Semicolon <stmt-tail> End Eof                                                                
+
+predict: <primary> --> Id 
+; End                                                                                               <primary> <primary-tail> Semicolon <stmt-tail> End Eof                                              
+
+match:Id
+; End                                                                                               Id <primary-tail> Semicolon <stmt-tail> End Eof                                                     
+predict: <primary-tail> --> Lambda 
+End                                                                                                 <primary-tail> Semicolon <stmt-tail> End Eof                                                        
+
+match:Lambda
+End                                                                                                 Lambda Semicolon <stmt-tail> End Eof                                                                
+match:Semicolon
+End                                                                                                 Semicolon <stmt-tail> End Eof                                                                       
+predict: <stmt-tail> --> Lambda 
+                                                                                                    <stmt-tail> End Eof                                                                                 
+
+match:Lambda
+                                                                                                    Lambda End Eof                                                                                      
+match:End
+                                                                                                    End Eof                                                                                             
+syntax error 2 
+parse stack: Eof 

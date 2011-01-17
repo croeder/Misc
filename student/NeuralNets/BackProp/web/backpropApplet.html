@@ -1,0 +1,32 @@
+<html>
+<head><title>Back Prop Applet</title></head>
+<body>
+
+
+<applet height=350 width=700 code=backprop/BackPropGui.class>
+</applet>
+This is an applet for exploring a neural net built to
+recognize circles. Train the network using the displayed
+points by using the &quot;Train 200 Epochs&quot; button. If you click
+the button a 2nd or 3rd time, it will train the network more.
+Accuracy discovered during training is displayed on the graph
+on the left. One training round consists of 200 epochs, or
+1 pass through each of 200 points. A new set of points for a 
+subsequent training round can be created using the 
+&quot;New Training Set&quot; button.
+<p>
+At any time, the network can be tested using the 
+&quot;Test 1000 points&quot; button. The points used to test
+will be displayed on the right. Green means the network
+&quot;thinks&quot; the point is inside the circle. Red
+means it &quot;thinks&quot; its outside the circle. The
+percentage of points it got correct are displayed at the
+top of the applet. 
+<p>
+The three sliders at the bottom of the group of buttons 
+control parameters of the network. Chaning one of these
+parameters won't take effect until a new network is created.
+<p>
+The far right of the applet consists of a map of the network.
+</body>
+</html>

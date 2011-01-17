@@ -1,0 +1,44 @@
+trim failed
+------printing-------
+--left--
+<addOp> <bool-expr> <expr-list> <expression> <factor> <id-list> <id> <ident> <int-expr> <multOp> <power> <primitive> <program> <stmt-list> <stmt> <system-goal> <term> 
+--right--
+<bool-expr> <expression> <factor> <id> <id-list> <ident> <int-expr> <int-expression> <power> <multOp> <primitive> <program> <stmt> <term> <addOp> <int-expresion> Begin <stmt-list> Comma <expr-list> EOF End EqOp <int-expression> Id AssignOp <expression> LParen <expression> MinusOp <primitive> PowerOp <power> RParen Read LParen <id-list> RParen Semi <stmt-list> Write LParen <expr-list> RParen divOp intLiteral minusOp multOp plusOp 
+--terminals--
+Begin Comma EOF End EqOp Id AssignOp LParen MinusOp PowerOp RParen Read LParen RParen Semi Write LParen RParen divOp intLiteral minusOp multOp plusOp 
+--nonterminals--
+<addOp> <bool-expr> <expr-list> <expression> <factor> <id-list> <id> <id-list> <ident> <int-expr> <int-expression> <multOp> <power> <multOp> <primitive> <program> <stmt-list> <stmt> <system-goal> <term> <addOp> <int-expresion> <stmt-list> <expr-list> <int-expression> <expression> <expression> <primitive> <power> <id-list> <stmt-list> <expr-list> 
+
+--productions--
+<addOp> --> plusOp 
+<addOp> --> minusOp 
+<bool-expr> --> <int-expression> EqOp <int-expression> 
+<expr-list> --> <expression> 
+<expr-list> --> <expression> Comma <expr-list> 
+<expression> --> <int-expr> 
+<expression> --> <bool-expr> 
+<factor> --> <primitive> 
+<factor> --> MinusOp <primitive> 
+<id-list> --> <id> 
+<id-list> --> <id> <id-list> 
+<id> --> Id 
+<ident> --> Id 
+<int-expr> --> <term> 
+<int-expr> --> <term> <addOp> <int-expresion> 
+<multOp> --> divOp 
+<multOp> --> multOp 
+<power> --> <factor> 
+<power> --> <factor> PowerOp <power> 
+<primitive> --> <ident> 
+<primitive> --> intLiteral 
+<primitive> --> LParen <expression> RParen 
+<program> --> Begin <stmt-list> End 
+<stmt-list> --> <stmt> Semi 
+<stmt-list> --> <stmt> Semi <stmt-list> 
+<stmt> --> Id AssignOp <expression> 
+<stmt> --> Read LParen <id-list> RParen 
+<stmt> --> Write LParen <expr-list> RParen 
+<system-goal> --> <program> EOF 
+<term> --> <power> 
+<term> --> <power> <multOp> <term> 
+------ending-------

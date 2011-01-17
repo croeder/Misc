@@ -1,0 +1,341 @@
+package backprop;
+
+/**
+ * <p>Title: BackPropNet</p>
+ *
+ * <p>Description: * a Neural Net exploring Back Propagation </p>
+ *
+ * <p>Copyright: Copyright (c) Chris Roeder 2004</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author Chris Roeder
+ * @version 1.0
+ */
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
+public class BackPropNet {
+
+    // the network
+    final int inputCount = 3; // 3rd is bias
+    final int outputCount = 2;
+    final int hiddenCount = 17; // 9th is bias
+    static final int pointCount = 1000;
+
+    double inputActivations[];
+    double hiddenActivations[];
+    double outputActivations[];
+    double inputWeights[][];
+    double outputWeights[][];
+
+    // training data
+    double outputDeltas[][];
+    double inputDeltas[][];
+    double outputChange[];
+    double inputChange[];
+
+    Point insidePoints[];
+    Point outsidePoints[];
+
+    final int X=0;
+    final int Y=1;
+    final int IN=1;
+    final int OUT=0;
+    final double stepSize=0.1;
+    double theta = 0.2;
+
+
+
+    public BackPropNet() {
+        inputActivations  = new double [inputCount];
+        hiddenActivations = new double [hiddenCount];
+        outputActivations = new double [outputCount];
+        inputWeights      = new double [inputCount][hiddenCount];
+        outputWeights     = new double [hiddenCount][outputCount];
+        outputChange      = new double [outputCount];
+        inputChange       = new double[hiddenCount];
+        outputDeltas      = new double [hiddenCount][outputCount];
+        inputDeltas       = new double [inputCount][hiddenCount];
+        insidePoints      = new Point[pointCount];
+        outsidePoints     = new Point[pointCount];
+
+        createTrainingSet();
+        initActivations();
+        initWeights();
+        try {
+            jbInit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    public static void main(String args[]){
+        BackPropNet bpn = new BackPropNet();
+
+        // train
+        for (int i=0; i< 1000; i++) {
+            double error = bpn.trainOneEpoch();
+            if (i%100==0 || i < 20)
+                System.out.println(i + " " + error);
+        }
+
+        bpn.testNetwork();
+
+
+        // test using new random points
+        int correct=0;
+        for (int i=0; i<pointCount; i++){
+            Point p = new Point();
+            if (bpn.testOnePoint(p)) {
+                correct++;
+            }
+        }
+        System.out.println("" + correct +  " correct out of: " + 1000);
+
+    }
+
+    double trainOneEpoch() {
+        int numCorrect=0;
+        for (int i = 0; i < pointCount; i++) {
+            Point p = outsidePoints[i];
+            int temp = trainOnePoint(p);
+            numCorrect += temp;
+        }
+
+        for (int i = 0; i < pointCount; i++) {
+            Point p = insidePoints[i];
+            numCorrect += trainOnePoint(p);
+        }
+
+        double error = numCorrect/(float)(pointCount * 2);
+        //System.out.println(error);
+        return error;
+    }
+
+    boolean insideCircle(Point p) {
+              // returns true if the network "thinks" the point is inside
+              inputActivations[X] = p.x;
+              inputActivations[Y] = p.y;
+              calculateActivations();
+              return (Math.abs(1.0 - outputActivations[IN]) < theta) &&
+                  (Math.abs(0.0 - outputActivations[OUT]) < theta);
+    }
+
+    boolean testOnePoint(Point p) {
+        // returns true if it got it right
+        inputActivations[X] = p.x;
+        inputActivations[Y] = p.y;
+        calculateActivations();
+        double in = getExpectedOutput(p.insideCircle(), IN);
+        double out = getExpectedOutput(p.insideCircle(), OUT);
+        if ( (Math.abs(outputActivations[IN] -in) < theta) &&
+             (Math.abs(outputActivations[OUT] - out) < theta)
+             ) {
+            return true;
+        }
+        return false;
+    }
+
+    int trainOnePoint(Point p) {
+        int pointRecognized=0;
+        if (testOnePoint(p)){
+            pointRecognized = 1;
+        }
+        else {
+            pointRecognized = 0;
+        }
+        // find error
+        getOutputDeltas(p.insideCircle());
+        getInputDeltas(p.insideCircle());
+        updateWeights();
+        return pointRecognized;
+    }
+
+    double f(double input){
+        // the sigmoid
+        return 1.0 / (1.0 + Math.exp(-1.0*input));
+    }
+
+    double hard(double input) {
+        // this function does the hard-limitting part
+        if (input < 0)
+            return 0.0;
+        else
+            return 1.0;
+    }
+
+    double fprime(double input) {
+        // the derivative
+        return input * (1.0 - input);
+    }
+
+    double getExpectedOutput(boolean insideCircle, int outputIndex) {
+        if (insideCircle) {
+            if (outputIndex == IN)
+                return 1.0;
+            else
+                return 0.0;
+        }
+        else {
+            if (outputIndex == IN)
+                return 0.0;
+            else
+                return 1.0;
+        }
+    }
+
+    void getOutputDeltas(boolean insideCircle) {
+        for (int i=0; i<outputCount; i++) {
+            double error = getExpectedOutput(insideCircle, i) - outputActivations[i];
+            outputChange[i] = error *  fprime(outputActivations[i]) ;
+            for (int j=0; j<hiddenCount; j++) {
+                outputDeltas[j][i] = stepSize * outputChange[i]* hiddenActivations[j];
+            }
+        }
+    }
+
+    void getInputDeltas(boolean insideCircle) {
+        for (int i=0; i<hiddenCount; i++) {
+            double sum=0.0;
+            for (int j=0; j<outputCount; j++) {
+                sum += outputChange[j] * outputWeights[i][j];
+            }
+            double temp = sum * fprime(hiddenActivations[i]);
+            inputChange[i] = temp;
+            for (int j=0; j<inputCount; j++) {
+                inputDeltas[j][i] = stepSize * inputChange[i] * inputActivations[j];
+            }
+        }
+    }
+
+    void updateWeights(){
+        // input
+        for (int i=0; i<inputCount; i++) {
+            for (int j=0; j<hiddenCount; j++) {
+                inputWeights[i][j] += inputDeltas[i][j];
+            }
+        }
+
+        // output
+        for (int i=0; i<hiddenCount; i++) {
+            for (int j=0; j<outputCount; j++) {
+                outputWeights[i][j] += outputDeltas[i][j];
+            }
+        }
+    }
+
+    void calculateActivations() {
+        // hidden
+        for (int i=0; i<hiddenCount; i++) {
+            double actValue = 0.0;
+            for (int j=0; j<inputCount; j++){
+                actValue += inputWeights[j][i] * inputActivations[j];
+            }
+            hiddenActivations[i] = f(actValue);
+        }
+
+        // output
+        for (int i=0; i<outputCount; i++) {
+            double actValue = 0.0;
+            for (int j=0; j<hiddenCount; j++) {
+                actValue += outputWeights[j][i] * hiddenActivations[j];
+            }
+            outputActivations[i] = f(actValue);
+        }
+    }
+
+    void createTrainingSet()
+    {
+        int inCount = 0;
+        int outCount = 0;
+        while (inCount < pointCount || outCount < pointCount) {
+            Point p = new Point();
+            if (p.insideCircle() && inCount < pointCount) {
+                insidePoints[inCount++] = p;
+            } else if (!p.insideCircle() && outCount < pointCount) {
+                outsidePoints[outCount++] = p;
+            }
+        }
+    }
+
+    void initActivations() {
+        java.util.Random r = new java.util.Random();
+
+        for (int i=0; i<inputCount; i++) {
+            inputActivations[i] = 0.0;
+        }
+        inputActivations[inputCount-1] =  1.0;  // bias
+
+        for (int i=0; i<hiddenCount; i++) {
+            hiddenActivations[i] = r.nextDouble()/10.0;
+        }
+        hiddenActivations[hiddenCount-1] =  1.0;// bias
+
+        for (int i=0; i<outputCount; i++) {
+            outputActivations[i] = 0.0;
+        }
+    }
+
+    void initWeights(){
+        java.util.Random r = new java.util.Random();
+        for (int i=0; i<inputCount; i++) {
+            for (int j=0; j<hiddenCount; j++) {
+                inputWeights[i][j] = (r.nextDouble() - 0.5)/20.0;
+            }
+        }
+        for (int i=0; i<hiddenCount; i++) {
+            for (int j=0; j<outputCount; j++) {
+                outputWeights[i][j] = (r.nextDouble() - 0.5)/20.0;
+            }
+        }
+    }
+
+    void printWeights() {
+        System.out.println("Weights");
+        for (int i=0; i<inputCount; i++) {
+            for (int j=0; j<hiddenCount; j++) {
+                System.out.print("" + inputWeights[i][j] + " ");
+            }
+            System.out.println();
+        }
+        for (int i=0; i<hiddenCount; i++) {
+            for (int j=0; j<outputCount; j++) {
+                System.out.print("" + outputWeights[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    void printActivations() {
+        System.out.println("Activations");
+        for (int i=0; i<hiddenCount; i++)
+            System.out.println("" + hiddenActivations[i] + " ");
+        System.out.println("");
+    }
+
+    void printDeltas() {
+        System.out.println("Deltas");
+        for (int i = 0; i < hiddenCount; i++) {
+            for (int j = 0; j < outputCount; j++) {
+                System.out.println(outputDeltas[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("----------------------------");
+        for (int i = 0; i < inputCount; i++) {
+            for (int j = 0; j < hiddenCount; j++) {
+                System.out.println(inputDeltas[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
+    private void jbInit() throws Exception {
+    }
+
+}
+

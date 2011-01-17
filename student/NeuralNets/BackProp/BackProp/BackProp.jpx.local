@@ -1,0 +1,24 @@
+build.menu.1[0]=com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;make
+build.menu.2[0]=com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;rebuild
+content.layout.xml.[0]=<project-layout><tab_container selected_index="2"><tab node_name="E%|/student/CSC 5542 NN Fall 04/BackProp/jaworski/BackProp.java"/><tab node_name="src/backprop/BackPropGui.java"/><tab node_name="src/backprop/BackPropNet.java"/></tab_container></project-layout>
+debug.NoTracingClasses.1[0]=16 java.lang.Object1  1 -1
+debug.NoTracingClasses.2[0]=21 java.lang.ClassLoader1  1 -1
+debug.NoTracingClasses.3[0]=16 java.lang.String1  1 -1
+debug.SplitThreadsAndDataView[0]=0
+history.files.active[0]=src/backprop/BackPropNet.java,F;1,19
+history.files.open.1[0]=E%|/student/CSC 5542 NN Fall 04/BackProp/jaworski/BackProp.java,F;201,7419
+history.files.open.2[0]=src/backprop/BackPropGui.java,F;1,19
+history.files.open.3[0]=src/backprop/BackPropNet.java,F;1,19
+import.optimize.legacyPropertiesRead[0]=1
+saveAsDialog.directoryHistory.1[0]=E:/student/CSC 5542 NN Fall 04/BackProp/BackProp/src/backprop
+saveAsDialog.directoryHistory.2[0]=E:/student/CSC 5542 NN Fall 04/BackProp/BackProp/src
+sys.Author[0]=
+sys.DefaultPackage[0]=backprop
+sys.ReopenHistory.1[0]=[C%|/Documents and Settings/Chris Roeder/Local Settings/Temporary Internet Files/Content.IE5/NB1RZHC0/WindowUtilities[1].java
+sys.ReopenHistory.2[0]=E%|/student/CSC 5542 NN Fall 04/BackProp/jaworski/Point.java
+sys.ReopenHistory.3[0]=src/backprop/Point.java
+sys.ReopenHistory.4[0]=[C%|/Documents and Settings/Chris Roeder/Local Settings/Temporary Internet Files/Content.IE5/M9B014BY/ExitListener[1].java
+sys.ReopenHistory.5[0]=src/backprop/BackPropNetOriginal.java
+sys.ReopenHistory.6[0]=src/backprop/AngledRect.java
+team.lastScanned[0]=1101678156531
+wizard.package.package_history.1[0]=backprop

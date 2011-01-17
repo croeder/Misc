@@ -1,0 +1,139 @@
+package binaryhopfield;
+
+/**
+ * <p>Title: BinHop</p>
+ * <p>Description: a Binary Hopfield Neural Network for pattern matching</p>
+ * <p>Copyright: Copyright Chris Roeder(c) 2004</p>
+ * @author Chris Roeder
+ * @version 1.0
+ */
+
+public class BinHop implements java.lang.Cloneable {
+  int conRight[][];
+  int conDown[][];
+  int values[][];
+
+  public BinHop() {
+    conRight = new int[Image.xMax][Image.yMax];
+    conDown  = new int[Image.xMax][Image.yMax];
+    values = new int[Image.xMax][Image.yMax];
+  }
+
+  public boolean isEqual(Object o) {
+    boolean diff = false;
+    if (o.getClass() == this.getClass()) {
+      BinHop otherBH = (BinHop) o;
+      for (int x = 0; x < Image.xMax; x++) {
+        for (int y = 0; y < Image.yMax; y++) {
+          diff = diff && values[x][y] == otherBH.values[x][y];
+          if (!diff)
+            break;
+        }
+      }
+    }
+    return diff;
+  }
+
+  Object clone(Object o){
+    if (o.getClass() == this.getClass()) {
+      BinHop bh = new BinHop();
+      BinHop obh = (BinHop) o;
+      for (int x=0; x<Image.xMax; x++)
+        for (int y=0; y<Image.yMax; y++) {
+          bh.conRight[x][y] = obh.conRight[x][y];
+          bh.conDown[x][y] =  obh.conDown[x][y];
+          bh.values[x][y] = obh.values[x][y];
+        }
+      return bh;
+    }
+    else  {
+      return null;
+    }
+  }
+
+  public void reset() {
+    for (int x=0; x<Image.xMax; x++)
+      for (int y=0; y<Image.yMax; y++) {
+        conRight[x][y] = 0;
+        conDown[x][y]=0;
+      }
+  }
+
+  public void prime(Image image) {
+    for (int x=0; x<Image.xMax; x++)
+      for (int y=0; y<Image.yMax; y++) {
+        if (image.bits[x][y])
+          values[x][y] = 1;
+        else
+          values[x][y] = -1;
+      }
+  }
+
+  void draw(java.awt.Graphics g, int xoff, int yoff) {
+    g.drawRect(xoff, yoff, Image.size*Image.xMax, Image.size*Image.yMax);
+    for (int x=0; x<Image.xMax; x++)
+      for (int y=0; y<Image.yMax; y++)
+        if (values[x][y]  > 0)
+          g.fillRect(x*Image.size + xoff, y*Image.size + yoff, Image.size, Image.size);
+  }
+
+  void drawNetwork(java.awt.Graphics g, int xoff, int yoff) {
+    g.drawRect(xoff, yoff, Image.size * Image.xMax, Image.size * Image.yMax);
+    for (int x = 0; x < Image.xMax - 1; x++)
+      for (int y = 0; y < Image.yMax - 1; y++) {
+        if (conRight[x][y] > 0)
+          g.fillRect(x * Image.size + xoff, y * Image.size + yoff, Image.size, Image.size / 2);
+        if (conDown[x][y] > 0)
+          g.fillRect(x * Image.size + xoff, y * Image.size + yoff, Image.size / 2, Image.size);
+      }
+  }
+
+
+  public void train(Image image) {
+    for (int x=0; x<Image.xMax; x++)
+      for (int y=0; y<Image.yMax; y++) {
+        if (image.bits[x][y] == image.bits[(x+1) % Image.xMax][y])
+          conRight[x][y]++;
+        else
+          conRight[x][y]--;
+        if (image.bits[x][y] == image.bits[x][(y+1) % Image.yMax])
+          conDown[x][y]++;
+        else
+          conDown[x][y]--;
+      }
+  }
+
+  int normalize(int i){
+    if (i!=0)
+      return i/Math.abs(i);
+    return 0;
+  }
+
+  public boolean update() {
+    BinHop save;
+    try {
+      save = (BinHop)this.clone();
+    }
+    catch (Exception x){
+      ;
+    }
+    // inside neurons
+    for (int x = 0; x < Image.xMax; x++)
+      for (int y = 0; y < Image.yMax; y++) {
+        values[x][y] += conRight[x][y] * values[ (x + 1) % Image.xMax][y];
+        values[x][y] = normalize(values[x][y]);
+
+        values[x][y] += conRight[ (x - 1 + Image.xMax) % Image.xMax][y] *
+            values[ (x - 1 + Image.xMax) % Image.xMax][y];
+        values[x][y] = normalize(values[x][y]);
+
+        values[x][y] += conDown[x][y] * values[x][ (y + 1) % Image.yMax];
+        values[x][y] = normalize(values[x][y]);
+
+        values[x][y] += conDown[x][ (y - 1 + Image.yMax) % Image.yMax] *
+            values[x][ (y - 1 + Image.yMax) % Image.yMax];
+        values[x][y] = normalize(values[x][y]);
+      }
+    return save.isEqual(this);
+  }
+}

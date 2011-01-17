@@ -1,0 +1,19 @@
+<program> 	->	Begin <stmt-list> End
+<stmt-list> 	->	<stmt> <stmt-tail>
+<stmt-tail> 	->	<stmt-list>
+<stmt-tail> 	->	Lambda
+<stmt>	->	<ident> AssignOp  <expr> Semicolon 
+<stmt>	->	Read LParen <ident> RParen Semicolon
+<stmt>	->	Write LParen <expr> RParen Semicolon
+<expr>	->	<primary>  <primary> 
+<primary>	->	LParen <expr> RParen 
+<primary>	->	<ident> 
+<primary>	->	Int 
+<addOp>	->	PlusOp 
+<addOp>	-> 	MinusOp 
+<ident> 	-> 	Id 
+<system-goal> 	-> 	<program> Eof
+
+
+
+

@@ -1,0 +1,50 @@
+------printing-------
+--left--
+<E> 
+--right--
+ <E>  <E> Id 
+--terminals--
+  Id 
+--nonterminals--
+<E> <E> 
+
+--productions--
+<E> --> <E>  <E> 
+<E> --> <E>  <E> 
+<E> -->  <E> 
+<E> --> Id 
+------find lambda-------
+
+------test initFirst-------
+---------------------------
+------fillFirstSet-------
+ contents: 
+ -->  
+<E> -->  Id 
+Id --> Id 
+------------------------------------------
+
+------fillFollowSet-------
+followSet(            <E>) = {"",  }
+followSet(  <system-goal>) = {"Lambda",  }
+
+----- fillPredictSet-----
+{                           "",  } predicts:            <E> -->  <E>                                 
+{ "", "Id",                      } predicts: <E>            --> <E>  <E>                             
+{ "Id",                          } predicts: <E>            --> Id                                   
+----- fillParseTable-----
+inserting: (<E>, ) <E>--><E>  <E> 
+inserting: (<E>, Id) <E>--><E>  <E> 
+inserting: (<E>, ) <E>--><E>  <E> 
+inserting: (<E>, Id) <E>--><E>  <E> 
+inserting: (<E>, ) <E>--> <E> 
+inserting: (<E>, Id) <E>-->Id 
+(<E>, ) --> <E> <E> 
+(<E>, ) --> <E> <E> 
+(<E>, Id) --> <E>Id 
+
+(<E>, ) --> <E> <E> 
+(<E>, ) --> <E> <E> 
+(<E>, Id) --> <E>Id 
+
+

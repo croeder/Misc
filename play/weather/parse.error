@@ -1,0 +1,1 @@
+insert into weather( stationid, DataDate, DataTime, TempInside, TempOutside, DewPoint, RelHumInside, RelHumOutside, WindSpeed, WindDir, WindChill, RainLastHour, RainLast24Hour, RelativePressure, PressureTendency) values ( 'KCDENV38', '2009-Feb-14', '06:15:10', '64.4', '25.3', '20.3', '29', '81', '0.0', '202.5', '25.3', '0.00', '0.00', '29.808', 'Falling') 

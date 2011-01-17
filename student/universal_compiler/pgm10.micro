@@ -1,0 +1,31 @@
+Begin
+	A := 0 ;
+	B := 0 ;
+	C := 0 ;
+	D := 0 ;
+	E := 0 ;
+	F := 0 ;
+	Begin
+		B := 5 + A ; -- 5
+		Begin
+			C := 4 + B ; -- 9
+			Begin
+				D := 3 + C ; -- 12
+				Begin
+					E := 2 + D ; -- 14
+					Begin
+						F := 1 + E ; -- 15
+						Write (A, B, C, D, E, F);
+					End
+					F := 1;
+				End
+				E := 1;
+			End	
+			D := 1;
+		End
+		C := 1;
+	End	
+	B := 1;
+	A := 1;
+	Write (A, B, C, D, E, F);
+End

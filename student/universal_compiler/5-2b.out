@@ -1,0 +1,92 @@
+------printing-------
+--left--
+<B> <C> <system-goal> 
+--right--
+<B> <C> a <system-goal> b <B> c <C> d e 
+--terminals--
+a b c d e 
+--nonterminals--
+<B> <C> <system-goal> <system-goal> <B> <C> 
+
+--productions--
+<B> --> b <B> e 
+<B> --> <C> 
+<C> --> c <C> e 
+<C> --> d 
+<system-goal> --> a <system-goal> e 
+<system-goal> --> <B> 
+------find lambda-------
+
+------test initFirst-------
+---------------------------
+------fillFirstSet-------
+ contents: 
+<B> --> b c d 
+<C> --> c d 
+<system-goal> --> a b c d 
+a --> a 
+b --> b 
+c --> c 
+d --> d 
+e --> e 
+------------------------------------------
+
+------fillFollowSet-------
+followSet(            <B>) = {"e",  }
+followSet(            <C>) = {"e",  }
+followSet(  <system-goal>) = {"e",  }
+
+----- fillPredictSet-----
+{                          "a",  } predicts:  <system-goal> --> a <system-goal> e                    
+{ "b",                           } predicts: <B>            --> b <B> e                              
+{ "b", "c", "d",                 } predicts: <system-goal>  --> <B>                                  
+{ "c",                           } predicts: <C>            --> c <C> e                              
+{ "c", "d",                      } predicts: <B>            --> <C>                                  
+{ "d",                           } predicts: <C>            --> d                                    
+----- fillParseTable-----
+inserting: (<B>, b) <B>-->b <B> e 
+inserting: (<B>, c) <B>--><C> 
+inserting: (<B>, d) <B>--><C> 
+inserting: (<C>, c) <C>-->c <C> e 
+inserting: (<C>, d) <C>-->d 
+inserting: (<system-goal>, a) <system-goal>-->a <system-goal> e 
+inserting: (<system-goal>, b) <system-goal>--><B> 
+inserting: (<system-goal>, c) <system-goal>--><B> 
+inserting: (<system-goal>, d) <system-goal>--><B> 
+(<B>, a) --> 
+(<B>, b) --> <B>b <B> e 
+(<B>, c) --> <B><C> 
+(<B>, d) --> <B><C> 
+(<B>, e) --> 
+
+(<C>, a) --> 
+(<C>, b) --> 
+(<C>, c) --> <C>c <C> e 
+(<C>, d) --> <C>d 
+(<C>, e) --> 
+
+(<system-goal>, a) --> <system-goal>a <system-goal> e 
+(<system-goal>, b) --> <system-goal><B> 
+(<system-goal>, c) --> <system-goal><B> 
+(<system-goal>, d) --> <system-goal><B> 
+(<system-goal>, e) --> 
+
+(<system-goal>, a) --> <system-goal>a <system-goal> e 
+(<system-goal>, b) --> <system-goal><B> 
+(<system-goal>, c) --> <system-goal><B> 
+(<system-goal>, d) --> <system-goal><B> 
+(<system-goal>, e) --> 
+
+(<B>, a) --> 
+(<B>, b) --> <B>b <B> e 
+(<B>, c) --> <B><C> 
+(<B>, d) --> <B><C> 
+(<B>, e) --> 
+
+(<C>, a) --> 
+(<C>, b) --> 
+(<C>, c) --> <C>c <C> e 
+(<C>, d) --> <C>d 
+(<C>, e) --> 
+
+

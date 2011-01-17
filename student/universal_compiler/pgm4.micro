@@ -1,0 +1,5 @@
+Begin
+READ(B, C);
+A := B + C;
+WRITE(A, B);
+End

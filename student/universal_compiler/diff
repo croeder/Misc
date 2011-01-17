@@ -1,0 +1,345 @@
+36,38c36,38
+< <addOp> --> PlusOp 
+< <addOp> --> MinusOp 
+< <expr-list> --> <expr> <expr-tail> 
+---
+> <addOp> --> PlusOp #ProcessOp($$) 
+> <addOp> --> MinusOp #ProcessOp($$) 
+> <expr-list> --> <expr> #WriteExpr($1) <expr-tail> 
+41,42c41,42
+< <expr> --> <primary> <primary-tail> 
+< <id-list> --> <ident> <id-tail> 
+---
+> <expr> --> <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) 
+> <id-list> --> <ident> #ReadId($1) <id-tail> 
+45,46c45,46
+< <ident> --> Id 
+< <primary-tail> --> <addOp> <expr> 
+---
+> <ident> --> Id #ProcessId($$) 
+> <primary-tail> --> <addOp> <expr> #GenInfix($$,$1,$2,$$) 
+48,51c48,51
+< <primary> --> LParen <expr> RParen 
+< <primary> --> <ident> 
+< <primary> --> Int 
+< <program> --> Begin <stmt-list> End 
+---
+> <primary> --> LParen <expr> RParen #Copy($2,$$) 
+> <primary> --> <ident> #Copy($1,$$) 
+> <primary> --> Int #ProcessLiteral($$) 
+> <program> --> #Start Begin <stmt-list> End 
+55c55
+< <stmt> --> <ident> AssignOp <expr> Semicolon 
+---
+> <stmt> --> <ident> AssignOp <expr> Semicolon #Assign($1,$3) 
+58c58
+< <system-goal> --> <program> Eof 
+---
+> <system-goal> --> <program> Eof #Finish 
+150,151c150,151
+< (<addOp>, MinusOp) --> <addOp>MinusOp 
+< (<addOp>, PlusOp) --> <addOp>PlusOp 
+---
+> (<addOp>, MinusOp) --> 
+> (<addOp>, PlusOp) --> 
+167,169c167,169
+< (<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, Id) --> 
+> (<expr-list>, Int) --> 
+> (<expr-list>, LParen) --> 
+175c175
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+179c179
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+209,211c209,211
+< (<expr>, Id) --> <expr><primary> <primary-tail> 
+< (<expr>, Int) --> <expr><primary> <primary-tail> 
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, Id) --> 
+> (<expr>, Int) --> 
+> (<expr>, LParen) --> 
+217c217
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+221c221
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+251c251
+< (<id-list>, Id) --> <id-list><ident> <id-tail> 
+---
+> (<id-list>, Id) --> 
+293c293
+< (<ident>, Id) --> <ident>Id 
+---
+> (<ident>, Id) --> 
+339,340c339,340
+< (<primary-tail>, MinusOp) --> <primary-tail><addOp> <expr> 
+< (<primary-tail>, PlusOp) --> <primary-tail><addOp> <expr> 
+---
+> (<primary-tail>, MinusOp) --> 
+> (<primary-tail>, PlusOp) --> 
+356,358c356,358
+< (<primary>, Id) --> <primary><ident> 
+< (<primary>, Int) --> <primary>Int 
+< (<primary>, LParen) --> <primary>LParen <expr> RParen 
+---
+> (<primary>, Id) --> 
+> (<primary>, Int) --> 
+> (<primary>, LParen) --> 
+364c364
+< (<primary>, LParen) --> <primary>LParen <expr> RParen 
+---
+> (<primary>, LParen) --> 
+368c368
+< (<primary>, LParen) --> <primary>LParen <expr> RParen 
+---
+> (<primary>, LParen) --> 
+381,382c381,382
+< (<primary-tail>, MinusOp) --> <primary-tail><addOp> <expr> 
+< (<primary-tail>, PlusOp) --> <primary-tail><addOp> <expr> 
+---
+> (<primary-tail>, MinusOp) --> 
+> (<primary-tail>, PlusOp) --> 
+394c394
+< (<program>, Begin) --> <program>Begin <stmt-list> End 
+---
+> (<program>, Begin) --> 
+461c461
+< (<stmt>, Id) --> <stmt><ident> AssignOp <expr> Semicolon 
+---
+> (<stmt>, Id) --> 
+499c499
+< (<system-goal>, Begin) --> <system-goal><program> Eof 
+---
+> (<system-goal>, Begin) --> 
+524,526c524,526
+< (<expr>, Id) --> <expr><primary> <primary-tail> 
+< (<expr>, Int) --> <expr><primary> <primary-tail> 
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, Id) --> 
+> (<expr>, Int) --> 
+> (<expr>, LParen) --> 
+532c532
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+536c536
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+566,568c566,568
+< (<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, Id) --> 
+> (<expr-list>, Int) --> 
+> (<expr-list>, LParen) --> 
+574c574
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+578c578
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+587c587
+< (<id-list>, Id) --> <id-list><ident> <id-tail> 
+---
+> (<id-list>, Id) --> 
+608,610c608,610
+< (<expr>, Id) --> <expr><primary> <primary-tail> 
+< (<expr>, Int) --> <expr><primary> <primary-tail> 
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, Id) --> 
+> (<expr>, Int) --> 
+> (<expr>, LParen) --> 
+616c616
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+620c620
+< (<expr>, LParen) --> <expr><primary> <primary-tail> 
+---
+> (<expr>, LParen) --> 
+629c629
+< (<id-list>, Id) --> <id-list><ident> <id-tail> 
+---
+> (<id-list>, Id) --> 
+650,652c650,652
+< (<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, Id) --> 
+> (<expr-list>, Int) --> 
+> (<expr-list>, LParen) --> 
+658c658
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+662c662
+< (<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+---
+> (<expr-list>, LParen) --> 
+667,668c667,668
+< <addOp>:       x              x              x              x              x              x              x              x              x              21             20             x              x              x              x              x              x              x              x              x              
+< <expr-list>:   x              x              x              x              x              11             11             11             x              x              x              x              x              11             x              x              x              11             x              x              
+---
+> <addOp>:       x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <expr-list>:   x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+670c670
+< <expr>:        x              x              x              x              x              14             14             14             x              x              x              x              x              14             x              x              x              14             x              x              
+---
+> <expr>:        x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+672c672
+< <id-list>:     x              x              x              x              x              8              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+---
+> <id-list>:     x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+674c674
+< <ident>:       x              x              x              x              x              22             x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+---
+> <ident>:       x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+676,679c676,679
+< <primary-tail>:x              x              16             x              x              x              x              x              x              15             15             16             x              x              16             16             x              x              16             16             
+< <primary>:     x              x              x              x              x              18             19             17             x              x              x              x              x              17             x              x              x              17             x              x              
+< <primary-tail>:x              x              16             x              x              x              x              x              x              15             15             16             x              x              16             16             x              x              16             16             
+< <program>:     x              1              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+---
+> <primary-tail>:x              x              16             x              x              x              x              x              x              x              x              16             x              x              16             16             x              x              16             16             
+> <primary>:     x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <primary-tail>:x              x              16             x              x              x              x              x              x              x              x              16             x              x              16             16             x              x              16             16             
+> <program>:     x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+682c682
+< <stmt>:        x              x              x              x              x              5              x              x              x              x              x              x              6              x              x              x              7              x              x              x              
+---
+> <stmt>:        x              x              x              x              x              x              x              x              x              x              x              x              6              x              x              x              7              x              x              x              
+684,685c684,685
+< <system-goal>: x              23             x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+< <expr>:        x              x              x              x              x              14             14             14             x              x              x              x              x              14             x              x              x              14             x              x              
+---
+> <system-goal>: x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <expr>:        x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+687,691c687,691
+< <expr-list>:   x              x              x              x              x              11             11             11             x              x              x              x              x              11             x              x              x              11             x              x              
+< <id-list>:     x              x              x              x              x              8              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+< <expr>:        x              x              x              x              x              14             14             14             x              x              x              x              x              14             x              x              x              14             x              x              
+< <id-list>:     x              x              x              x              x              8              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+< <expr-list>:   x              x              x              x              x              11             11             11             x              x              x              x              x              11             x              x              x              11             x              x              
+---
+> <expr-list>:   x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <id-list>:     x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <expr>:        x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <id-list>:     x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+> <expr-list>:   x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              x              
+699c699
+< (<system-goal>, Begin) predict: "<system-goal>" --> "<program>" "Eof" 
+---
+> (<system-goal>, Begin) predict: "" --> 
+702,730c702
+< WTF: <program> "<"
+< nonterminal: <program>
+< (<program>, Begin) predict: "<program>" --> "Begin" "<stmt-list>" "End" 
+< Begin A := 5 ; End Eof                                                                              <program> Eof EOP:0:0:1:2:EOP                                                                       
+< 
+< WTF: Begin "B"
+< X is a TERMINAL
+< match:Begin
+< Begin A := 5 ; End Eof                                                                              Begin <stmt-list> End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                           
+< WTF: <stmt-list> "<"
+< nonterminal: <stmt-list>
+< (<stmt-list>, Id) predict: "<stmt-list>" --> "<stmt>" "<stmt-tail>" 
+< Id := 5 ; End Eof                                                                                   <stmt-list> End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                                 
+< 
+< WTF: <stmt> "<"
+< nonterminal: <stmt>
+< (<stmt>, Id) predict: "<stmt>" --> "<ident>" "AssignOp" "<expr>" "Semicolon" 
+< Id := 5 ; End Eof                                                                                   <stmt> <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                          
+< 
+< WTF: <ident> "<"
+< nonterminal: <ident>
+< (<ident>, Id) predict: "<ident>" --> "Id" 
+< Id := 5 ; End Eof                                                                                   <ident> AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< 
+< WTF: Id "I"
+< X is a TERMINAL
+< match:Id
+< Id := 5 ; End Eof                                                                                   Id EOP:7:9:9:13:EOP AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< WTF: EOP:7:9:9:13:EOP "E"
+---
+> WTF: EOP:0:0:1:2:EOP "E"
+732,793d703
+< WTF: AssignOp "A"
+< X is a TERMINAL
+< match:AssignOp
+< AssignOp 5 ; End Eof                                                                                AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< WTF: <expr> "<"
+< nonterminal: <expr>
+< (<expr>, Int) predict: "<expr>" --> "<primary>" "<primary-tail>" 
+< Int ; End Eof                                                                                       <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< 
+< WTF: <primary> "<"
+< nonterminal: <primary>
+< (<primary>, Int) predict: "<primary>" --> "Int" 
+< Int ; End Eof                                                                                       <primary> <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< 
+< WTF: Int "I"
+< X is a TERMINAL
+< match:Int
+< Int ; End Eof                                                                                       Int EOP:10:13:13:15:EOP <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< WTF: EOP:10:13:13:15:EOP "E"
+< POPPING EOP
+< WTF: <primary-tail> "<"
+< nonterminal: <primary-tail>
+< (<primary-tail>, Semicolon) predict: "<primary-tail>" --> "Lambda" 
+< Semicolon End Eof                                                                                   <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< 
+< WTF: Lambda "L"
+< X is a TERMINAL
+< match:Lambda
+< Semicolon End Eof                                                                                   Lambda EOP:10:13:14:15:EOP EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+< WTF: EOP:10:13:14:15:EOP "E"
+< POPPING EOP
+< WTF: EOP:7:9:10:13:EOP "E"
+< POPPING EOP
+< WTF: Semicolon "S"
+< X is a TERMINAL
+< match:Semicolon
+< Semicolon End Eof                                                                                   Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP       
+< WTF: EOP:4:7:7:9:EOP "E"
+< POPPING EOP
+< WTF: <stmt-tail> "<"
+< nonterminal: <stmt-tail>
+< (<stmt-tail>, End) predict: "<stmt-tail>" --> "Lambda" 
+< End Eof                                                                                             <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                 
+< 
+< WTF: Lambda "L"
+< X is a TERMINAL
+< match:Lambda
+< End Eof                                                                                             Lambda EOP:4:7:8:9:EOP EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                      
+< WTF: EOP:4:7:8:9:EOP "E"
+< POPPING EOP
+< WTF: EOP:2:4:4:7:EOP "E"
+< POPPING EOP
+< WTF: End "E"
+< X is a TERMINAL
+< match:End
+< End Eof                                                                                             End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                                             
+< WTF: EOP:1:2:2:4:EOP "E"
+< POPPING EOP
+< WTF: Eof "E"
+< X is a TERMINAL
+< match:Eof
+< Eof                                                                                                 Eof EOP:0:0:1:2:EOP                                                                                 

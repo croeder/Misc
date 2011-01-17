@@ -1,0 +1,93 @@
+<html>
+<body>
+<b>
+CSC 5542 Neural Networks<br>
+CU Denver Fall 2004<br>
+Chris Roeder<br>
+</b>
+<p>
+
+<h3>Introduction</h3>
+This project explores Binary Hopfield networks applied to the problems 
+of pattern recognition, and noisy pattern recognition. 
+<P>
+A Java2 applet accompanies this project. It should run from your browser
+if you have the Java2 plugin.<br>
+Get the plugin <a href="http://java.sun.com/products/plugin">here</a>.<br>
+Go to the applet page <a href="BinHopApplet.html">here</a>.
+Source code (java) includes the following files: 
+<a href=BinHop.java>BinHop</a>, <a href=BinHopGui.java>BinHopGui</a>, 
+<a href=Image.java>Image</a>.
+<h3> Questions </h3>
+<ol>
+<li><b>Test each pattern</b><br>
+  <ol>
+  <li> The patterns converge in very few iterations, but they don't necessarily 
+       converge to the desired patterns. Following are pictures after training
+       on all four images. The patterns can be painted in large and small sizes.
+       There are three different types of patterns. The first is an attempt at a
+       &quot;normal&quot; numeral font. The second is based on 7 segment LEDs, and
+       the last is just a set of simple, yet very different (at least in placement)
+       symbols. None of the variations made a huge difference in the performance of
+       the network. While the &quot;bits different&quot; display isn't working, the 
+       differences in recognized pattern and what is/should be there is clearly  
+       significant. The differences aren't just  a few random bits, but so much
+       so that the original isn't recognizeable.
+       <ul>
+          <li><img src=smallzero.png>zero
+          <li><img src=smallone.png>one
+          <li><img src=smalltwo.png>two
+          <li><img src=smallthree.png>three
+      </ul>
+      Here are pictures of other symbols. Each attempt at recognition was with a network
+      trained on four symbols from that familly.
+      <ul>
+          <li><img src=largezero.png>
+          <li><img src=largezero2.png>
+          <li><img src=largeone2.png>
+      </ul>
+  </ol>
+<li><b>Pattern Modification</b><br>
+I tried a few different patterns. All stabilized very quickly. The display would go at least 
+5 iterations, but would usually stabilize after one, or rarely two. I wondered if the 
+7 segment numerals from LED displays would work any better because its always the same
+segments that are recognized. Surprisingly, the were the least stable and the most
+distorted. You can't see it from snapshots, but there are phases where the network
+goes from completely white to completely black and back again. I also tried patterns
+that aren't numbers, but just simple yet different patterns. It didn't work well
+for them either. Following are some screen shots:
+<ul>
+<li> <img src=largeone3.png>
+<li> <img src=largetwo3.png>
+</ul>
+<li><b>Noisy Tests</b><br>
+This table shows the number of different bits for the various
+images at various noise levels. These are 20x24 pixel images for a 
+total of 480 pixels.
+<table border>
+<tr>
+   <th>Image</th><th>5%</th><th>10%</th><th>20%</th>
+</tr>
+<tr><td>One</td><td>52</td><td>78</td><td>102</td></tr>
+<tr><td>One</td><td>83</td><td>79</td><td>168</td></tr>
+<tr><td>One</td><td>135</td><td>178</td><td>253</td></tr>
+<tr><td>One</td><td>36</td><td>92</td><td>139</td></tr></table>
+<ul>
+<li><img src=noisezero5.png>
+<li> <img src=noiseone5.png>
+<li> <img src=noisetwo5.png>
+<li><img src=noisethree5.png>
+<li><img src=noisezero10.png>
+<li> <img src=noiseone10.png>
+<li> <img src=noisetwo10.png>
+<li><img src=noisethree10.png>
+<li><img src=noisezero20.png>
+<li> <img src=noiseone20.png>
+<li> <img src=noisetwo20.png>
+<li><img src=noisethree20.png>
+
+</ul>
+
+</ol>
+</body>
+</html>

@@ -1,0 +1,173 @@
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+Testing is_non_terminal........passed?
+------printing-------
+------find lambda-------
+<expr-tail> <id-tail> <primary-tail> <stmt-tail> Lambda 
+------test ComputeFirst-------
+Testing compute first on production for <addOp>
+--> computed firstSet
+Testing compute first on production for <addOp>
+--> computed firstSet
+Testing compute first on production for <expr-list>
+--> computed firstSet<primary> 
+Testing compute first on production for <expr-tail>
+--> computed firstSet
+Testing compute first on production for <expr-tail>
+--> computed firstSet
+Testing compute first on production for <expression>
+--> computed firstSet
+Testing compute first on production for <id-list>
+--> computed firstSet
+Testing compute first on production for <id-tail>
+--> computed firstSet
+Testing compute first on production for <id-tail>
+--> computed firstSet
+Testing compute first on production for <primary-tail>
+--> computed firstSet
+Testing compute first on production for <primary-tail>
+--> computed firstSet
+Testing compute first on production for <primary>
+--> computed firstSet
+Testing compute first on production for <primary>
+--> computed firstSet
+Testing compute first on production for <primary>
+--> computed firstSet
+Testing compute first on production for <program>
+--> computed firstSet
+Testing compute first on production for <stmt-list>
+--> computed firstSet
+Testing compute first on production for <stmt-tail>
+--> computed firstSet<stmt> 
+Testing compute first on production for <stmt-tail>
+--> computed firstSet
+Testing compute first on production for <stmt>
+--> computed firstSet
+Testing compute first on production for <stmt>
+--> computed firstSet
+Testing compute first on production for <stmt>
+--> computed firstSet
+Testing compute first on production for <system-goal>
+--> computed firstSet
+
+------fillFirstSet-------
+<addOp> --> 
+<expr-list> --> <expression> <primary> 
+<expr-tail> --> 
+<expression> --> <primary> 
+<id --> 
+<id-list> --> 
+<id-tail> --> 
+<primary-tail> --> <addOp> 
+<primary> --> 
+<program> --> 
+<stmt-list> --> <stmt> 
+<stmt-tail> --> <stmt-list> <stmt> 
+<stmt> --> 
+<system-goal> --> <program> 
+AssignOp --> 
+Begin --> 
+Comma --> 
+EOF --> 
+End --> 
+Id --> 
+LParen --> 
+Lambda --> Lambda 
+RParen --> 
+Read --> 
+Semi --> 
+Write --> 
+intLiteral --> 
+minusOp --> 
+plusOp --> 
+tail> --> 
+
+------fillFollowSet-------
+<addOp> --> <primary> 
+<expression> --> 
+<id --> 
+<primary> --> <addOp> 
+<stmt> --> <stmt-list> <stmt> 
+<system-goal> --> Lambda 
+AssignOp --> 
+Begin --> 
+Comma --> 
+EOF --> 
+End --> 
+Id --> 
+LParen --> 
+Lambda --> 
+RParen --> 
+Read --> 
+Semi --> 
+Write --> 
+intLiteral --> 
+minusOp --> 
+plusOp --> 
+tail> --> 
+
+----- fillPredictSet-----
+<addOp> --> <primary> 
+<addOp> --> <primary> 
+<expr-list> --> <primary> 
+<expr-tail> --> 
+<expr-tail> --> 
+<expression> --> 
+<id-list> --> 
+<id-tail> --> 
+<id-tail> --> 
+<primary-tail> --> 
+<primary-tail> --> 
+<primary> --> <addOp> 
+<primary> --> <addOp> 
+<primary> --> <addOp> 
+<program> --> 
+<stmt-list> --> 
+<stmt-tail> --> <stmt> 
+<stmt-tail> --> 
+<stmt> --> <stmt-list> <stmt> 
+<stmt> --> <stmt-list> <stmt> 
+<stmt> --> <stmt-list> <stmt> 
+<system-goal> --> Lambda 
+

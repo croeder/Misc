@@ -1,0 +1,43 @@
+#include "scanner.h"
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+
+int main(int argc, char **argv) {
+	cout << "initializing r..." << endl;
+  	Scanner r("orig.micro");
+  	Token t;
+  	while ((t = r.getNextToken()) != EofTok) {
+		cout << t << endl;
+		r.advance();
+	}
+
+
+	cout << "initializing s..." << endl;
+  	Scanner s("std_pgm_1.micro");
+  	while ((t = s.getNextToken()) != EofTok) {
+    	cout << setw(10)<< s.decodeTokenType(t) << "  " << s.getTokenBuffer() 
+         << endl;
+    	s.advance();
+  	}
+
+cout << endl << endl << endl;
+
+	cout << "initializing p..." << endl;
+ 	Scanner p("orig.micro");
+ 	Token t1 = s.getNextToken();
+ 	Token t2 = s.getNextToken();
+ 	if (t1 != t2)
+    	cout << "Error: getNextToken should only give a different token "
+         << "after calling advance." << endl;
+	 p.advance();
+ 	t2 = p.getNextToken();
+	 if (t1 == t2)
+    cout << "Error: getNextToken should only give same token "
+         << "after not calling advance (unless two identical tokens " 
+         << "repeat in the input)" << endl;
+    cout << "t1: " << (int) t1 << " t2: " << (int) t2 << endl;
+    cout << p.decodeTokenType(t2) << endl;
+}

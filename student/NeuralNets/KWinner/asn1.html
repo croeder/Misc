@@ -1,0 +1,88 @@
+<html>
+<head><title>CS5542 Assignment 1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<p>Fall 2004</p>
+<p>CSC 5542</p>
+<p>Neural Networks</p>
+<p>Chris Roeder, croeder@croeder.com</p>
+<h3>Assignment 1</h3>
+<ol>
+  <li> 
+    <h4>Source Code (C#)</h4>
+    <ul>
+      <li><a href="KWTA.cs">KWTA </a> 
+      <li><a href="GraphDisplay.cs">GraphDisplay</a>
+      <li><a href="TextDriver.cs">Text Driver</a>
+    </ul>
+  </li>
+  <p>
+  <li>
+    <h4>Questions</h4>
+  </li>
+  <ol>
+  <li><b>Does the Energy Decrease with each iteration?</b><br>
+         For now (9/2/04), I'm seeing a slight increase. See the graph.
+         Stay tuned for future debugging...<br>
+         I fixed it. Yes it decreases.
+         <img src=graph.png><br>
+          </li>
+  <li><b>Does the network converge to a state that corresponds to
+       &quot;K-winners&quot;?</b><br>
+       Yes, 0.5 finds 1, 1.5 finds 2 etc.
+       <a href=q2data.txt>data</a>
+       </li>
+  <li><b>Try a case where all the activations are equal (non-zero).</b> <br>
+     Since they all have the same value, there are no winners. They all
+     remain equal. <a href=q3data.txt>data</a> <br>
+     <img src=graph2.png>
+  </li>
+   
+  <li><b>Show that the k-winner states are stable equilibrium when the external input 
+    satisfies k-1 &lt; ext &lt; k</b><br>
+
+    The state values come from<br>
+     a<sub>i</sub>(t+1) =
+    a<sub>i</sub>(t) + step * <u>(M-a<sub>i</sub>(t))*(a<sub>i</sub>(t) -m)</u>
+    * <u>net<sub>i</sub>(t)</u>.<br>
+    The two underlined parts contribute differently to the progression of a neuron's
+    value. <p>
+    The first is a kind of &quot; volume &quot; control that makes smaller
+    changes for values closer to <i>either</i> m or M. Values in the middle of
+    the range create larger values. For m=0 and M=1 consider an activation of
+    0.1. It ends up being step * 0.9 * 0.1. Notice that its the same value as the
+    one created for an activation of 0.9: step * 0.1 * 0.9. Both equal 0.09 * step.<br>
+    Consider an activation at 0.5: step * 0.5 * 0.5  or 0.25 * step, a larger value.
+    So for values further away from the extremes, this factor is larger.
+    <p>
+    The second underlined part is more interesting as it controls the direction
+    of the changes. net<sub>i</sub>(t) = [Wa{t) + e(t)]<sub>i</sub>.<br>
+    W is the connection matrix and a is a column-vector of activations,
+    so Wa(t) is a row-vector of activation sums. That is, each entry in the
+    row-vector is the sum of all the other activations...and the value is negative
+    because W is made up of a bunch of -1's and 0's.<br>
+    e(t) is the external inputs to each neuron.<br>
+    If we consider just one neuron, then this is the external input minus the
+    sum of the other neurons' activations. It is the key to why particular values
+    of <i>ext</i> result in different numbers of winners. If our neuron is
+    to be a winner,  <i>ext</i> has to
+    be big enough to overcome all the other neurons' small activation values
+    as well as the other winners' large activation values. If ext is  0.5 and
+    all the other 19 neurons have activations between 0 and 1 (averaging 0.5)
+    the value will be negative a lot initially. Since step is small (0.005)
+    this will result in a small amount being subtracted from each activation.
+    Eventually so much will be subtracted from each that the sum of the activations
+    is closer to ext. At the same time the values of the activations are
+    settling down closer to 1 and 0. If ext is 0.5, no neuron can develop an
+    activation value of 1 because this factor will always be negative.
+    If ext is 1.5 there is enough energy to cover one neuron keeping a winning
+    value of 1. With ext = 2.5 there is enough to cover two, and so on.
+
+
+    </li>
+	</ol>
+</ol>
+</body>
+</html>

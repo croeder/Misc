@@ -1,0 +1,4 @@
+<system-goal> -> <program> EOF 
+<program> -> Begin <stmt-list> End 
+<stmt-list> -> <stmt> Semi 
+<stmt-list> -> <stmt> Semi <stmt-list> 

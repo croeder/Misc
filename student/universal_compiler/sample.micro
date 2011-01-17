@@ -1,0 +1,16 @@
+
+BEGIN
+    READ(a,b,c);
+	read(a,b,c);
+    READ ( a, b, c ) ;
+    c := a + b;
+    a := a - c;
+    WRITE(c,a);
+    -- bogus stuff
+   new_c := ( (b-(7)+(c+d)) ) - (3-a1);
+   new_d := ( (b-(7)+(c+d))) ) - ((3-a1);
+   mult_and_power   := 3 * a ** 4 / 4 + 3;
+   mult_and_power_2 := (3 * a) ** 4 / (4 + 3);
+   := b+d;
+   a : = goofy;xf
+END

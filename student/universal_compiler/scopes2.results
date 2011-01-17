@@ -1,0 +1,35 @@
+INSTR:Declare	A_2	Integer
+INSTR:Store	A_2	1
+INSTR:Store	A_2	2
+INSTR:Declare	B_3	Integer
+INSTR:Store	B_3	2
+INSTR:Store	A_2	3
+INSTR:Store	B_3	3
+INSTR:Declare	C_4	Integer
+INSTR:Store	C_4	3
+INSTR:Store	A_2	4
+INSTR:Store	B_3	4
+INSTR:Store	C_4	4
+INSTR:Declare	A1_1	Integer
+INSTR:Read	A1_1
+INSTR:Declare	New_A_1	Integer
+INSTR:Read	New_A_1
+INSTR:Declare	D_1	Integer
+INSTR:Read	D_1
+INSTR:Declare	B_1	Integer
+INSTR:Read	B_1
+INSTR:Declare	C_1	Integer
+INSTR:-	New_A_1	D_1	temp_0
+INSTR:-	temp_0	75	temp_1
+INSTR:+	A1_1	temp_1	temp_2
+INSTR:Store	C_1	temp_2
+INSTR:Declare	New_C_1	Integer
+INSTR:+	C_1	D_1	temp_3
+INSTR:+	7	temp_3	temp_4
+INSTR:-	B_1	temp_4	temp_5
+INSTR:-	3	A1_1	temp_6
+INSTR:-	temp_5	temp_6	temp_7
+INSTR:Store	New_C_1	temp_7
+INSTR:Write	C_1	Integer
+INSTR:+	A1_1	New_C_1	temp_8
+INSTR:Write	temp_8	Integer

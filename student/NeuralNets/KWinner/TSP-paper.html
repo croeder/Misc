@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>TSP-paper</title>
+</head>
+<body>
+Fall 2004<br>
+CSC 5542<br>
+Neural Networks<br>
+Chris Roeder, croeder@croeder.com<br>
+<br>
+<h3>Assignment 2 : Travelling Salesman Problem</h3>
+<div style="text-align: center;"><br>
+</div>
+<h2 style="text-align: center;">A Neural Network Approach to the
+Travelling Salesman Problem</h2>
+This&nbsp; page describes the Travelling Salesman Problem and a neural
+network approach to solving it.&nbsp; The focus is on a satisfiying
+summary of the intuitinal aspects of the solution. <br>
+<h4>The Problem</h4>
+The Travelling Salesman Problem is the problem faced by a salesman who
+must visit&nbsp; a number of cities with the least amount of travel.
+The Travelling Salesman problem has been described mathematically as a
+Hamiltonian path of minimum length of a graph. This just means it is a
+distinct cycle that contains all the nodes (BECKMAN).&nbsp; Other
+authors describe its complexity as NP (LEWIS).&nbsp; For example a 30
+city tour would require examining 29! &gt; 10<sup>30</sup>.<br>
+<h4>Traditional Solutions</h4>
+"Real" Solutions for the TSP are quite varied. They include branch and
+bound algorithms which can handle up to 60 cities (WIKIPEDIA-1). Linear
+Programming has been used&nbsp; for tours up to 200 cities, and a
+specialization called the cutting method was able to solve a&nbsp;
+15112 city problem in 2001 (WIKIPEDIA-1). Work on this algorithm
+included work by Ray Fulkerson of the Ford-Fulkerson max-flow algorithm
+(there is also a mathematical research prize name for him)
+(WIKIPEDIA-22).<br>
+<h4>Early Neural Networks Approaches</h4>
+Hopfield and Tank&nbsp; suggested an approach in 1985 which spawned
+much work on the TSP problem, and other problems as well (HERTZ). A
+different neural net approach to the problem is the elastic ring method
+that uses a Kohonen network. While not discussed here, it seems
+interesting because of the intriguing intuition it is based on: a
+rubber band.<br>
+<br>
+Hopfield and Tank's approach is to build a network of NxN neurons where
+there are N cities in the tour. The cities are rows&nbsp; and the
+possible stops are the columns. Cities are connected to each other with
+weights related to the distance between them. In the Hopfield and Tank
+model the values are binary. Wolfe's fuzzy approach (WOLFE-1) makes the
+values
+continuous in efforts to elucidate the inner workings of the network.<br>
+<h4>Dr. Wolfe's Fuzzy Approach&nbsp;</h4>
+<h5>("Oh How I Regret Having Taken DiffEQ Over the Summer of '87 (and
+the resulting 'C')")</h5>
+As noted above Dr. Wolfe's Fuzzy approach is basically a Hopfield and
+Tank approach, but with a continuous (within the limits of a discrete
+representation) rather than a binary&nbsp; value for the activation of
+each neuron. This raises the issue of how to interpret&nbsp; the
+activations, and this is addressed with the "fuzzy readout."&nbsp; As
+the Dr. notes in the introduction to his paper, the fuzzy approach
+makes it easier to see what's going on in the network.&nbsp; I don't
+know that it really behaves any differently, just that its easier to
+observe.&nbsp;&nbsp; What follows is a quick summary of his paper
+interspersed with editorial comments about&nbsp; my old and rusty math
+skills.<br>
+<br>
+The first section of the paper after describing the network is one on a
+"subspace approach". Unfortunately I didn't understand it well enough
+to discuss.&nbsp; Basically it discusses using an orthogonal projection
+to shift the feasible space&nbsp; from a zero-sum space to an affine
+space where the sums are one. I understand how this works with the
+average of the row and column values, but not why.&nbsp; Perhaps more
+time spent with WOLFE-2 would help.<br>
+<br>
+In the next section,&nbsp; Wolfe describes some concepts that you can
+see in the activation graph as the network "cooks."<br>
+<ul>
+  <li>The <span style="font-style: italic;">centroid&nbsp; </span>is
+the center of mass of all the cities.</li>
+  <li>The <span style="font-style: italic;">principal axis </span>is
+the long dimension of whatever shape the cities take. If it were an
+ellipse, it would be the long axis.</li>
+  <li>The <span style="font-style: italic;">partition<span
+ style="font-style: italic;">&nbsp; </span></span>is a line that is
+(more/less) perpendicular to the principal axis&nbsp; and bisects it.</li>
+</ul>
+Other concepts are mentioned, but introduced as standard with a
+reference to a book&nbsp; I don't have immediately available.
+(principal components and correlation matrix).<br>
+<br>
+The following section , "TSP Heuristics" uses these concepts to explain
+some of the behaviour you see in the display. <br>
+<ul>
+  <li>A <span style="font-style: italic;">Centroid Tour </span>is a
+tour you get by&nbsp; sweeping a radius out from the centroid around
+the centroid. As the radius sweeps around, it picks up the cities in an
+order the centroid tour would have. <br>
+  </li>
+  <li>&nbsp;A <span style="font-style: italic;">Monotonic Tour&nbsp; </span>is
+the tour you would get if you started at one end of the major axis and
+swept a perpendicular line along it. You can see this in the display
+when a circle is full of zig-zags that don't make any sense.</li>
+  <li>A <span style="font-style: italic;">Nearest City Tour&nbsp; </span>is
+a tour that would result from a greedy algorithm that started at one
+city and just built the tour by finding the next-closest city. This
+would be a fun algorithm to add to the application. Even more fun would
+be to find a city configuration that results in a really bad tour when
+the Nearest City Tour is used.</li>
+  <li>If Nearest City is reminiscent of&nbsp; Prim's algorithm, then <span
+ style="font-style: italic;">2-Opt</span> is reminiscent of Kruskal's.
+Instead of choosing the shortest edge as you build the tour end-to-end,
+2-Opt builds the tour by replacing edges through the whole tour. <br>
+  </li>
+</ul>
+The next section discusses the fuzzy readout. The fuzzy readout
+basically looks for the maximum value for a city's stop.<br>
+<br>
+Before discussing performance and other issues, the paper discusses the
+Phase I dynamics and presents proofs of how the centroid tour evolves
+in the network.&nbsp; <br>
+<ul>
+  <li>Eigen Values</li>
+  <li>Sinusoidal Emergence</li>
+  <li>Phase Differences at either end of&nbsp; the principal axis</li>
+  <li>Sinusoids develop in opposite phases&nbsp; for cities on either
+side of
+the partition.</li>
+</ul>
+A full understanding of these would give meaning to the "globs" that
+can be seen at various resolutions while the network is developing at
+very low energies.
+These are particularly fascinating when watching a circle tour form
+with the linear display scale set at "low". Note the scale of the
+values on the color bar at the bottom.<br>
+<ul>
+</ul>
+<img style="width: 446px; height: 264px;" alt="" src="tspGlob.png">
+<ul>
+  <br>
+  <br>
+</ul>
+<h3>Conclusion</h3>
+A truly satisfying explanation to the inner workings of such a neural
+net probably require auditing Linear Algebra and Diff. Eq. classes, as
+well as reading some of the cited papers.<br>
+<br>
+<h4>Possible Future Enhancements to Code<br>
+</h4>
+<ul>
+  <li>Show centroid, principal axis and partition on the city graph<br>
+  </li>
+  <li>Show centers of mass in the network display</li>
+  <li>Provide other initial configurations of cities:</li>
+  <ul>
+    <li>Ellipses</li>
+    <li>"Clumped" arrangements to show extreme behavior of the various
+phases. Ideally these clumped configurations would be ones that&nbsp;
+could "fool" a nearest-city tour. i.e. Is there a configuration that
+whose nearest city tour is not really a good solution?<br>
+    </li>
+    <li>Linear <br>
+    </li>
+  </ul>
+  <li>Show other&nbsp; tours</li>
+  <ul>
+    <li>Centroid&nbsp; Tour<br>
+    </li>
+    <li>Monotonic Tour<br>
+    </li>
+    <li>Nearest City Tours (best and worst)</li>
+  </ul>
+  <ul>
+    <li>2-Opt (almost like Kruskal's)</li>
+    <li>non-fuzzy solution<br>
+    </li>
+  </ul>
+</ul>
+<h4>Bugs</h4>
+Following is an incomplete list of bugs.&nbsp; <br>
+<ul>
+  <li>calibration and correctness of color scales hasn't been verified
+(and the code is ugly)</li>
+  <li>sometimes the simulation doesn't restart right&nbsp; after
+hitting 10,000<br>
+  </li>
+</ul>
+<br>
+<h4>References</h4>
+BECKMAN -&nbsp; F.S. Beckman,<span style="text-decoration: underline;">
+</span><span style="text-decoration: underline;">Mathematical
+Foundations of Programming</span>, p. 103, Addison Wesley, 1981<br>
+HERTZ - John Hertz, Anders Krogh, Richard G. Palmer, <span
+ style="text-decoration: underline;">Introduction to the Theory of
+Neural Computation</span>, p. 76, Addison Wesley, 1991<br>
+LEWIS -&nbsp; Harry R. Lewis, Christos H. Papadimitriou, <span
+ style="text-decoration: underline;">Elements of the Theory of
+Computation, p. 312, 337&nbsp;</span> Prentice-Hall, 1981<br>
+WIKIPEDIA-1 - http://en.wikipedia.org/wiki/Traveling_salesman_problem<br>
+WIKIPEDIA-2 - http://www.fact-index.com/d/d_/d__r__fulkerson.html<br>
+WOLFE-1&nbsp; - William J. Wolfe,&nbsp;<span
+ style="text-decoration: underline;"> A Fuzzy Hopfield-Tank Traveling
+Salesman Problem Model</span><br>
+WOLFE-2&nbsp; - William J. Wolfe and Richard M. Ulmer, <span
+ style="text-decoration: underline;">Orthogonal Projections Applied to
+the Assignment Problem</span><br>
+WOFLE-3 - William J. Wolfe, Jay A. Rothman, Edward H. Chang, William
+Aultman, and Garth Ripton, <span style="text-decoration: underline;">Harmonic
+Analysis of Homogenous Networks</span><br>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<head><title>CSC 5542 - Chris Roeder </title></head>
+<body>
+
+Fall 2004<br>
+CSC 5542 <br>
+Neural Nets<br>
+Chris Roeder <a href="mailto:croeder@croeder.com">croeder@croeder.com</a><br>
+<p>
+<h2>Assignment 5  Back Propagation</h2>
+<h4>
+<a href=backpropApplet.html>Applet Page</a></h4>
+<h4>Introduction</h4>
+This project explores a feed forward back propagation network 
+that is built to choose if a point is in one of two convex sets.
+The input is an x value and a y value for the coordinates of the point.
+The output is a pair of values. A value close to one for one of the values
+and a value close to zero for the other means the point is in one of
+the sets. The opposite configuration means its in the other set.<p>
+To be able to distinguish a convex shape, the network needs one row
+of intermediate, hidden neurons. Another row would be required for
+more complicated shapes that include some concave shapes. The basic
+thinking behind the network is that it mimics a number of lines 
+that make up the shape. 
+<p>
+Training the network is also quite interesting. In this case the
+weight values for the network are discovered by the network while
+training. In training, the network is exposed to points from either
+set. The output neuron activation levels are compared to expected
+values and the difference is used to tweak the weights of the
+connections from the hidden layer to the output layer. The process 
+is repeated to tweak the weights of the connections between 
+the input neurons and the hidden neurons. This backward flow from
+output to input gives the learning process its name: back propagation.
+
+<h4>Specific Questions</h4>
+<ol>
+<li><b>Source Code (Java)</b><br>
+  <a href=BackPropNet.java>BackPropNet.java</a>
+  <a href=BackPropGui.java>BackPropGui.java</a>
+  <a href=Point.java>Point.java</a>
+<li><b>Training</b><br>
+   The network got mostly trained within 100 epochs or so. More training helped,
+but only a little bit. I included a way to create new training
+   sets, and subsequent rounds of epochs on different training sets can be used
+   to add another 5% to the network's accuracy. (more under Decision Criteria below).
+<li><b>Step Size</b><br>
+I found a step size of 0.3 works quickly and well. 0.1 just
+takes more training and 0.6 didn't work much differently from 0.3.
+<li><b>Momentum</b><br> I didn't use a momentum term.
+<li><b>Weight Updates</b><br>
+Weights were updated after each point.
+<li><b>Number of Epochs to Learn</b>  <br>
+   100 epochs were usually usefull, but with new training sets I could see
+   small benefits up to 1000. If the sets of points are different with each
+training set the training is more effective.
+<li><b>Accuracy</b><br>
+   No more then 95% with extensive training, and 32 nodes. I got 
+8 nodes up to about 92%. Something like 80% with just one
+   round of 200 epochs on one set of 200 points.
+<li><b>Decision Criteria</b><br>
+   I check for both output neurons to be within theta of 1 or 0. I was using a
+   a value of 0.1. The 2.7GHz chip on my laptop does fine with 1000 test points
+   and it makes it easier to see the circle that the net sees. I tried to work
+with a value of 0.01 and it just took a lot of training (10x as much), 
+but the network eventually
+got there.
+</ol>
+Its a pretty robust network. With anywhere from 8 to 32 nodes, a step size of 
+0.1 to 0.5 and a testing theta value anywhere from 0.01 to 0.1 would get results
+around 90%. The biggest difference is how much training it would require.
+<h4>References</h4>
+<ul>
+<li> projects by Geoff Yaworski, Dave Fowler and Christian Ricci
+<li> &quot;An Introduction to Computing with Neural Nets", R.P. Lippmann
+</ul> 
+</body>
+</html>

@@ -1,0 +1,699 @@
+------printing-------
+--left--
+<addOp> <expr-list> <expr-tail> <expr> <id-list> <id-tail> <ident> <primary-tail> <primary> <program> <stmt-list> <stmt-tail> <stmt> <system-goal> 
+--right--
+<addOp> <expr> <expr-tail> <ident> <id-tail> <primary> <primary-tail> <program> <stmt-list> <stmt> <stmt-tail> AssignOp <expr> Begin <stmt-list> Comma <expr-list> <id-list> End Eof Id Int LParen <expr> Lambda MinusOp PlusOp RParen Read LParen <id-list> RParen Semicolon Write LParen <expr-list> RParen Semicolon 
+--terminals--
+AssignOp Begin Comma End Eof Id Int LParen Lambda MinusOp PlusOp RParen Read LParen RParen Semicolon Write LParen RParen Semicolon 
+--nonterminals--
+<addOp> <expr-list> <expr-tail> <expr> <expr-tail> <id-list> <id-tail> <ident> <id-tail> <primary-tail> <primary> <primary-tail> <program> <stmt-list> <stmt-tail> <stmt> <stmt-tail> <system-goal> <expr> <stmt-list> <expr-list> <id-list> <expr> <id-list> <expr-list> 
+
+--productions--
+<addOp> --> PlusOp 
+<addOp> --> MinusOp 
+<expr-list> --> <expr> <expr-tail> 
+<expr-tail> --> Comma <expr-list> 
+<expr-tail> --> Lambda 
+<expr> --> <primary> <primary-tail> 
+<id-list> --> <ident> <id-tail> 
+<id-tail> --> Comma <id-list> 
+<id-tail> --> Lambda 
+<ident> --> Id 
+<primary-tail> --> <addOp> <expr> 
+<primary-tail> --> Lambda 
+<primary> --> <ident> 
+<primary> --> Int 
+<primary> --> LParen <expr> RParen 
+<program> --> Begin <stmt-list> End 
+<stmt-list> --> <stmt> <stmt-tail> 
+<stmt-tail> --> <stmt-list> 
+<stmt-tail> --> Lambda 
+<stmt> --> <ident> AssignOp <expr> Semicolon 
+<stmt> --> Read LParen <id-list> RParen Semicolon 
+<stmt> --> Write LParen <expr-list> RParen Semicolon 
+<system-goal> --> <program> Eof 
+<expr-tail> <id-tail> <primary-tail> <stmt-tail> Lambda 
+------test initFirst-------
+                  <addOp> --> MinusOp PlusOp 
+              <expr-list> --> 
+              <expr-tail> --> Comma Lambda 
+                   <expr> --> 
+                <id-list> --> 
+                <id-tail> --> Comma Lambda 
+                  <ident> --> Id 
+           <primary-tail> --> Lambda 
+                <primary> --> Int LParen 
+                <program> --> Begin 
+              <stmt-list> --> 
+              <stmt-tail> --> Lambda 
+                   <stmt> --> Read Write 
+            <system-goal> --> 
+---------------------------
+------fillFirstSet-------
+ First Set contents: 
+                  <addOp> --> MinusOp PlusOp 
+              <expr-list> --> Id Int LParen 
+              <expr-tail> --> Comma Lambda 
+                   <expr> --> Id Int LParen 
+                <id-list> --> Id 
+                <id-tail> --> Comma Lambda 
+                  <ident> --> Id 
+           <primary-tail> --> Lambda MinusOp PlusOp 
+                <primary> --> Id Int LParen 
+                <program> --> Begin 
+              <stmt-list> --> Id Read Write 
+              <stmt-tail> --> Id Lambda Read Write 
+                   <stmt> --> Id Read Write 
+            <system-goal> --> Begin 
+                 AssignOp --> AssignOp 
+                    Begin --> Begin 
+                    Comma --> Comma 
+                      End --> End 
+                      Eof --> Eof 
+                       Id --> Id 
+                      Int --> Int 
+                   LParen --> LParen 
+                   Lambda --> Lambda 
+                  MinusOp --> MinusOp 
+                   PlusOp --> PlusOp 
+                   RParen --> RParen 
+                     Read --> Read 
+                Semicolon --> Semicolon 
+                    Write --> Write 
+------------------------------------------
+------fillFollowSet-------
+followSet(        <addOp>) = {"Id", "Int", "LParen",  }
+followSet(    <expr-list>) = {"RParen",  }
+followSet(    <expr-tail>) = {"RParen",  }
+followSet(         <expr>) = {"Comma", "RParen", "Semicolon",  }
+followSet(      <id-list>) = {"RParen",  }
+followSet(      <id-tail>) = {"RParen",  }
+followSet(        <ident>) = {"AssignOp", "Comma", "MinusOp", "PlusOp", "RParen", "Semicolon",  }
+followSet( <primary-tail>) = {"Comma", "RParen", "Semicolon",  }
+followSet(      <primary>) = {"Comma", "MinusOp", "PlusOp", "RParen", "Semicolon",  }
+followSet(      <program>) = {"Eof",  }
+followSet(    <stmt-list>) = {"End",  }
+followSet(    <stmt-tail>) = {"End",  }
+followSet(         <stmt>) = {"End", "Id", "Read", "Write",  }
+followSet(  <system-goal>) = {"Lambda",  }
+
+----- fillPredictSet-----
+{                      "Begin",  } predicts:      <program> --> Begin <stmt-list> End                
+{ "Comma",                       } predicts: <expr-tail>    --> Comma <expr-list>                    
+{ "Comma", "RParen", "Semicolon",  } predicts: <primary-tail> --> Lambda                               
+{ "End",                         } predicts: <stmt-tail>    --> Lambda                               
+{ "Id",                          } predicts: <id-list>      --> <ident> <id-tail>                    
+{ "Id", "Int", "LParen",         } predicts: <expr-list>    --> <expr> <expr-tail>                   
+{ "Id", "Read", "Write",         } predicts: <stmt-list>    --> <stmt> <stmt-tail>                   
+{ "Int",                         } predicts: <primary>      --> Int                                  
+{ "LParen",                      } predicts: <primary>      --> LParen <expr> RParen                 
+{ "MinusOp",                     } predicts: <addOp>        --> MinusOp                              
+{ "MinusOp", "PlusOp",           } predicts: <primary-tail> --> <addOp> <expr>                       
+{ "PlusOp",                      } predicts: <addOp>        --> PlusOp                               
+{ "RParen",                      } predicts: <expr-tail>    --> Lambda                               
+{ "Read",                        } predicts: <stmt>         --> Read LParen <id-list> RParen Semicolon 
+{ "Write",                       } predicts: <stmt>         --> Write LParen <expr-list> RParen Semicolon 
+----- fillParseTable-----
+(<addOp>, AssignOp) --> 
+(<addOp>, Begin) --> 
+(<addOp>, Comma) --> 
+(<addOp>, End) --> 
+(<addOp>, Eof) --> 
+(<addOp>, Id) --> 
+(<addOp>, Int) --> 
+(<addOp>, LParen) --> 
+(<addOp>, Lambda) --> 
+(<addOp>, MinusOp) --> <addOp>MinusOp 
+(<addOp>, PlusOp) --> <addOp>PlusOp 
+(<addOp>, RParen) --> 
+(<addOp>, Read) --> 
+(<addOp>, LParen) --> 
+(<addOp>, RParen) --> 
+(<addOp>, Semicolon) --> 
+(<addOp>, Write) --> 
+(<addOp>, LParen) --> 
+(<addOp>, RParen) --> 
+(<addOp>, Semicolon) --> 
+
+(<expr-list>, AssignOp) --> 
+(<expr-list>, Begin) --> 
+(<expr-list>, Comma) --> 
+(<expr-list>, End) --> 
+(<expr-list>, Eof) --> 
+(<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Lambda) --> 
+(<expr-list>, MinusOp) --> 
+(<expr-list>, PlusOp) --> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Read) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+(<expr-list>, Write) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+
+(<expr-tail>, AssignOp) --> 
+(<expr-tail>, Begin) --> 
+(<expr-tail>, Comma) --> <expr-tail>Comma <expr-list> 
+(<expr-tail>, End) --> 
+(<expr-tail>, Eof) --> 
+(<expr-tail>, Id) --> 
+(<expr-tail>, Int) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, Lambda) --> 
+(<expr-tail>, MinusOp) --> 
+(<expr-tail>, PlusOp) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Read) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Semicolon) --> 
+(<expr-tail>, Write) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Semicolon) --> 
+
+(<expr>, AssignOp) --> 
+(<expr>, Begin) --> 
+(<expr>, Comma) --> 
+(<expr>, End) --> 
+(<expr>, Eof) --> 
+(<expr>, Id) --> <expr><primary> <primary-tail> 
+(<expr>, Int) --> <expr><primary> <primary-tail> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, Lambda) --> 
+(<expr>, MinusOp) --> 
+(<expr>, PlusOp) --> 
+(<expr>, RParen) --> 
+(<expr>, Read) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+(<expr>, Write) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+
+(<expr-tail>, AssignOp) --> 
+(<expr-tail>, Begin) --> 
+(<expr-tail>, Comma) --> <expr-tail>Comma <expr-list> 
+(<expr-tail>, End) --> 
+(<expr-tail>, Eof) --> 
+(<expr-tail>, Id) --> 
+(<expr-tail>, Int) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, Lambda) --> 
+(<expr-tail>, MinusOp) --> 
+(<expr-tail>, PlusOp) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Read) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Semicolon) --> 
+(<expr-tail>, Write) --> 
+(<expr-tail>, LParen) --> 
+(<expr-tail>, RParen) --> <expr-tail>Lambda 
+(<expr-tail>, Semicolon) --> 
+
+(<id-list>, AssignOp) --> 
+(<id-list>, Begin) --> 
+(<id-list>, Comma) --> 
+(<id-list>, End) --> 
+(<id-list>, Eof) --> 
+(<id-list>, Id) --> <id-list><ident> <id-tail> 
+(<id-list>, Int) --> 
+(<id-list>, LParen) --> 
+(<id-list>, Lambda) --> 
+(<id-list>, MinusOp) --> 
+(<id-list>, PlusOp) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Read) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+(<id-list>, Write) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+
+(<id-tail>, AssignOp) --> 
+(<id-tail>, Begin) --> 
+(<id-tail>, Comma) --> <id-tail>Comma <id-list> 
+(<id-tail>, End) --> 
+(<id-tail>, Eof) --> 
+(<id-tail>, Id) --> 
+(<id-tail>, Int) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, Lambda) --> 
+(<id-tail>, MinusOp) --> 
+(<id-tail>, PlusOp) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Read) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Semicolon) --> 
+(<id-tail>, Write) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Semicolon) --> 
+
+(<ident>, AssignOp) --> 
+(<ident>, Begin) --> 
+(<ident>, Comma) --> 
+(<ident>, End) --> 
+(<ident>, Eof) --> 
+(<ident>, Id) --> <ident>Id 
+(<ident>, Int) --> 
+(<ident>, LParen) --> 
+(<ident>, Lambda) --> 
+(<ident>, MinusOp) --> 
+(<ident>, PlusOp) --> 
+(<ident>, RParen) --> 
+(<ident>, Read) --> 
+(<ident>, LParen) --> 
+(<ident>, RParen) --> 
+(<ident>, Semicolon) --> 
+(<ident>, Write) --> 
+(<ident>, LParen) --> 
+(<ident>, RParen) --> 
+(<ident>, Semicolon) --> 
+
+(<id-tail>, AssignOp) --> 
+(<id-tail>, Begin) --> 
+(<id-tail>, Comma) --> <id-tail>Comma <id-list> 
+(<id-tail>, End) --> 
+(<id-tail>, Eof) --> 
+(<id-tail>, Id) --> 
+(<id-tail>, Int) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, Lambda) --> 
+(<id-tail>, MinusOp) --> 
+(<id-tail>, PlusOp) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Read) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Semicolon) --> 
+(<id-tail>, Write) --> 
+(<id-tail>, LParen) --> 
+(<id-tail>, RParen) --> <id-tail>Lambda 
+(<id-tail>, Semicolon) --> 
+
+(<primary-tail>, AssignOp) --> 
+(<primary-tail>, Begin) --> 
+(<primary-tail>, Comma) --> <primary-tail>Lambda 
+(<primary-tail>, End) --> 
+(<primary-tail>, Eof) --> 
+(<primary-tail>, Id) --> 
+(<primary-tail>, Int) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, Lambda) --> 
+(<primary-tail>, MinusOp) --> <primary-tail><addOp> <expr> 
+(<primary-tail>, PlusOp) --> <primary-tail><addOp> <expr> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Read) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Semicolon) --> <primary-tail>Lambda 
+(<primary-tail>, Write) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Semicolon) --> <primary-tail>Lambda 
+
+(<primary>, AssignOp) --> 
+(<primary>, Begin) --> 
+(<primary>, Comma) --> 
+(<primary>, End) --> 
+(<primary>, Eof) --> 
+(<primary>, Id) --> <primary><ident> 
+(<primary>, Int) --> <primary>Int 
+(<primary>, LParen) --> <primary>LParen <expr> RParen 
+(<primary>, Lambda) --> 
+(<primary>, MinusOp) --> 
+(<primary>, PlusOp) --> 
+(<primary>, RParen) --> 
+(<primary>, Read) --> 
+(<primary>, LParen) --> <primary>LParen <expr> RParen 
+(<primary>, RParen) --> 
+(<primary>, Semicolon) --> 
+(<primary>, Write) --> 
+(<primary>, LParen) --> <primary>LParen <expr> RParen 
+(<primary>, RParen) --> 
+(<primary>, Semicolon) --> 
+
+(<primary-tail>, AssignOp) --> 
+(<primary-tail>, Begin) --> 
+(<primary-tail>, Comma) --> <primary-tail>Lambda 
+(<primary-tail>, End) --> 
+(<primary-tail>, Eof) --> 
+(<primary-tail>, Id) --> 
+(<primary-tail>, Int) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, Lambda) --> 
+(<primary-tail>, MinusOp) --> <primary-tail><addOp> <expr> 
+(<primary-tail>, PlusOp) --> <primary-tail><addOp> <expr> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Read) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Semicolon) --> <primary-tail>Lambda 
+(<primary-tail>, Write) --> 
+(<primary-tail>, LParen) --> 
+(<primary-tail>, RParen) --> <primary-tail>Lambda 
+(<primary-tail>, Semicolon) --> <primary-tail>Lambda 
+
+(<program>, AssignOp) --> 
+(<program>, Begin) --> <program>Begin <stmt-list> End 
+(<program>, Comma) --> 
+(<program>, End) --> 
+(<program>, Eof) --> 
+(<program>, Id) --> 
+(<program>, Int) --> 
+(<program>, LParen) --> 
+(<program>, Lambda) --> 
+(<program>, MinusOp) --> 
+(<program>, PlusOp) --> 
+(<program>, RParen) --> 
+(<program>, Read) --> 
+(<program>, LParen) --> 
+(<program>, RParen) --> 
+(<program>, Semicolon) --> 
+(<program>, Write) --> 
+(<program>, LParen) --> 
+(<program>, RParen) --> 
+(<program>, Semicolon) --> 
+
+(<stmt-list>, AssignOp) --> 
+(<stmt-list>, Begin) --> 
+(<stmt-list>, Comma) --> 
+(<stmt-list>, End) --> 
+(<stmt-list>, Eof) --> 
+(<stmt-list>, Id) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, Int) --> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, Lambda) --> 
+(<stmt-list>, MinusOp) --> 
+(<stmt-list>, PlusOp) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Read) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Semicolon) --> 
+(<stmt-list>, Write) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Semicolon) --> 
+
+(<stmt-tail>, AssignOp) --> 
+(<stmt-tail>, Begin) --> 
+(<stmt-tail>, Comma) --> 
+(<stmt-tail>, End) --> <stmt-tail>Lambda 
+(<stmt-tail>, Eof) --> 
+(<stmt-tail>, Id) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, Int) --> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, Lambda) --> 
+(<stmt-tail>, MinusOp) --> 
+(<stmt-tail>, PlusOp) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Read) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Semicolon) --> 
+(<stmt-tail>, Write) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Semicolon) --> 
+
+(<stmt>, AssignOp) --> 
+(<stmt>, Begin) --> 
+(<stmt>, Comma) --> 
+(<stmt>, End) --> 
+(<stmt>, Eof) --> 
+(<stmt>, Id) --> <stmt><ident> AssignOp <expr> Semicolon 
+(<stmt>, Int) --> 
+(<stmt>, LParen) --> 
+(<stmt>, Lambda) --> 
+(<stmt>, MinusOp) --> 
+(<stmt>, PlusOp) --> 
+(<stmt>, RParen) --> 
+(<stmt>, Read) --> <stmt>Read LParen <id-list> RParen Semicolon 
+(<stmt>, LParen) --> 
+(<stmt>, RParen) --> 
+(<stmt>, Semicolon) --> 
+(<stmt>, Write) --> <stmt>Write LParen <expr-list> RParen Semicolon 
+(<stmt>, LParen) --> 
+(<stmt>, RParen) --> 
+(<stmt>, Semicolon) --> 
+
+(<stmt-tail>, AssignOp) --> 
+(<stmt-tail>, Begin) --> 
+(<stmt-tail>, Comma) --> 
+(<stmt-tail>, End) --> <stmt-tail>Lambda 
+(<stmt-tail>, Eof) --> 
+(<stmt-tail>, Id) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, Int) --> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, Lambda) --> 
+(<stmt-tail>, MinusOp) --> 
+(<stmt-tail>, PlusOp) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Read) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Semicolon) --> 
+(<stmt-tail>, Write) --> <stmt-tail><stmt-list> 
+(<stmt-tail>, LParen) --> 
+(<stmt-tail>, RParen) --> 
+(<stmt-tail>, Semicolon) --> 
+
+(<system-goal>, AssignOp) --> 
+(<system-goal>, Begin) --> <system-goal><program> Eof 
+(<system-goal>, Comma) --> 
+(<system-goal>, End) --> 
+(<system-goal>, Eof) --> 
+(<system-goal>, Id) --> 
+(<system-goal>, Int) --> 
+(<system-goal>, LParen) --> 
+(<system-goal>, Lambda) --> 
+(<system-goal>, MinusOp) --> 
+(<system-goal>, PlusOp) --> 
+(<system-goal>, RParen) --> 
+(<system-goal>, Read) --> 
+(<system-goal>, LParen) --> 
+(<system-goal>, RParen) --> 
+(<system-goal>, Semicolon) --> 
+(<system-goal>, Write) --> 
+(<system-goal>, LParen) --> 
+(<system-goal>, RParen) --> 
+(<system-goal>, Semicolon) --> 
+
+(<expr>, AssignOp) --> 
+(<expr>, Begin) --> 
+(<expr>, Comma) --> 
+(<expr>, End) --> 
+(<expr>, Eof) --> 
+(<expr>, Id) --> <expr><primary> <primary-tail> 
+(<expr>, Int) --> <expr><primary> <primary-tail> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, Lambda) --> 
+(<expr>, MinusOp) --> 
+(<expr>, PlusOp) --> 
+(<expr>, RParen) --> 
+(<expr>, Read) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+(<expr>, Write) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+
+(<stmt-list>, AssignOp) --> 
+(<stmt-list>, Begin) --> 
+(<stmt-list>, Comma) --> 
+(<stmt-list>, End) --> 
+(<stmt-list>, Eof) --> 
+(<stmt-list>, Id) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, Int) --> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, Lambda) --> 
+(<stmt-list>, MinusOp) --> 
+(<stmt-list>, PlusOp) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Read) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Semicolon) --> 
+(<stmt-list>, Write) --> <stmt-list><stmt> <stmt-tail> 
+(<stmt-list>, LParen) --> 
+(<stmt-list>, RParen) --> 
+(<stmt-list>, Semicolon) --> 
+
+(<expr-list>, AssignOp) --> 
+(<expr-list>, Begin) --> 
+(<expr-list>, Comma) --> 
+(<expr-list>, End) --> 
+(<expr-list>, Eof) --> 
+(<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Lambda) --> 
+(<expr-list>, MinusOp) --> 
+(<expr-list>, PlusOp) --> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Read) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+(<expr-list>, Write) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+
+(<id-list>, AssignOp) --> 
+(<id-list>, Begin) --> 
+(<id-list>, Comma) --> 
+(<id-list>, End) --> 
+(<id-list>, Eof) --> 
+(<id-list>, Id) --> <id-list><ident> <id-tail> 
+(<id-list>, Int) --> 
+(<id-list>, LParen) --> 
+(<id-list>, Lambda) --> 
+(<id-list>, MinusOp) --> 
+(<id-list>, PlusOp) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Read) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+(<id-list>, Write) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+
+(<expr>, AssignOp) --> 
+(<expr>, Begin) --> 
+(<expr>, Comma) --> 
+(<expr>, End) --> 
+(<expr>, Eof) --> 
+(<expr>, Id) --> <expr><primary> <primary-tail> 
+(<expr>, Int) --> <expr><primary> <primary-tail> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, Lambda) --> 
+(<expr>, MinusOp) --> 
+(<expr>, PlusOp) --> 
+(<expr>, RParen) --> 
+(<expr>, Read) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+(<expr>, Write) --> 
+(<expr>, LParen) --> <expr><primary> <primary-tail> 
+(<expr>, RParen) --> 
+(<expr>, Semicolon) --> 
+
+(<id-list>, AssignOp) --> 
+(<id-list>, Begin) --> 
+(<id-list>, Comma) --> 
+(<id-list>, End) --> 
+(<id-list>, Eof) --> 
+(<id-list>, Id) --> <id-list><ident> <id-tail> 
+(<id-list>, Int) --> 
+(<id-list>, LParen) --> 
+(<id-list>, Lambda) --> 
+(<id-list>, MinusOp) --> 
+(<id-list>, PlusOp) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Read) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+(<id-list>, Write) --> 
+(<id-list>, LParen) --> 
+(<id-list>, RParen) --> 
+(<id-list>, Semicolon) --> 
+
+(<expr-list>, AssignOp) --> 
+(<expr-list>, Begin) --> 
+(<expr-list>, Comma) --> 
+(<expr-list>, End) --> 
+(<expr-list>, Eof) --> 
+(<expr-list>, Id) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Int) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, Lambda) --> 
+(<expr-list>, MinusOp) --> 
+(<expr-list>, PlusOp) --> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Read) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+(<expr-list>, Write) --> 
+(<expr-list>, LParen) --> <expr-list><expr> <expr-tail> 
+(<expr-list>, RParen) --> 
+(<expr-list>, Semicolon) --> 
+
+
+----- do Parse ------
+------ Init Scanner----
+------------Init Parser ----------
+-------------LLDriver ----------
+(<system-goal>, Begin) predict: "<system-goal>" --> "<program>" "Eof" 
+Begin A := 5 ; End Eof                                                                              <system-goal>                                                                                       
+
+(<program>, Begin) predict: "<program>" --> "Begin" "<stmt-list>" "End" 
+Begin A := 5 ; End Eof                                                                              <program> Eof EOP:0:0:1:2:EOP                                                                       
+
+match:Begin
+Begin A := 5 ; End Eof                                                                              Begin <stmt-list> End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                           
+(<stmt-list>, Id) predict: "<stmt-list>" --> "<stmt>" "<stmt-tail>" 
+Id := 5 ; End Eof                                                                                   <stmt-list> End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                                 
+
+(<stmt>, Id) predict: "<stmt>" --> "<ident>" "AssignOp" "<expr>" "Semicolon" 
+Id := 5 ; End Eof                                                                                   <stmt> <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                          
+
+(<ident>, Id) predict: "<ident>" --> "Id" 
+Id := 5 ; End Eof                                                                                   <ident> AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+
+match:Id
+Id := 5 ; End Eof                                                                                   Id EOP:7:9:9:13:EOP AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+POPPING EOP
+match:AssignOp
+AssignOp 5 ; End Eof                                                                                AssignOp <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+(<expr>, Int) predict: "<expr>" --> "<primary>" "<primary-tail>" 
+Int ; End Eof                                                                                       <expr> Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+
+(<primary>, Int) predict: "<primary>" --> "Int" 
+Int ; End Eof                                                                                       <primary> <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+
+match:Int
+Int ; End Eof                                                                                       Int EOP:10:13:13:15:EOP <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+POPPING EOP
+(<primary-tail>, Semicolon) predict: "<primary-tail>" --> "Lambda" 
+Semicolon End Eof                                                                                   <primary-tail> EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+
+match:Lambda
+Semicolon End Eof                                                                                   Lambda EOP:10:13:14:15:EOP EOP:7:9:10:13:EOP Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP 
+POPPING EOP
+POPPING EOP
+match:Semicolon
+Semicolon End Eof                                                                                   Semicolon EOP:4:7:7:9:EOP <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP       
+POPPING EOP
+(<stmt-tail>, End) predict: "<stmt-tail>" --> "Lambda" 
+End Eof                                                                                             <stmt-tail> EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                 
+
+match:Lambda
+End Eof                                                                                             Lambda EOP:4:7:8:9:EOP EOP:2:4:4:7:EOP End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                      
+POPPING EOP
+POPPING EOP
+match:End
+End Eof                                                                                             End EOP:1:2:2:4:EOP Eof EOP:0:0:1:2:EOP                                                             
+POPPING EOP
+match:Eof
+Eof                                                                                                 Eof EOP:0:0:1:2:EOP                                                                                 

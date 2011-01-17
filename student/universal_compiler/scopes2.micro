@@ -1,0 +1,25 @@
+BEGIN
+	BEGIN
+		A := 1 ;
+		BEGIN
+			A := 2 ;	
+			B := 2;
+			BEGIN
+				A := 3 ;
+				B := 3;
+				C := 3;
+			END
+			BEGIN
+				A := 4 ;
+				B := 4;
+				C := 4;
+			END
+			D := 44 ;
+		END
+		BEGIN
+			E := 44;
+		END
+		E := 11;
+	END
+    WRITE(A, B, C, D);
+END

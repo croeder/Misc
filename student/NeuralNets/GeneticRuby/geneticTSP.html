@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>CSC 5542 Assignment #3 - Chris Roeder</title>
+</head>
+<body>
+Fall 2004<br>
+CSC 5542<br>
+Neural Networks<br>
+Chris Roeder, croeder@croeder.com
+<h3> Assignment 3: Genetic Travelling Salesman Problem</h3>
+<h4>Source Code (Ruby, Tk) </h4>
+<ul>
+  <li><a href="City">City</a> </li>
+  <li><a href="Tour">Tour</a> </li>
+  <li><a href="Population">Population</a> </li>
+  <li><a href="geneticTSP">geneticTSP</a> </li>
+  <li><a href="GeneticTSPGui">GeneticTSPGui</a> </li>
+</ul>
+<h4>Report</h4>
+<ol>
+  <li><b>Introduction</b><br>
+As described elsewhere the Travelling Salesman Problem is a problem
+that can't be solved in polynomial time. This paper describes a genetic
+algorithm to find approximate solutions to the problem. Genetic
+solutions are solutions that follow an algorithm simillar to that
+proposed for the genetic transformation in the evolution of species.
+The idea is to combine "good" solutions to find more, hopefully better
+solutions. In the evolutionary example the hope is that "good"
+solutions are the more common ones. If they are more common, they are
+more likely to combine or breed and produce more good solutions and
+some better ones as well.
+    <p> The travelling salesman problem is suited to this algorithm
+particularly well because its easy to define "good", and its easy to
+take two solutions and recombine them into a better solution. A good
+solution, obviously, is a short one. Recombining two solutions is a
+little more complicated than just slicing them and putting them back
+together, but its close. You need to make sure each city is in the
+resulting tour. </p>
+    <p> Another whole twist is that there may be better solutions than
+those present in the population. There may be a solution that is better
+than the best combination of all the parts in the population. A
+mutation is a random change that may or may not exist in any population
+member. This algorithm uses two different mutation operations to
+randomly introduce new combinations into the population. Details are in
+the assigment. </p>
+    <p> This particular implementation is written in Ruby, a newer
+scripting language simillar to Perl and Python. I was amazed at how
+easy and familliar it is to use. It was much easier than when I was
+learning Perl. I think Ruby is easier than Perl because the syntax uses
+less cryptic characters. It might just be that Ruby was easy for me
+since I had already struggled with Perl. The Gui is written using Tk, a
+toolkit used with Perl or another scripting language Tcl. </p>
+    <p> <b> Observations </b><br>
+I noticed, as suggested in the assignment, that without mutations, the
+system finds a good solution rather quickly. It levels out almost
+immediately. My graphs only go up to 500 generations,&nbsp; since the
+code was written in Ruby. It runs slow. 500 generations took about 5
+minutes. Without mutations, the bottom of the graph, the shortest
+tour,&nbsp; was found rather quickly. With mutations, both kinds, the
+bottom slowly drifts lower. While the tops of the mutated runs are
+erratic and higher than the non mutated one, it seems the mutations
+help a little bit. I need to let a mutated run go overnight and see how
+well the slow improvement does.<br>
+    <br>
+The pictures below are screen shots of the Ruby/Tk application I wrote.
+I got a little pressed for time trying to learn Tk from the numerous
+Perl/Tk references on the web. Ruby instead of Perl is a small
+challenge, but I look forward to a Ruby/Tk book, especially one with a
+good description of layouts! The generation size graphs are lined
+at&nbsp; full tour length units. The tour graph is a square with sides
+of length one. (0, 0) is in the upper left corner.<br>
+    </p>
+  </li>
+  <li><b>Cases</b>
+    <ol>
+      <li> <b>Mutation Operator #1, Rate = 0<br>
+        <img style="width: 810px; height: 618px;" alt="" src="Case1.png"><br>
+        </b>
+        <ol>
+        </ol>
+      </li>
+      <li> <b>Mutation Operator #1, Rate = 0.1<br>
+        <img style="width: 812px; height: 620px;" alt="" src="Case2.png"><br>
+        </b>
+        <ol>
+        </ol>
+      </li>
+      <li> <b>Mutation Operator #2, Rate = 0<br>
+        <img style="width: 810px; height: 620px;" alt="" src="Case3.png"><br>
+        </b>
+        <ol>
+        </ol>
+      </li>
+      <li> <b>Mutation Operator #2, Rate = 0.1<br>
+        <img style="width: 816px; height: 592px;" alt="" src="Case4.png"><br>
+        </b>
+        <ol>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+</body>
+</html>

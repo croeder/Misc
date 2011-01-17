@@ -1,0 +1,35 @@
+<system-goal> 	->	<program> EOF 
+<program> 	->	Begin <stmt-list> End
+<stmt-list> 	->	<stmt> Semi
+<stmt-list> 	->	<stmt> Semi <stmt-list>
+<stmt>	->	Id AssignOp  <expression> 
+<stmt>	->	Read LParen <id-list> RParen 
+<stmt>	->	Write LParen <expr-list> RParen 
+<id-list>	-> 	<id> 
+<id-list>	-> 	<id>  <id-list> 
+<id>	-> 	Id 
+<expr-list>	->	<expression> 
+<expr-list>	->	<expression>  Comma <expr-list> 
+<expression>	->	<int-expr> 
+<expression>	->	<bool-expr>
+<int-expr>	->	<term>
+<int-expr>	->	<term> <addOp> <int-expresion> 
+<bool-expr>	->	<int-expression> EqOp <int-expression> 
+<term>	-> 	<power>
+<term>	-> 	<power> <multOp> <term> 
+<power>	->	<factor> 
+<power>	->	<factor> PowerOp <power> 
+<factor>	->	<primitive> 
+<factor>	->	MinusOp <primitive> 
+<primitive>	->	<ident>
+<primitive>	->	intLiteral 
+<primitive>	->	LParen <expression> RParen
+<ident>	->	Id 
+<addOp>	->	plusOp 
+<addOp>	->	minusOp 
+<multOp>	->  	divOp 
+<multOp>	->  	multOp 
+
+
+
+

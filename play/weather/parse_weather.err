@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/croeder/play/weather/parse_weather.py", line 37, in <module>
+    db = PgSQL.connect(database='weather')
+  File "/usr/lib/python2.6/dist-packages/pyPgSQL/PgSQL.py", line 2210, in connect
+    return Connection(connInfo, client_encoding, unicode_results)
+  File "/usr/lib/python2.6/dist-packages/pyPgSQL/PgSQL.py", line 2365, in __init__
+    raise DatabaseError, m
+libpq.DatabaseError: FATAL:  database "weather" does not exist
+

@@ -1,0 +1,92 @@
+------fillFirstSet-------
+                  <addOp> --> MinusOp PlusOp 
+              <expr-list> --> Id Int LParen 
+              <expr-tail> --> Comma Lambda 
+                   <expr> --> Id Int LParen 
+                <id-list> --> Id 
+                <id-tail> --> Comma Lambda 
+           <primary-tail> --> Lambda MinusOp PlusOp 
+                <primary> --> Id Int LParen 
+                <program> --> Begin 
+              <stmt-list> --> Id Read Write 
+              <stmt-tail> --> Id Lambda Read Write 
+                   <stmt> --> Id Read Write 
+            <system-goal> --> Begin 
+                 AssignOp --> AssignOp 
+                    Begin --> Begin 
+                    Comma --> Comma 
+                      End --> End 
+                      Eof --> Eof 
+                       Id --> Id 
+                      Int --> Int 
+                   LParen --> LParen 
+                   Lambda --> Lambda 
+                  MinusOp --> MinusOp 
+                   PlusOp --> PlusOp 
+                   RParen --> RParen 
+                     Read --> Read 
+                Semicolon --> Semicolon 
+                    Write --> Write 
+------fillFollowSet-------
+followSet(        <addOp>) = {"Id", "Int", "LParen",  }
+followSet(    <expr-list>) = {"RParen",  }
+followSet(    <expr-tail>) = {"RParen",  }
+followSet(         <expr>) = {"Comma", "RParen", "Semicolon",  }
+followSet(      <id-list>) = {"RParen",  }
+followSet(      <id-tail>) = {"RParen",  }
+followSet( <primary-tail>) = {"Comma", "RParen", "Semicolon",  }
+followSet(      <primary>) = {"Comma", "MinusOp", "PlusOp", "RParen", "Semicolon",  }
+followSet(      <program>) = {"Eof",  }
+followSet(    <stmt-list>) = {"End",  }
+followSet(    <stmt-tail>) = {"End",  }
+followSet(         <stmt>) = {"End", "Id", "Read", "Write",  }
+followSet(  <system-goal>) = {"Lambda",  }
+----- fillPredictSet-----
+{                      "Begin",  } predicts:      <program> --> Begin <stmt-list> End                
+{ "Comma",                       } predicts: <expr-tail>    --> Comma <expr-list>                    
+{ "Comma", "RParen", "Semicolon",  } predicts: <primary-tail> --> Lambda                               
+{ "End",                         } predicts: <stmt-tail>    --> Lambda                               
+{ "Id",                          } predicts: <id-list>      --> Id <id-tail>                         
+{ "Id", "Int", "LParen",         } predicts: <expr-list>    --> <expr> <expr-tail>                   
+{ "Id", "Read", "Write",         } predicts: <stmt-list>    --> <stmt> <stmt-tail>                   
+{ "Int",                         } predicts: <primary>      --> Int                                  
+{ "LParen",                      } predicts: <primary>      --> LParen <expr> RParen                 
+{ "MinusOp",                     } predicts: <addOp>        --> MinusOp                              
+{ "MinusOp", "PlusOp",           } predicts: <primary-tail> --> <addOp> <expr>                       
+{ "PlusOp",                      } predicts: <addOp>        --> PlusOp                               
+{ "RParen",                      } predicts: <expr-tail>    --> Lambda                               
+{ "Read",                        } predicts: <stmt>         --> Read LParen <id-list> RParen Semicolon 
+{ "Write",                       } predicts: <stmt>         --> Write LParen <expr-list> RParen Semicolon 
+(<system-goal>, Begin) predict: "<system-goal>" --> "<program>" "Eof" 
+Begin Read ( A , B ) ; End  Eof                                                                     <system-goal>                                                                                       
+
+(<program>, Begin) predict: "<program>" --> "Begin" "<stmt-list>" "End" 
+Begin Read ( A , B ) ; End  Eof                                                                     <program> Eof                                                                                       
+
+match:Begin
+Begin Read ( A , B ) ; End  Eof                                                                     Begin <stmt-list> End Eof                                                                           
+(<stmt-list>, Read) predict: "<stmt-list>" --> "<stmt>" "<stmt-tail>" 
+Read ( A , B ) ; End  Eof                                                                           <stmt-list> End Eof                                                                                 
+
+(<stmt>, Read) predict: "<stmt>" --> "Read" "LParen" "<id-list>" "RParen" "Semicolon" 
+Read ( A , B ) ; End  Eof                                                                           <stmt> <stmt-tail> End Eof                                                                          
+
+match:Read
+Read ( A , B ) ; End  Eof                                                                           Read LParen <id-list> RParen Semicolon <stmt-tail> End Eof                                          
+match:LParen
+LParen A , B ) ; End  Eof                                                                           LParen <id-list> RParen Semicolon <stmt-tail> End Eof                                               
+(<id-list>, Id) predict: "<id-list>" --> "Id" "<id-tail>" 
+Id , B ) ; End  Eof                                                                                 <id-list> RParen Semicolon <stmt-tail> End Eof                                                      
+
+match:Id
+Id , B ) ; End  Eof                                                                                 Id <id-tail> RParen Semicolon <stmt-tail> End Eof                                                   
+(<id-tail>, Comma) predict: "<id-tail>" --> "Comma" "<id-tail>" 
+Comma B ) ; End  Eof                                                                                <id-tail> RParen Semicolon <stmt-tail> End Eof                                                      
+
+match:Comma
+Comma B ) ; End  Eof                                                                                Comma <id-tail> RParen Semicolon <stmt-tail> End Eof                                                
+(<id-tail>, Id) predict: "" --> 
+Id ) ; End  Eof                                                                                     <id-tail> RParen Semicolon <stmt-tail> End Eof                                                      
+
+syntax error 2  X:RParen a: Id
+parse stack: RParen Semicolon <stmt-tail> End Eof 

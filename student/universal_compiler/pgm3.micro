@@ -1,0 +1,5 @@
+Begin
+READ(B);
+A := 5 + B;
+WRITE(A);
+End

@@ -1,0 +1,5 @@
+assumptions:
+1 rule per line
+tokens are seperated by spaces
+lhs is seperated from rhs by "->"
+lambda is "Lambda"

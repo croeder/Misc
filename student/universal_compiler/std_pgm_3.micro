@@ -1,0 +1,4 @@
+Begin
+A := 5;
+B := A;
+End

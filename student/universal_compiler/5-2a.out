@@ -1,0 +1,62 @@
+------printing-------
+--left--
+<A> <B> <S> 
+--right--
+<A><B><B><A> Lambda a b 
+--terminals--
+<A><B><B><A> Lambda a b 
+--nonterminals--
+<A> <B> <S> 
+
+--productions--
+<A> --> a 
+<A> --> Lambda 
+<B> --> b 
+<B> --> Lambda 
+<S> --> <A><B><B><A> 
+------find lambda-------
+
+------test initFirst-------
+---------------------------
+------fillFirstSet-------
+ contents: 
+<A> --> Lambda a 
+<A><B><B><A> --> <A><B><B><A> 
+<B> --> Lambda b 
+<S> --> <A><B><B><A> 
+Lambda --> Lambda 
+a --> a 
+b --> b 
+------------------------------------------
+
+------fillFollowSet-------
+followSet(            <A>) = { }
+followSet(            <B>) = { }
+followSet(            <S>) = { }
+followSet(  <system-goal>) = {"Lambda",  }
+
+----- fillPredictSet-----
+{                                } predicts:            <A> --> Lambda                               
+{ "<A><B><B><A>",                } predicts: <S>            --> <A><B><B><A>                         
+{ "a",                           } predicts: <A>            --> a                                    
+{ "b",                           } predicts: <B>            --> b                                    
+----- fillParseTable-----
+inserting: (<A>, a) <A>-->a 
+inserting: (<B>, b) <B>-->b 
+inserting: (<S>, <A><B><B><A>) <S>--><A><B><B><A> 
+(<A>, <A><B><B><A>) --> 
+(<A>, Lambda) --> 
+(<A>, a) --> <A>a 
+(<A>, b) --> 
+
+(<B>, <A><B><B><A>) --> 
+(<B>, Lambda) --> 
+(<B>, a) --> 
+(<B>, b) --> <B>b 
+
+(<S>, <A><B><B><A>) --> <S><A><B><B><A> 
+(<S>, Lambda) --> 
+(<S>, a) --> 
+(<S>, b) --> 
+
+

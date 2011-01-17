@@ -1,0 +1,5 @@
+Begin
+Read(in);
+out := in+100;
+Write(out);
+End 

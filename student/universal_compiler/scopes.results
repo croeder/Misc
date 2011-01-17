@@ -1,0 +1,13 @@
+INSTR:Declare	A_2	Integer
+INSTR:Store	A_2	1
+
+INSTR:Store	A_2	2
+INSTR:Declare	B_3	Integer
+INSTR:Store	B_3	2
+
+INSTR:Store	A_2	3
+INSTR:Store	B_3	3
+
+INSTR:Declare	C_4	Integer
+INSTR:Store	C_4	3
+

@@ -1,0 +1,5 @@
+<system-goal> -> <A>
+<A> -> <B> <C> Lambda
+<B> -> <D>
+<C> -> xyz
+<D> -> Lambda

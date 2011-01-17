@@ -1,0 +1,19 @@
+<program> 	->	#Start Begin <stmt-list> End
+<stmt-list> 	->	<stmt> <stmt-tail>
+<stmt-tail> 	->	<stmt-list>
+<stmt-tail> 	->	Lambda
+<stmt>	->	<ident> AssignOp  <expr> Semicolon #Assign($1,$3)
+<stmt>	->	Read LParen <ident> RParen Semicolon
+<stmt>	->	Write LParen <expr> RParen Semicolon
+<expr>	->	<primary> #Copy($1,$2) <primary> #Copy($2,$$)
+<primary>	->	LParen <expr> RParen #Copy($2,$$)
+<primary>	->	<ident> #Copy($1,$$)
+<primary>	->	Int #ProcessLiteral($$)
+<addOp>	->	PlusOp #ProcessOp($$)
+<addOp>	-> 	MinusOp #ProcessOp($$)
+<ident> 	-> 	Id #ProcessId($$)
+<system-goal> 	-> 	<program> Eof #Finish
+
+
+
+

@@ -1,0 +1,84 @@
+------printing-------
+--left--
+<E-tail> <E> <P> 
+--right--
+ <E> <P> <E-tail> Id plus <E> times <E> 
+--terminals--
+ Id plus times 
+--nonterminals--
+<E-tail> <E> <P> <E-tail> <E> <E> 
+
+--productions--
+<E-tail> --> plus <E> 
+<E-tail> --> times <E> 
+<E-tail> --> <P> 
+<E> --> <P> <E-tail> 
+<P> -->  <E> 
+<P> --> Id 
+------find lambda-------
+
+------test initFirst-------
+---------------------------
+------fillFirstSet-------
+ contents: 
+ -->  
+<E-tail> -->  Id plus times 
+<E> -->  Id 
+<P> -->  Id 
+Id --> Id 
+plus --> plus 
+times --> times 
+------------------------------------------
+
+------fillFollowSet-------
+followSet(       <E-tail>) = {"", "Id", "plus", "times",  }
+followSet(            <E>) = {"", "Id", "plus", "times",  }
+followSet(            <P>) = {"", "Id", "plus", "times",  }
+followSet(  <system-goal>) = {"Lambda",  }
+
+----- fillPredictSet-----
+{                           "",  } predicts:            <P> -->  <E>                                 
+{ "", "Id",                      } predicts: <E-tail>       --> <P>                                  
+{ "Id",                          } predicts: <P>            --> Id                                   
+{ "plus",                        } predicts: <E-tail>       --> plus <E>                             
+{ "times",                       } predicts: <E-tail>       --> times <E>                            
+----- fillParseTable-----
+inserting: (<E-tail>, plus) <E-tail>-->plus <E> 
+inserting: (<E-tail>, times) <E-tail>-->times <E> 
+inserting: (<E-tail>, ) <E-tail>--><P> 
+inserting: (<E-tail>, Id) <E-tail>--><P> 
+inserting: (<E>, ) <E>--><P> <E-tail> 
+inserting: (<E>, Id) <E>--><P> <E-tail> 
+inserting: (<P>, ) <P>--> <E> 
+inserting: (<P>, Id) <P>-->Id 
+(<E-tail>, ) --> <E-tail><P> 
+(<E-tail>, Id) --> <E-tail><P> 
+(<E-tail>, plus) --> <E-tail>plus <E> 
+(<E-tail>, times) --> <E-tail>times <E> 
+
+(<E>, ) --> <E><P> <E-tail> 
+(<E>, Id) --> <E><P> <E-tail> 
+(<E>, plus) --> 
+(<E>, times) --> 
+
+(<P>, ) --> <P> <E> 
+(<P>, Id) --> <P>Id 
+(<P>, plus) --> 
+(<P>, times) --> 
+
+(<E-tail>, ) --> <E-tail><P> 
+(<E-tail>, Id) --> <E-tail><P> 
+(<E-tail>, plus) --> <E-tail>plus <E> 
+(<E-tail>, times) --> <E-tail>times <E> 
+
+(<E>, ) --> <E><P> <E-tail> 
+(<E>, Id) --> <E><P> <E-tail> 
+(<E>, plus) --> 
+(<E>, times) --> 
+
+(<E>, ) --> <E><P> <E-tail> 
+(<E>, Id) --> <E><P> <E-tail> 
+(<E>, plus) --> 
+(<E>, times) --> 
+
+

@@ -1,0 +1,712 @@
+
+------------------------------------>
+-1, -1, 0, 1
+Token: Begin Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <system-goal> 
+Semantic (r-l): 0:<system-goal>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+0, 1, 1, 3
+Token: Begin Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <program> Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)
+<------------------------------------
+
+
+------------------------------------>
+1, 3, 3, 6
+Token: Begin Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Begin <stmt-list> End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)
+<------------------------------------
+
+
+------------------------------------>
+1, 3, 4, 6
+Token: Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt-list> End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)
+<------------------------------------
+
+
+------------------------------------>
+4, 6, 6, 8
+Token: Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt> <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+6, 8, 8, 13
+Token: Read ( A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Read LParen <id-list> RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+6, 8, 9, 13
+Token: LParen A , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): LParen <id-list> RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+6, 8, 10, 13
+Token: Id , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <id-list> RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+10, 13, 13, 15
+Token: Id , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <ident> #ReadId($1) <id-tail> EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("", 0)14:<id-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+13, 15, 15, 16
+Token: Id , B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:10:13:13:15:EOP #ReadId($1) <id-tail> EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("", 0)14:<id-tail>("", 0)15:Id("A", 0)
+<------------------------------------
+
+INSTR:Read	A
+
+------------------------------------>
+10, 13, 14, 15
+Token: Comma B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <id-tail> EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+14, 15, 15, 17
+Token: Comma B ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Comma <id-list> EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+14, 15, 16, 17
+Token: Id ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <id-list> EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+16, 17, 17, 19
+Token: Id ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <ident> #ReadId($1) <id-tail> EOP:14:15:16:17:EOP EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)17:<ident>("", 0)18:<id-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+17, 19, 19, 20
+Token: Id ) ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:16:17:17:19:EOP #ReadId($1) <id-tail> EOP:14:15:16:17:EOP EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)17:<ident>("", 0)18:<id-tail>("", 0)19:Id("B", 0)
+<------------------------------------
+
+INSTR:Read	B
+
+------------------------------------>
+16, 17, 18, 19
+Token: RParen ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <id-tail> EOP:14:15:16:17:EOP EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)17:<ident>("B", 0)18:<id-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+18, 19, 19, 20
+Token: RParen ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Lambda EOP:16:17:18:19:EOP EOP:14:15:16:17:EOP EOP:10:13:14:15:EOP EOP:6:8:10:13:EOP RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen("", 0)12:Semicolon("", 0)13:<ident>("A", 0)14:<id-tail>("", 0)15:Comma(",", 0)16:<id-list>("", 0)17:<ident>("B", 0)18:<id-tail>("", 0)19:Lambda("", 0)
+<------------------------------------
+
+
+------------------------------------>
+6, 8, 11, 13
+Token: RParen ; C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): RParen Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen(")", 0)12:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+6, 8, 12, 13
+Token: Semicolon C := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Semicolon EOP:4:6:6:8:EOP <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:Read("Read", 0)9:LParen("(", 0)10:<id-list>("", 0)11:RParen(")", 0)12:Semicolon(";", 0)
+<------------------------------------
+
+
+------------------------------------>
+4, 6, 7, 8
+Token: Id := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt-tail> EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+7, 8, 8, 9
+Token: Id := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt-list> EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+8, 9, 9, 11
+Token: Id := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt> <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+9, 11, 11, 15
+Token: Id := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <ident> AssignOp <expr> Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("", 0)12:AssignOp("", 0)13:<expr>("", 0)14:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+11, 15, 15, 16
+Token: Id := A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:9:11:11:15:EOP AssignOp <expr> Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("", 0)12:AssignOp("", 0)13:<expr>("", 0)14:Semicolon("", 0)15:Id("C", 0)
+<------------------------------------
+
+
+------------------------------------>
+9, 11, 12, 15
+Token: AssignOp A + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): AssignOp <expr> Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+9, 11, 13, 15
+Token: Id + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <expr> Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+13, 15, 15, 17
+Token: Id + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("", 0)16:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+15, 17, 17, 18
+Token: Id + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <ident> #Copy($1,$$) EOP:13:15:15:17:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("", 0)16:<primary-tail>("", 0)17:<ident>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+17, 18, 18, 19
+Token: Id + ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:15:17:17:18:EOP #Copy($1,$$) EOP:13:15:15:17:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("", 0)16:<primary-tail>("", 0)17:<ident>("", 0)18:Id("A", 0)
+<------------------------------------
+
+
+------------------------------------>
+13, 15, 16, 17
+Token: PlusOp ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)
+<------------------------------------
+
+
+------------------------------------>
+16, 17, 17, 19
+Token: PlusOp ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <addOp> <expr> #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("", 0)18:<expr>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+17, 19, 19, 20
+Token: PlusOp ( 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): PlusOp #ProcessOp($$) EOP:16:17:17:19:EOP <expr> #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("", 0)18:<expr>("", 0)19:PlusOp("+", 0)
+<------------------------------------
+
+
+------------------------------------>
+16, 17, 18, 19
+Token: LParen 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <expr> #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+18, 19, 19, 21
+Token: LParen 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+19, 21, 21, 24
+Token: LParen 1 + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): LParen <expr> RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)
+<------------------------------------
+
+
+------------------------------------>
+19, 21, 22, 24
+Token: Int + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <expr> RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)
+<------------------------------------
+
+
+------------------------------------>
+22, 24, 24, 26
+Token: Int + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("", 0)25:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+24, 26, 26, 27
+Token: Int + B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Int #ProcessLiteral($$) EOP:22:24:24:26:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("", 0)25:<primary-tail>("", 0)26:Int("1", 0)
+<------------------------------------
+
+
+------------------------------------>
+22, 24, 25, 26
+Token: PlusOp B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)
+<------------------------------------
+
+
+------------------------------------>
+25, 26, 26, 28
+Token: PlusOp B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <addOp> <expr> #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("", 0)27:<expr>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+26, 28, 28, 29
+Token: PlusOp B ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): PlusOp #ProcessOp($$) EOP:25:26:26:28:EOP <expr> #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("", 0)27:<expr>("", 0)28:PlusOp("+", 0)
+<------------------------------------
+
+
+------------------------------------>
+25, 26, 27, 28
+Token: Id ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <expr> #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+27, 28, 28, 30
+Token: Id ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:25:26:27:28:EOP #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)28:<primary>("", 0)29:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+28, 30, 30, 31
+Token: Id ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <ident> #Copy($1,$$) EOP:27:28:28:30:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:25:26:27:28:EOP #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)28:<primary>("", 0)29:<primary-tail>("", 0)30:<ident>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+30, 31, 31, 32
+Token: Id ) ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:28:30:30:31:EOP #Copy($1,$$) EOP:27:28:28:30:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:25:26:27:28:EOP #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)28:<primary>("", 0)29:<primary-tail>("", 0)30:<ident>("", 0)31:Id("B", 0)
+<------------------------------------
+
+
+------------------------------------>
+27, 28, 29, 30
+Token: RParen ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:25:26:27:28:EOP #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)28:<primary>("B", 0)29:<primary-tail>("B", 0)
+<------------------------------------
+
+
+------------------------------------>
+29, 30, 30, 31
+Token: RParen ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): Lambda EOP:27:28:29:30:EOP #Copy($2,$$) EOP:25:26:27:28:EOP #GenInfix($$,$1,$2,$$) EOP:22:24:25:26:EOP #Copy($2,$$) EOP:19:21:22:24:EOP RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("", 0)23:RParen("", 0)24:<primary>("1", 0)25:<primary-tail>("1", 0)26:<addOp>("+", 0)27:<expr>("", 0)28:<primary>("B", 0)29:<primary-tail>("B", 0)30:Lambda("", 0)
+<------------------------------------
+
+INSTR:+	1	B	temp_0
+
+------------------------------------>
+19, 21, 23, 24
+Token: RParen ; Write ( A , B , C ) ; End Eof 
+Parse (l-r): RParen #Copy($2,$$) EOP:18:19:19:21:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("", 0)20:<primary-tail>("", 0)21:LParen("(", 0)22:<expr>("temp_0", 0)23:RParen(")", 0)
+<------------------------------------
+
+
+------------------------------------>
+18, 19, 20, 21
+Token: Semicolon Write ( A , B , C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("temp_0", 0)20:<primary-tail>("temp_0", 0)
+<------------------------------------
+
+
+------------------------------------>
+20, 21, 21, 22
+Token: Semicolon Write ( A , B , C ) ; End Eof 
+Parse (l-r): Lambda EOP:18:19:20:21:EOP #Copy($2,$$) EOP:16:17:18:19:EOP #GenInfix($$,$1,$2,$$) EOP:13:15:16:17:EOP #Copy($2,$$) EOP:9:11:13:15:EOP Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("", 0)14:Semicolon("", 0)15:<primary>("A", 0)16:<primary-tail>("A", 0)17:<addOp>("+", 0)18:<expr>("", 0)19:<primary>("temp_0", 0)20:<primary-tail>("temp_0", 0)21:Lambda("", 0)
+<------------------------------------
+
+INSTR:+	A	temp_0	temp_1
+
+------------------------------------>
+9, 11, 14, 15
+Token: Semicolon Write ( A , B , C ) ; End Eof 
+Parse (l-r): Semicolon #Assign($1,$3) EOP:8:9:9:11:EOP <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<ident>("C", 0)12:AssignOp(":=", 0)13:<expr>("temp_1", 0)14:Semicolon(";", 0)
+<------------------------------------
+
+INSTR:Store	C	temp_1
+
+------------------------------------>
+8, 9, 10, 11
+Token: Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt-tail> EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+10, 11, 11, 12
+Token: Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt-list> EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+11, 12, 12, 14
+Token: Write ( A , B , C ) ; End Eof 
+Parse (l-r): <stmt> <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+12, 14, 14, 19
+Token: Write ( A , B , C ) ; End Eof 
+Parse (l-r): Write LParen <expr-list> RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+12, 14, 15, 19
+Token: LParen A , B , C ) ; End Eof 
+Parse (l-r): LParen <expr-list> RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+12, 14, 16, 19
+Token: Id , B , C ) ; End Eof 
+Parse (l-r): <expr-list> RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+16, 19, 19, 21
+Token: Id , B , C ) ; End Eof 
+Parse (l-r): <expr> #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+19, 21, 21, 23
+Token: Id , B , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:19:19:21:EOP #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)21:<primary>("", 0)22:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+21, 23, 23, 24
+Token: Id , B , C ) ; End Eof 
+Parse (l-r): <ident> #Copy($1,$$) EOP:19:21:21:23:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:19:19:21:EOP #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)21:<primary>("", 0)22:<primary-tail>("", 0)23:<ident>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+23, 24, 24, 25
+Token: Id , B , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:21:23:23:24:EOP #Copy($1,$$) EOP:19:21:21:23:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:16:19:19:21:EOP #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)21:<primary>("", 0)22:<primary-tail>("", 0)23:<ident>("", 0)24:Id("A", 0)
+<------------------------------------
+
+
+------------------------------------>
+19, 21, 22, 23
+Token: Comma B , C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:16:19:19:21:EOP #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)21:<primary>("A", 0)22:<primary-tail>("A", 0)
+<------------------------------------
+
+
+------------------------------------>
+22, 23, 23, 24
+Token: Comma B , C ) ; End Eof 
+Parse (l-r): Lambda EOP:19:21:22:23:EOP #Copy($2,$$) EOP:16:19:19:21:EOP #WriteExpr($1) <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("", 0)20:<expr-tail>("", 0)21:<primary>("A", 0)22:<primary-tail>("A", 0)23:Lambda("", 0)
+<------------------------------------
+
+INSTR:Write	A	Integer
+
+------------------------------------>
+16, 19, 20, 21
+Token: Comma B , C ) ; End Eof 
+Parse (l-r): <expr-tail> EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+20, 21, 21, 23
+Token: Comma B , C ) ; End Eof 
+Parse (l-r): Comma <expr-list> EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+20, 21, 22, 23
+Token: Id , C ) ; End Eof 
+Parse (l-r): <expr-list> EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+22, 23, 23, 25
+Token: Id , C ) ; End Eof 
+Parse (l-r): <expr> #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+23, 25, 25, 27
+Token: Id , C ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:22:23:23:25:EOP #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)25:<primary>("", 0)26:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+25, 27, 27, 28
+Token: Id , C ) ; End Eof 
+Parse (l-r): <ident> #Copy($1,$$) EOP:23:25:25:27:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:22:23:23:25:EOP #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)25:<primary>("", 0)26:<primary-tail>("", 0)27:<ident>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+27, 28, 28, 29
+Token: Id , C ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:25:27:27:28:EOP #Copy($1,$$) EOP:23:25:25:27:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:22:23:23:25:EOP #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)25:<primary>("", 0)26:<primary-tail>("", 0)27:<ident>("", 0)28:Id("B", 0)
+<------------------------------------
+
+
+------------------------------------>
+23, 25, 26, 27
+Token: Comma C ) ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:22:23:23:25:EOP #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)25:<primary>("B", 0)26:<primary-tail>("B", 0)
+<------------------------------------
+
+
+------------------------------------>
+26, 27, 27, 28
+Token: Comma C ) ; End Eof 
+Parse (l-r): Lambda EOP:23:25:26:27:EOP #Copy($2,$$) EOP:22:23:23:25:EOP #WriteExpr($1) <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("", 0)24:<expr-tail>("", 0)25:<primary>("B", 0)26:<primary-tail>("B", 0)27:Lambda("", 0)
+<------------------------------------
+
+INSTR:Write	B	Integer
+
+------------------------------------>
+22, 23, 24, 25
+Token: Comma C ) ; End Eof 
+Parse (l-r): <expr-tail> EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+24, 25, 25, 27
+Token: Comma C ) ; End Eof 
+Parse (l-r): Comma <expr-list> EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+24, 25, 26, 27
+Token: Id ) ; End Eof 
+Parse (l-r): <expr-list> EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+26, 27, 27, 29
+Token: Id ) ; End Eof 
+Parse (l-r): <expr> #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+27, 29, 29, 31
+Token: Id ) ; End Eof 
+Parse (l-r): <primary> #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:26:27:27:29:EOP #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)29:<primary>("", 0)30:<primary-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+29, 31, 31, 32
+Token: Id ) ; End Eof 
+Parse (l-r): <ident> #Copy($1,$$) EOP:27:29:29:31:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:26:27:27:29:EOP #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)29:<primary>("", 0)30:<primary-tail>("", 0)31:<ident>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+31, 32, 32, 33
+Token: Id ) ; End Eof 
+Parse (l-r): Id #ProcessId($$) EOP:29:31:31:32:EOP #Copy($1,$$) EOP:27:29:29:31:EOP #Copy($1,$2) <primary-tail> #Copy($2,$$) EOP:26:27:27:29:EOP #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)29:<primary>("", 0)30:<primary-tail>("", 0)31:<ident>("", 0)32:Id("C", 0)
+<------------------------------------
+
+
+------------------------------------>
+27, 29, 30, 31
+Token: RParen ; End Eof 
+Parse (l-r): <primary-tail> #Copy($2,$$) EOP:26:27:27:29:EOP #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)29:<primary>("C", 0)30:<primary-tail>("C", 0)
+<------------------------------------
+
+
+------------------------------------>
+30, 31, 31, 32
+Token: RParen ; End Eof 
+Parse (l-r): Lambda EOP:27:29:30:31:EOP #Copy($2,$$) EOP:26:27:27:29:EOP #WriteExpr($1) <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("", 0)28:<expr-tail>("", 0)29:<primary>("C", 0)30:<primary-tail>("C", 0)31:Lambda("", 0)
+<------------------------------------
+
+INSTR:Write	C	Integer
+
+------------------------------------>
+26, 27, 28, 29
+Token: RParen ; End Eof 
+Parse (l-r): <expr-tail> EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("C", 0)28:<expr-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+28, 29, 29, 30
+Token: RParen ; End Eof 
+Parse (l-r): Lambda EOP:26:27:28:29:EOP EOP:24:25:26:27:EOP EOP:22:23:24:25:EOP EOP:20:21:22:23:EOP EOP:16:19:20:21:EOP EOP:12:14:16:19:EOP RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen("", 0)18:Semicolon("", 0)19:<expr>("A", 0)20:<expr-tail>("", 0)21:Comma(",", 0)22:<expr-list>("", 0)23:<expr>("B", 0)24:<expr-tail>("", 0)25:Comma(",", 0)26:<expr-list>("", 0)27:<expr>("C", 0)28:<expr-tail>("", 0)29:Lambda("", 0)
+<------------------------------------
+
+
+------------------------------------>
+12, 14, 17, 19
+Token: RParen ; End Eof 
+Parse (l-r): RParen Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen(")", 0)18:Semicolon("", 0)
+<------------------------------------
+
+
+------------------------------------>
+12, 14, 18, 19
+Token: Semicolon End Eof 
+Parse (l-r): Semicolon EOP:11:12:12:14:EOP <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Write("Write", 0)15:LParen("(", 0)16:<expr-list>("", 0)17:RParen(")", 0)18:Semicolon(";", 0)
+<------------------------------------
+
+
+------------------------------------>
+11, 12, 13, 14
+Token: End Eof 
+Parse (l-r): <stmt-tail> EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)
+<------------------------------------
+
+
+------------------------------------>
+13, 14, 14, 15
+Token: End Eof 
+Parse (l-r): Lambda EOP:11:12:13:14:EOP EOP:10:11:11:12:EOP EOP:8:9:10:11:EOP EOP:7:8:8:9:EOP EOP:4:6:7:8:EOP EOP:1:3:4:6:EOP End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("", 0)6:<stmt>("", 0)7:<stmt-tail>("", 0)8:<stmt-list>("", 0)9:<stmt>("", 0)10:<stmt-tail>("", 0)11:<stmt-list>("", 0)12:<stmt>("", 0)13:<stmt-tail>("", 0)14:Lambda("", 0)
+<------------------------------------
+
+
+------------------------------------>
+1, 3, 5, 6
+Token: End Eof 
+Parse (l-r): End EOP:0:1:1:3:EOP Eof #Finish EOP:-1:-1:0:1:EOP 
+Semantic (r-l): 0:<system-goal>("", 0)1:<program>("", 0)2:Eof("", 0)3:Begin("Begin", 0)4:<stmt-list>("", 0)5:End("End", 0)
+<------------------------------------
+

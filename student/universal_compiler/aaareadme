@@ -1,0 +1,4 @@
+this version of assignment 9 will use the EOPs on the parse stack,
+the action symbols in the predict table and show calls to semantic routines.
+
+A final version will incorporate the semantic routines.

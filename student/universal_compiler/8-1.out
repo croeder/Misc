@@ -1,0 +1,40 @@
+predict: <system-goal> --> <program> Eof 
+Begin Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                      <system-goal>                                                                                       
+
+predict: <program> --> Begin <stmt-list> End 
+Begin Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                      <program> Eof                                                                                       
+
+match:Begin
+Begin Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                      Begin <stmt-list> End Eof                                                                           
+predict: <stmt-list> --> <stmt> <stmt-tail> 
+Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                            <stmt-list> End Eof                                                                                 
+
+predict: <stmt> --> Read LParen <id-list> RParen Semicolon 
+Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                            <stmt> <stmt-tail> End Eof                                                                          
+
+match:Read
+Read ( in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                            Read LParen <id-list> RParen Semicolon <stmt-tail> End Eof                                          
+match:LParen
+LParen in ) ; out := in + 100 ; Write ( out ) ; End  Eof                                            LParen <id-list> RParen Semicolon <stmt-tail> End Eof                                               
+predict: <id-list> --> Id <id-tail> 
+Id ) ; out := in + 100 ; Write ( out ) ; End  Eof                                                   <id-list> RParen Semicolon <stmt-tail> End Eof                                                      
+
+match:Id
+Id ) ; out := in + 100 ; Write ( out ) ; End  Eof                                                   Id <id-tail> RParen Semicolon <stmt-tail> End Eof                                                   
+predict: <id-tail> --> Lambda 
+RParen ; out := in + 100 ; Write ( out ) ; End  Eof                                                 <id-tail> RParen Semicolon <stmt-tail> End Eof                                                      
+
+match:Lambda
+RParen ; out := in + 100 ; Write ( out ) ; End  Eof                                                 Lambda RParen Semicolon <stmt-tail> End Eof                                                         
+match:RParen
+RParen ; out := in + 100 ; Write ( out ) ; End  Eof                                                 RParen Semicolon <stmt-tail> End Eof                                                                
+match:Semicolon
+Semicolon out := in + 100 ; Write ( out ) ; End  Eof                                                Semicolon <stmt-tail> End Eof                                                                       
+predict: <stmt-tail> --> <stmt-list> 
+Id := in + 100 ; Write ( out ) ; End  Eof                                                           <stmt-tail> End Eof                                                                                 
+
+predict: <stmt-list> --> <stmt> <stmt-tail> 
+Id := in + 100 ; Write ( out ) ; End  Eof                                                           <stmt-list> End Eof                                                                                 
+
+predict: <stmt> --> Id AssignOp <expr> Semicolon 
+Id := in + 100 ; Write ( out ) ; End  Eof                                                           <stmt> <stmt-tail> End Eof                                                                          

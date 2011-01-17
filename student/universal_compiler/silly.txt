@@ -1,0 +1,16 @@
+<system-goal> -> <title> <paper-tail>
+<paper-tail> -> <paragraph> <paper-tail>
+<paper-tail> -> Lambda
+<paragraph> -> <sentence> <paragraph>
+<paragraph> -> Lambda
+<sentence> -> <subject-clause> <verb> <subject-clause>
+<subject-clause> -> <article> <subject>
+<subject-clause> -> <subject>
+<article> -> a
+<article> -> the
+<subject> -> Chris
+<subject> -> program
+<subject> -> work
+<verb> -> loves
+<verb> -> hates
+<title> -> foo

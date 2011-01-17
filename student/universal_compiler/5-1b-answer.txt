@@ -1,0 +1,7 @@
+<system-goal> -> <E>
+<E> -> <P> <E-tail>
+<E-tail> -> plus <E>
+<E-tail> -> times <E>
+<E-tail> -> <P>
+<P> -> ( <E> )
+<P> -> Id

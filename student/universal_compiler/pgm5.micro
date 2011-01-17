@@ -1,0 +1,4 @@
+Begin
+--- multiplication not supported by this version of the grammar
+B :=  2 * 3;
+End

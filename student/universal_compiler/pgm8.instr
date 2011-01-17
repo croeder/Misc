@@ -1,0 +1,8 @@
+INSTR:Read	A
+INSTR:Read	B
+INSTR:+	1	B	temp_0
+INSTR:+	A	temp_0	temp_1
+INSTR:Store	C	temp_1
+INSTR:Write	A	Integer
+INSTR:Write	B	Integer
+INSTR:Write	C	Integer

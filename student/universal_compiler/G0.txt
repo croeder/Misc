@@ -1,0 +1,12 @@
+------printing-------
+--left--
+
+--right--
+
+--terminals--
+
+--nonterminals--
+
+
+--productions--
+------find lambda-------

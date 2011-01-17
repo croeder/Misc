@@ -1,0 +1,18 @@
+"""
+trim failed
+------printing-------
+--left--
+<program> <stmt-list> <system-goal> 
+--right--
+<program> <stmt> Begin <stmt-list> EOF End Semi <stmt-list> 
+--terminals--
+Begin EOF End Semi 
+--nonterminals--
+<program> <stmt-list> <stmt> <system-goal> <stmt-list> <stmt-list> 
+
+--productions--
+<program> --> Begin <stmt-list> End 
+<stmt-list> --> <stmt> Semi 
+<stmt-list> --> <stmt> Semi <stmt-list> 
+<system-goal> --> <program> EOF 
+------ending-------

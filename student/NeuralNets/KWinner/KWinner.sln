@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KWinner", "KWinner.csproj", "{E04ED71F-0762-496E-A1B7-500F1E0A9B5B}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeneticTSP", "..\GeneticTSP\GeneticTSP.vcproj", "{EF3CD645-3933-4AB7-A68E-92CE33699595}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{E04ED71F-0762-496E-A1B7-500F1E0A9B5B}.Debug.ActiveCfg = Debug|.NET
+		{E04ED71F-0762-496E-A1B7-500F1E0A9B5B}.Debug.Build.0 = Debug|.NET
+		{E04ED71F-0762-496E-A1B7-500F1E0A9B5B}.Release.ActiveCfg = Release|.NET
+		{E04ED71F-0762-496E-A1B7-500F1E0A9B5B}.Release.Build.0 = Release|.NET
+		{EF3CD645-3933-4AB7-A68E-92CE33699595}.Debug.ActiveCfg = Debug|Win32
+		{EF3CD645-3933-4AB7-A68E-92CE33699595}.Debug.Build.0 = Debug|Win32
+		{EF3CD645-3933-4AB7-A68E-92CE33699595}.Release.ActiveCfg = Release|Win32
+		{EF3CD645-3933-4AB7-A68E-92CE33699595}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

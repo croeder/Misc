@@ -1,0 +1,36 @@
+<system goal> 	->	<program> EOF #Finish
+<program> 	->	#start Begin <stmt list> End
+<stmt list> 	->	<stmt> Semi
+<stmt list> 	->	<stmt> Semi <stmt list>
+<stmt>	->	Id AssignOp  <expression> #assign
+<stmt>	->	Read LParen <id list> RParen 
+<stmt>	->	Write LParen <expr list> RParen 
+<id list>	-> 	<id> #addId #readId
+<id list>	-> 	<id> #readIdComma <id list> #addId
+<id list>	-> 
+<id>	-> 	Id #processId
+<expr list>	->	<expression> #writeExpr #addexpr
+<expr list>	->	<expression> #writeExpr Comma <expr list> #addexpr
+<expression>	->	<int expr> 
+<expression>	->	<bool expr>
+<int expr>	->	<term>
+<int expr>	->	<term> <addOp> <int expresion> #GenInfix
+<bool expr>	->	<int expression> EqOp <int expression> #GenInfix
+<term>	-> 	<power>
+<term>	-> 	<power> <multOp> <term> #GenInfix
+<power>	->	<factor> 
+<power>	->	<factor> PowerOp <power> #GenInfix
+<factor>	->	<primitive> 
+<factor>	->	MinusOp <primitive> #GenUnary
+<primitive>	->	<ident>
+<primitive>	->	intLiteral #processLiteral
+<primitive>	->	LParen <expression> RParen
+<ident>	->	Id #processeId
+<addOp>	->	plusOp #processOp
+<addOp>	->	minusOp #processOp
+<multOp>	->  	divOp #processOp
+<multOp>	->  	multOp #processOp
+
+
+
+

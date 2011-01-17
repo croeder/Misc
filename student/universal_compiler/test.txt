@@ -1,0 +1,6 @@
+<program> -> begin <stmt-list> end
+<stmt-list> -> <stmt> <stmt-tail>
+<stmt-tail> -> <stmt-list>
+<stmt-tail> -> Lambda
+<stmt> -> Statement
+<system-goal> -> <program> EOF
