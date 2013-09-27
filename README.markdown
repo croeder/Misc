@@ -8,3 +8,4 @@ This repo has projects I'v worked on in various contexts over the years:
 	* universal_compiler - an implementation of a table-driven parser and compiler in C++
 * clojure - some toy clojure projects
 * play - some python code to read data from a weather station and populate a database. Also interfaces with weather underground.
+* misc - small programs for learning a technology or some detail
