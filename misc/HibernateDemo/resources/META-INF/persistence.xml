@@ -1,0 +1,38 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+	http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	   version="1.0">
+	   <!--    version="2.0">-->
+	
+	<persistence-unit name="edu.ucdenver.ccp.uimatracking.jpademo">
+	 <!-- FOR DERBY: transaction-type="RESOURCE_LOCAL"> -->
+		<class>hibernatedemo.Restaurant</class>
+		      <class>hibernatedemo.MenuItem</class>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+      	<properties>
+      	    <!-- DERBY SUX
+         	<property name="javax.persistence.jdbc.driver" 	value="org.apache.derby.jdbc.EmbeddedDriver"/>
+         	<property name="javax.persistence.jdbc.user" 	value="me"/>
+         	<property name="javax.persistence.jdbc.password" value="mine"/>
+         	<property name="javax.persistence.jdbc.url" 	value="jdbc:derby:myDB;create=true"/>
+         	<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+         	-->
+         	<!-- MYSQL -->
+         	<property name="javax.persistence.jdbc.driver"  value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user"    value="root"/>
+            <property name="javax.persistence.jdbc.password" value="3xpr3ss"/>
+            <property name="javax.persistence.jdbc.url"     value="jdbc:mysql://localhost:3306/test"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>-->
+            
+            <!-- This fixes an error "user must supply a jdbc connection" -->
+                    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
+         	
+         	<property name="hibernate.show_sql" value="true"/>
+         	<property name="hibernate.hbm2ddl.auto" value="update" /> 
+         	<!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+      	</properties>
+     	<!-- <jta-data-source>java:/DefaultDS</jta-data-source>-->
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <restaurants ID="5" 
+                RESTAURANT="LaVals"
+                CITY="Berkeley"/> 
+   <restaurants ID="9" 
+                RESTAURANT="Los Faralitos"
+                CITY="Aurora"/> 
+   <restaurants ID="6" 
+                RESTAURANT="Solera"
+                CITY="Denver"/> 
+</dataset>

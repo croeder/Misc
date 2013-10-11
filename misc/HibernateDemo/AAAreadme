@@ -1,0 +1,3 @@
+- The restaurant code is likely from the springsource site.
+- JpaDemo does not work.
+I'm getting a NoSuchFieldError:NONE and haven't fixed it yet.
