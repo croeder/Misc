@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http//www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.croeder</groupId>
+  <artifactId>baristamatic</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <description>Code to extract and display protein counts  per month from rdf generated from journal articles</description>
+  
+  <packaging>jar</packaging>
+
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>aduna-opensource.releases</id>
+      <name>Aduna Open Source - Maven releases</name>
+      <url>http://repo.aduna-software.org/maven2/releases</url>
+    </repository>
+
+
+    <repository>
+      <id>clojars</id>
+      <url>http://clojars.org/repo/</url>
+    </repository>
+
+        <!-- Specific repository for Any23 dependencies without a dedicated repository. -->
+        <repository>
+            <id>any23-repository-external</id>
+            <url>http://any23.googlecode.com/svn/repo-ext</url>
+        </repository>
+        <!-- The Any23 modules repository. -->
+        <repository>
+            <id>any23-repository</id>
+            <url>http://any23.googlecode.com/svn/repo</url>
+        </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>swank-clojure</groupId>
+      <artifactId>swank-clojure</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/clojure</directory>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>com.theoryinpractise</groupId>
+        <artifactId>clojure-maven-plugin</artifactId>
+        <version>1.3.6</version>
+        <extensions>true</extensions>
+		<configuration>
+			<!--<vmargs>-d64 -Xmx4g</vmargs> -->
+          <sourceDirectories>
+            <sourceDirectory>src/main/clojure</sourceDirectory>
+          </sourceDirectories>
+          <testSourceDirectories>
+            <testSourceDirectory>src/test/clojure</testSourceDirectory>
+          </testSourceDirectories>
+		</configuration>
+        <executions>
+          <execution>
+            <id>compile-clojure</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <executions>
+          <execution>
+            <phase>test</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <testClassesDirectory>src/test/clojure/</testClassesDirectory>
+        </configuration>
+      </plugin>
+
+        <plugin>
+            <!-- run using "mvn exec:java" -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>java</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <mainClass>com.croeder.baristamatic</mainClass>
+            </configuration>
+        </plugin>
+
+
+    </plugins>
+  </build>
+</project>
